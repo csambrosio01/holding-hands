@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "697507531479",
+    "firebase_url": "https://holding-hands-92f40.firebaseio.com",
+    "project_id": "holding-hands-92f40",
+    "storage_bucket": "holding-hands-92f40.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:697507531479:android:816b98f0fdc0f77ed17e92",
+        "android_client_info": {
+          "package_name": "com.usp.holdinghands"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "697507531479-16n4nv7stiqfrmkvhirrot1h3a2352vb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.usp.holdinghands",
+            "certificate_hash": "211684b51c75078d18af5db79830e378785b369f"
+          }
+        },
+        {
+          "client_id": "697507531479-qju36ulauncv83te1vfjnbobdr13ujl1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAl_4jtO7gKVs3D0nDTAFjdZqf240sZZvs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "697507531479-qju36ulauncv83te1vfjnbobdr13ujl1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
