@@ -4,4 +4,5 @@
     <string name="search_header">Sua pesquisa</string>
     <string name="search_edit_text">Pesquisar por nome</string>
     <string name="search_filter">Filtrar o conteúdo</string>
+    <string name="user_help_types_header">Disposto a:\n</string>
 </resources>
