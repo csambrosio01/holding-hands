@@ -14,7 +14,8 @@ import com.usp.holdinghands.model.getHelpAsString
 class UserAdapter(private val users: MutableList<User>) :
     RecyclerView.Adapter<UserAdapter.ConstraintLayoutViewHolder>() {
 
-    class ConstraintLayoutViewHolder(val constraintLayout: ConstraintLayout) : RecyclerView.ViewHolder(constraintLayout)
+    class ConstraintLayoutViewHolder(val constraintLayout: ConstraintLayout) :
+        RecyclerView.ViewHolder(constraintLayout)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -32,9 +33,14 @@ class UserAdapter(private val users: MutableList<User>) :
         holder.constraintLayout.findViewById<TextView>(R.id.user_name).text = user.name
         holder.constraintLayout.findViewById<TextView>(R.id.user_age).text = user.age.toString()
         holder.constraintLayout.findViewById<TextView>(R.id.user_distance).text = user.distance
-        holder.constraintLayout.findViewById<TextView>(R.id.user_help_types).text = user.getHelpAsString()
+        holder.constraintLayout.findViewById<TextView>(R.id.user_help_types).text =
+            user.getHelpAsString()
 
-        val imageId = holder.constraintLayout.context.resources.getIdentifier(user.image, "drawable", holder.constraintLayout.context.packageName)
+        val imageId = holder.constraintLayout.context.resources.getIdentifier(
+            user.image,
+            "drawable",
+            holder.constraintLayout.context.packageName
+        )
         holder.constraintLayout.findViewById<ImageView>(R.id.user_image).setImageResource(imageId)
     }
 
