@@ -37,4 +37,7 @@ dependencies {
 
     // Firebase
     implementation 'com.google.firebase:firebase-core:17.5.0'
+
+    //RecyclerView
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 }
