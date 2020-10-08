@@ -12,6 +12,10 @@ class SearchActivity : AppCompatActivity() {
 
     private val users = mutableListOf<User>()
 
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var viewAdapter: RecyclerView.Adapter<*>
+    private lateinit var viewManager: RecyclerView.LayoutManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
@@ -22,10 +26,13 @@ class SearchActivity : AppCompatActivity() {
     private fun configureRecyclerView() {
         readJson()
 
-        findViewById<RecyclerView>(R.id.search_recycler_view).apply {
+        viewManager = LinearLayoutManager(this)
+        viewAdapter = UserAdapter(users)
+
+        recyclerView = findViewById<RecyclerView>(R.id.search_recycler_view).apply {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(this)
-            adapter = UserAdapter(users)
+            layoutManager = viewManager
+            adapter = viewAdapter
         }
     }
 
