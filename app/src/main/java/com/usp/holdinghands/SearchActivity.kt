@@ -1,12 +1,16 @@
 package com.usp.holdinghands
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.usp.holdinghands.adapter.UserAdapter
 import com.usp.holdinghands.controller.UserController
 import com.usp.holdinghands.model.User
+
+const val FILTER_ACTIVITY_REQUEST_CODE = 10544
 
 class SearchActivity : AppCompatActivity() {
 
@@ -24,6 +28,7 @@ class SearchActivity : AppCompatActivity() {
         userController = UserController(applicationContext)
 
         configureRecyclerView()
+        configureFilterButton()
     }
 
     private fun configureRecyclerView() {
@@ -36,6 +41,13 @@ class SearchActivity : AppCompatActivity() {
             setHasFixedSize(true)
             layoutManager = viewManager
             adapter = viewAdapter
+        }
+    }
+
+    private fun configureFilterButton() {
+        findViewById<ImageButton>(R.id.search_filter).setOnClickListener {
+            val intent = Intent(this, FilterActivity::class.java)
+            startActivityForResult(intent, FILTER_ACTIVITY_REQUEST_CODE)
         }
     }
 }
