@@ -16,7 +16,14 @@ enum class HelpType(val type: String) {
     ALL(App.context!!.getString(R.string.filter_category_6_switch))
 }
 
-data class User(val name: String, val age: Int, val distance: Double, val helpTypes: List<HelpType>, val image: String, val gender: Gender)
+data class User(
+    val name: String,
+    val age: Int,
+    val distance: Double,
+    val helpTypes: List<HelpType>,
+    val image: String,
+    val gender: Gender
+)
 
 fun User.getHelpAsString(): String {
     val sb = StringBuilder()
