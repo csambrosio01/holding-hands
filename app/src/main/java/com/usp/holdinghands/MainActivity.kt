@@ -1,7 +1,9 @@
 package com.usp.holdinghands
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
@@ -22,5 +24,11 @@ class MainActivity : AppCompatActivity() {
 
         image.startAnimation(topAnim)
         text.startAnimation(bottomAnim)
+
+        Handler().postDelayed({
+            val intent = Intent(this, SearchActivity::class.java)
+            startActivity(intent)
+            finish()
+        }, 1500)
     }
 }
