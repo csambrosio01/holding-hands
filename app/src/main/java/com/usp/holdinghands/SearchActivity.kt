@@ -1,12 +1,17 @@
 package com.usp.holdinghands
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.usp.holdinghands.adapter.UserAdapter
 import com.usp.holdinghands.controller.UserController
 import com.usp.holdinghands.model.User
+
+const val FILTER_ACTIVITY_REQUEST_CODE = 10544
 
 class SearchActivity : AppCompatActivity() {
 
@@ -24,6 +29,19 @@ class SearchActivity : AppCompatActivity() {
         userController = UserController(applicationContext)
 
         configureRecyclerView()
+        configureFilterButton()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == FILTER_ACTIVITY_REQUEST_CODE) {
+            if (data != null && data.hasExtra(FILTERED_USERS)) {
+                users.clear()
+                val a = data.extras!!.getString(FILTERED_USERS)!!
+                users.addAll(userController.fromJsonString(a))
+                viewAdapter.notifyDataSetChanged()
+            }
+        }
     }
 
     private fun configureRecyclerView() {
@@ -36,6 +54,13 @@ class SearchActivity : AppCompatActivity() {
             setHasFixedSize(true)
             layoutManager = viewManager
             adapter = viewAdapter
+        }
+    }
+
+    private fun configureFilterButton() {
+        findViewById<ImageButton>(R.id.search_filter).setOnClickListener {
+            val intent = Intent(this, FilterActivity::class.java)
+            startActivityForResult(intent, FILTER_ACTIVITY_REQUEST_CODE)
         }
     }
 }
