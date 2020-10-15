@@ -1,134 +1,145 @@
-{
-  "users": [
-    {
-      "name": "Heloise Cavalcante",
-      "age": 35,
-      "distance": "10 Km",
-      "helpTypes": [
-        "Ir à farmácia",
-        "Ir ao mercado"
-      ],
-      "image": "heloise"
-    },
-    {
-      "name": "Mario da Silva",
-      "age": 40,
-      "distance": "8 Km",
-      "helpTypes": [
-        "Passear com o cachorro"
-      ],
-      "image": "mario"
-    },
-    {
-      "name": "Ruan Pereira",
-      "age": 26,
-      "distance": "2 Km",
-      "helpTypes": [
-        "Ir ao mercado"
-      ],
-      "image": "ruan"
-    },
-    {
-      "name": "Beatriz Aparecida de Melo",
-      "age": 24,
-      "distance": "7 Km",
-      "helpTypes": [
-        "Ir à farmácia",
-        "Ir ao mercado",
-        "Cuidadora"
-      ],
-      "image": "beatriz"
-    },
-    {
-      "name": "Rafael Barreto de Souza",
-      "age": 27,
-      "distance": "9 Km",
-      "helpTypes": [
-        "Ir ao mercado",
-        "Treinar junto"
-      ],
-      "image": "rafael"
-    },
-    {
-      "name": "Isabela Rezende",
-      "age": 32,
-      "distance": "5 Km",
-      "helpTypes": [
-        "Ir à farmácia",
-        "Passear com o cachorro"
-      ],
-      "image": "isabela"
-    },
-    {
-      "name": "Gabriel Santos",
-      "age": 18,
-      "distance": "3 Km",
-      "helpTypes": [
-        "Ir à farmácia",
-        "Ir ao mercado",
-        "Passear com o cachorro",
-        "Treinar junto",
-        "Cuidador"
-      ],
-      "image": "gabriel"
-    },
-    {
-      "name": "Amanda Gomes de Albuquerque",
-      "age": 20,
-      "distance": "15 Km",
-      "helpTypes": [
-        "Ir à farmácia",
-        "Ir ao mercado"
-      ],
-      "image": "amanda"
-    },
-    {
-      "name": "Julio Assunção",
-      "age": 33,
-      "distance": "13 Km",
-      "helpTypes": [
-        "Ir ao mercado"
-      ],
-      "image": "julio"
-    },
-    {
-      "name": "Julia Rodrigues",
-      "age": 25,
-      "distance": "11 Km",
-      "helpTypes": [
-        "Ir à farmácia",
-        "Ir ao mercado",
-        "Passear com o cachorro"
-      ],
-      "image": "julia"
-    },
-    {
-      "name": "Ana dos Santos",
-      "age": 28,
-      "distance": "2 Km",
-      "helpTypes": [
-        "Ir à farmácia",
-        "Passear com o cachorro"
-      ],
-      "image": "ana"
-    },
-    {
-      "name": "Marcos Oliveira",
-      "age": 22,
-      "distance": "3 Km",
-      "helpTypes": [
-        "Ir ao mercado"
-      ],
-      "image": "marcos"
-    },
-    {
-      "name": "Lucas Sanchez",
-      "age": 25,
-      "distance": "4 Km",
-      "helpTypes": [
-        "Ir à farmácia"
-      ],
-      "image": "lucas"
-    }
-  ]
-}
+[
+  {
+    "name": "Heloise Cavalcante",
+    "age": 35,
+    "distance": 10,
+    "helpTypes": [
+      "TYPE_5",
+      "TYPE_1"
+    ],
+    "image": "heloise",
+    "gender": "FEMALE"
+  },
+  {
+    "name": "Mario da Silva",
+    "age": 40,
+    "distance": 8 ,
+    "helpTypes": [
+      "TYPE_2"
+    ],
+    "image": "mario",
+    "gender": "MALE"
+  },
+  {
+    "name": "Ruan Pereira",
+    "age": 26,
+    "distance": 2,
+    "helpTypes": [
+      "TYPE_1"
+    ],
+    "image": "ruan",
+    "gender": "MALE"
+  },
+  {
+    "name": "Beatriz Aparecida de Melo",
+    "age": 24,
+    "distance": 7,
+    "helpTypes": [
+      "TYPE_5",
+      "TYPE_1",
+      "TYPE_3"
+    ],
+    "image": "beatriz",
+    "gender": "FEMALE"
+  },
+  {
+    "name": "Rafael Barreto de Souza",
+    "age": 27,
+    "distance": 9,
+    "helpTypes": [
+      "TYPE_1",
+      "TYPE_4"
+    ],
+    "image": "rafael",
+    "gender": "MALE"
+  },
+  {
+    "name": "Isabela Rezende",
+    "age": 32,
+    "distance": 5,
+    "helpTypes": [
+      "TYPE_5",
+      "TYPE_2"
+    ],
+    "image": "isabela",
+    "gender": "FEMALE"
+  },
+  {
+    "name": "Gabriel Santos",
+    "age": 18,
+    "distance": 3,
+    "helpTypes": [
+      "TYPE_5",
+      "TYPE_1",
+      "TYPE_2",
+      "TYPE_4",
+      "TYPE_3"
+    ],
+    "image": "gabriel",
+    "gender": "MALE"
+  },
+  {
+    "name": "Amanda Gomes de Albuquerque",
+    "age": 20,
+    "distance": 15,
+    "helpTypes": [
+      "TYPE_5",
+      "TYPE_1"
+    ],
+    "image": "amanda",
+    "gender": "FEMALE"
+  },
+  {
+    "name": "Julio Assunção",
+    "age": 33,
+    "distance": 13,
+    "helpTypes": [
+      "TYPE_1"
+    ],
+    "image": "julio",
+    "gender": "MALE"
+  },
+  {
+    "name": "Julia Rodrigues",
+    "age": 25,
+    "distance": 11,
+    "helpTypes": [
+      "TYPE_5",
+      "TYPE_1",
+      "TYPE_2"
+    ],
+    "image": "julia",
+    "gender": "FEMALE"
+  },
+  {
+    "name": "Ana dos Santos",
+    "age": 28,
+    "distance": 2,
+    "helpTypes": [
+      "TYPE_5",
+      "TYPE_2"
+    ],
+    "image": "ana",
+    "gender": "FEMALE"
+  },
+  {
+    "name": "Marcos Oliveira",
+    "age": 22,
+    "distance": 3,
+    "helpTypes": [
+      "TYPE_1"
+    ],
+    "image": "marcos",
+    "gender": "MALE"
+  },
+  {
+    "name": "Lucas Sanchez",
+    "age": 25,
+    "distance": 4,
+    "helpTypes": [
+      "TYPE_5"
+    ],
+    "image": "lucas",
+    "gender": "MALE"
+  }
+]
