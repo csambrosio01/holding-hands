@@ -37,10 +37,3 @@ fun User.getHelpAsString(): String {
     }
     return sb.toString().trim()
 }
-
-const val TAG_USERS = "users"
-const val TAG_NAME = "name"
-const val TAG_AGE = "age"
-const val TAG_DISTANCE = "distance"
-const val TAG_HELP_TYPES = "helpTypes"
-const val TAG_IMAGE = "image"
