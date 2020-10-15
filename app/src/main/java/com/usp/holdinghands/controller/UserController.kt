@@ -4,10 +4,7 @@ import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.usp.holdinghands.R
-import com.usp.holdinghands.model.Gender
-import com.usp.holdinghands.model.HelpType
 import com.usp.holdinghands.model.User
-import com.usp.holdinghands.model.UserFilter
 import java.io.InputStreamReader
 import java.lang.reflect.Type
 
