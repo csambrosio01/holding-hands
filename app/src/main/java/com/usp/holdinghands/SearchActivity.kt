@@ -1,5 +1,6 @@
 package com.usp.holdinghands
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
@@ -29,6 +30,18 @@ class SearchActivity : AppCompatActivity() {
 
         configureRecyclerView()
         configureFilterButton()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == FILTER_ACTIVITY_REQUEST_CODE) {
+            if (data != null && data.hasExtra(FILTERED_USERS)) {
+                users.clear()
+                val a = data.extras!!.getString(FILTERED_USERS)!!
+                users.addAll(userController.fromJsonString(a))
+                viewAdapter.notifyDataSetChanged()
+            }
+        }
     }
 
     private fun configureRecyclerView() {

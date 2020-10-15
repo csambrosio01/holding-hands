@@ -1,7 +1,10 @@
 package com.usp.holdinghands
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.CompoundButton
 import android.widget.RadioButton
 import android.widget.TextView
@@ -11,6 +14,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.slider.RangeSlider
 import com.google.android.material.slider.Slider
 import com.usp.holdinghands.controller.UserController
+import com.usp.holdinghands.model.Gender
+import com.usp.holdinghands.model.HelpType
+import com.usp.holdinghands.model.UserFilter
 
 const val FILTERED_USERS = "filtered_users"
 
@@ -29,6 +35,7 @@ class FilterActivity : AppCompatActivity() {
         configureDistanceSlidesLayout()
         configureNumberOfHelpsSliderLayout()
         configureAllCategoriesSwitch()
+        configureFilterButton()
     }
 
     private fun configureToolbar() {
@@ -101,5 +108,60 @@ class FilterActivity : AppCompatActivity() {
             findViewById<SwitchCompat>(R.id.filter_category_4_switch).isChecked = isChecked
             findViewById<SwitchCompat>(R.id.filter_category_5_switch).isChecked = isChecked
         }
+    }
+
+    private fun configureFilterButton() {
+        findViewById<Button>(R.id.filter_button).setOnClickListener {
+            setResult(
+                Activity.RESULT_OK,
+                Intent().putExtra(
+                    FILTERED_USERS,
+                    userController.toJson(userController.makeSearch(makeUserFilter()))
+                )
+            )
+            finish()
+        }
+    }
+
+    private fun makeUserFilter(): UserFilter {
+        val gender: Gender = if (findViewById<SwitchCompat>(R.id.male_switch).isChecked) {
+            if (findViewById<SwitchCompat>(R.id.female_switch).isChecked) {
+                Gender.BOTH
+            } else {
+                Gender.MALE
+            }
+        } else {
+            Gender.FEMALE
+        }
+
+        val helpTypes: MutableList<HelpType> = mutableListOf()
+
+        if (findViewById<SwitchCompat>(R.id.filter_category_6_switch).isChecked) {
+            helpTypes.add(HelpType.ALL)
+        } else {
+            if (findViewById<SwitchCompat>(R.id.filter_category_1_switch).isChecked) helpTypes.add(
+                HelpType.TYPE_1
+            )
+            if (findViewById<SwitchCompat>(R.id.filter_category_2_switch).isChecked) helpTypes.add(
+                HelpType.TYPE_2
+            )
+            if (findViewById<SwitchCompat>(R.id.filter_category_3_switch).isChecked) helpTypes.add(
+                HelpType.TYPE_3
+            )
+            if (findViewById<SwitchCompat>(R.id.filter_category_4_switch).isChecked) helpTypes.add(
+                HelpType.TYPE_4
+            )
+            if (findViewById<SwitchCompat>(R.id.filter_category_5_switch).isChecked) helpTypes.add(
+                HelpType.TYPE_5
+            )
+        }
+
+        return UserFilter(
+            gender = gender,
+            ageMin = findViewById<RangeSlider>(R.id.age_slider).values[0].toInt(),
+            ageMax = findViewById<RangeSlider>(R.id.age_slider).values[1].toInt(),
+            distance = findViewById<Slider>(R.id.distance_slider).value.toDouble(),
+            helpTypes = helpTypes
+        )
     }
 }
