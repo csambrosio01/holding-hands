@@ -6,4 +6,6 @@
     <string name="search_filter">Filtrar o conteúdo</string>
     <string name="user_image">Imagem do usuário</string>
     <string name="user_help_types_header">Disposto a:\n</string>
+    <string name="user_age">%1$s anos</string>
+    <string name="user_distance">%1$s Km</string>
 </resources>
