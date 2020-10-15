@@ -23,7 +23,11 @@ data class User(
     val helpTypes: List<HelpType>,
     val image: String,
     val gender: Gender
-)
+) {
+    override fun toString(): String {
+        return "{name: ${this.name}, age: ${this.age}, name: ${this.distance}, name: ${this.distance}, helpTypes: ${this.getHelpAsString()}, image: ${this.image}, gender: ${this.gender}}"
+    }
+}
 
 fun User.getHelpAsString(): String {
     val sb = StringBuilder()
