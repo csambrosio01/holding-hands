@@ -14,4 +14,18 @@
     <string name="help_type_4">Treinar junto</string>
     <string name="help_type_5">Ir à farmácia</string>
     <string name="help_type_all">Todas as categorias</string>
+    <string name="filter_button">Filtrar</string>
+    <string name="filter_header">Filtros</string>
+    <string name="filter_gender">Gênero</string>
+    <string name="filter_male_switch">Masculino</string>
+    <string name="filter_female_switch">Feminino</string>
+    <string name="filter_age">Faixa etária</string>
+    <string name="range_slider_value">%1$s - %2$s</string>
+    <string name="filter_distance">Distância</string>
+    <string name="distance_slider_value">%1$s km</string>
+    <string name="filter_type">Pesquisar por</string>
+    <string name="filter_volunteer_radio">Voluntário</string>
+    <string name="filter_supported_radio">Amparado</string>
+    <string name="filter_number_helps">Quantidade de ajudas</string>
+    <string name="filter_categories_header">Categorias</string>
 </resources>

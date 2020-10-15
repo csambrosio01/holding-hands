@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="initial_age_slider_values">
+        <item>18.0</item>
+        <item>25.0</item>
+    </array>
+    <array name="initial_distance_slider_value">
+        <item>30.0</item>
+    </array>
+    <array name="initial_number_helps_slider_value">
+        <item>0.0</item>
+        <item>50.0</item>
+    </array>
+</resources>
