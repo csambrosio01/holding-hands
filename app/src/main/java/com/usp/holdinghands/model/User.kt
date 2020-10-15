@@ -8,12 +8,12 @@ enum class Gender {
 }
 
 enum class HelpType(val type: String) {
-    TYPE_1(App.context!!.getString(R.string.filter_category_1_switch)),
-    TYPE_2(App.context!!.getString(R.string.filter_category_2_switch)),
-    TYPE_3(App.context!!.getString(R.string.filter_category_3_switch)),
-    TYPE_4(App.context!!.getString(R.string.filter_category_4_switch)),
-    TYPE_5(App.context!!.getString(R.string.filter_category_5_switch)),
-    ALL(App.context!!.getString(R.string.filter_category_6_switch))
+    TYPE_1(App.context!!.getString(R.string.help_type_1)),
+    TYPE_2(App.context!!.getString(R.string.help_type_2)),
+    TYPE_3(App.context!!.getString(R.string.help_type_3)),
+    TYPE_4(App.context!!.getString(R.string.help_type_4)),
+    TYPE_5(App.context!!.getString(R.string.help_type_5)),
+    ALL(App.context!!.getString(R.string.help_type_all))
 }
 
 data class User(

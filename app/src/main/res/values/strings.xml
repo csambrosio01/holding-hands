@@ -8,4 +8,10 @@
     <string name="user_help_types_header">Disposto a:\n</string>
     <string name="user_age">%1$s anos</string>
     <string name="user_distance">%1$s Km</string>
+    <string name="help_type_1">Ir ao mercado</string>
+    <string name="help_type_2">Passear com o animal</string>
+    <string name="help_type_3">Estudar junto</string>
+    <string name="help_type_4">Treinar junto</string>
+    <string name="help_type_5">Ir à farmácia</string>
+    <string name="help_type_all">Todas as categorias</string>
 </resources>
