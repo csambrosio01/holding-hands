@@ -31,8 +31,13 @@ class UserAdapter(private val users: MutableList<User>) :
         val user = users[position]
 
         holder.constraintLayout.findViewById<TextView>(R.id.user_name).text = user.name
-        holder.constraintLayout.findViewById<TextView>(R.id.user_age).text = holder.constraintLayout.context.getString(R.string.user_age, user.age.toString())
-        holder.constraintLayout.findViewById<TextView>(R.id.user_distance).text = holder.constraintLayout.context.getString(R.string.user_distance, user.distance.toString())
+        holder.constraintLayout.findViewById<TextView>(R.id.user_age).text =
+            holder.constraintLayout.context.getString(R.string.user_age, user.age.toString())
+        holder.constraintLayout.findViewById<TextView>(R.id.user_distance).text =
+            holder.constraintLayout.context.getString(
+                R.string.user_distance,
+                user.distance.toString()
+            )
         holder.constraintLayout.findViewById<TextView>(R.id.user_help_types).text =
             user.getHelpAsString()
 
