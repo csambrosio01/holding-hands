@@ -47,7 +47,7 @@ class SearchActivity : AppCompatActivity() {
         users.addAll(userController.getUsers())
 
         viewManager = LinearLayoutManager(this)
-        viewAdapter = UserAdapter(users)
+        viewAdapter = UserAdapter(users, applicationContext)
 
         recyclerView = findViewById<RecyclerView>(R.id.search_recycler_view).apply {
             setHasFixedSize(true)
