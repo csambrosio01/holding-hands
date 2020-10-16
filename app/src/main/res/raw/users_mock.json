@@ -8,7 +8,9 @@
       "TYPE_1"
     ],
     "image": "heloise",
-    "gender": "FEMALE"
+    "gender": "FEMALE",
+    "profession": "Desenvolvedora",
+    "numberOfHelps": 4
   },
   {
     "name": "Mario da Silva",
@@ -18,7 +20,9 @@
       "TYPE_2"
     ],
     "image": "mario",
-    "gender": "MALE"
+    "gender": "MALE",
+    "profession": "Analista de negócios",
+    "numberOfHelps": 3
   },
   {
     "name": "Ruan Pereira",
@@ -28,7 +32,9 @@
       "TYPE_1"
     ],
     "image": "ruan",
-    "gender": "MALE"
+    "gender": "MALE",
+    "profession": "Estudante",
+    "numberOfHelps": 7
   },
   {
     "name": "Beatriz Aparecida de Melo",
@@ -40,7 +46,9 @@
       "TYPE_3"
     ],
     "image": "beatriz",
-    "gender": "FEMALE"
+    "gender": "FEMALE",
+    "profession": "Estudante",
+    "numberOfHelps": 1
   },
   {
     "name": "Rafael Barreto de Souza",
@@ -51,7 +59,9 @@
       "TYPE_4"
     ],
     "image": "rafael",
-    "gender": "MALE"
+    "gender": "MALE",
+    "profession": "Motorista",
+    "numberOfHelps": 9
   },
   {
     "name": "Isabela Rezende",
@@ -62,7 +72,9 @@
       "TYPE_2"
     ],
     "image": "isabela",
-    "gender": "FEMALE"
+    "gender": "FEMALE",
+    "profession": "Assistende de RH",
+    "numberOfHelps": 14
   },
   {
     "name": "Gabriel Santos",
@@ -76,7 +88,9 @@
       "TYPE_3"
     ],
     "image": "gabriel",
-    "gender": "MALE"
+    "gender": "MALE",
+    "profession": "Desenvolvedor",
+    "numberOfHelps": 25
   },
   {
     "name": "Amanda Gomes de Albuquerque",
@@ -87,7 +101,9 @@
       "TYPE_1"
     ],
     "image": "amanda",
-    "gender": "FEMALE"
+    "gender": "FEMALE",
+    "profession": "Advogada",
+    "numberOfHelps": 41
   },
   {
     "name": "Julio Assunção",
@@ -97,7 +113,9 @@
       "TYPE_1"
     ],
     "image": "julio",
-    "gender": "MALE"
+    "gender": "MALE",
+    "profession": "Advogado",
+    "numberOfHelps": 2
   },
   {
     "name": "Julia Rodrigues",
@@ -109,7 +127,9 @@
       "TYPE_2"
     ],
     "image": "julia",
-    "gender": "FEMALE"
+    "gender": "FEMALE",
+    "profession": "Mestra de obras",
+    "numberOfHelps": 10
   },
   {
     "name": "Ana dos Santos",
@@ -120,7 +140,9 @@
       "TYPE_2"
     ],
     "image": "ana",
-    "gender": "FEMALE"
+    "gender": "FEMALE",
+    "profession": "Professora",
+    "numberOfHelps": 2
   },
   {
     "name": "Marcos Oliveira",
@@ -130,7 +152,9 @@
       "TYPE_1"
     ],
     "image": "marcos",
-    "gender": "MALE"
+    "gender": "MALE",
+    "profession": "Servente de pedreiro",
+    "numberOfHelps": 50
   },
   {
     "name": "Lucas Sanchez",
@@ -140,6 +164,8 @@
       "TYPE_5"
     ],
     "image": "lucas",
-    "gender": "MALE"
+    "gender": "MALE",
+    "profession": "Professor",
+    "numberOfHelps":15
   }
 ]

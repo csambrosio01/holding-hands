@@ -22,10 +22,12 @@ data class User(
     val distance: Double,
     val helpTypes: List<HelpType>,
     val image: String,
-    val gender: Gender
+    val gender: Gender,
+    val profession: String,
+    val numberOfHelps: Int
 ) {
     override fun toString(): String {
-        return "{name: ${this.name}, age: ${this.age}, name: ${this.distance}, name: ${this.distance}, helpTypes: ${this.getHelpAsString()}, image: ${this.image}, gender: ${this.gender}}"
+        return "{name: ${this.name}, age: ${this.age}, name: ${this.distance}, name: ${this.distance}, helpTypes: ${this.getHelpAsString()}, image: ${this.image}, gender: ${this.gender}, profession: ${this.profession}, numberOfHelps: ${this.numberOfHelps}}"
     }
 }
 
