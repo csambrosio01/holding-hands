@@ -1,21 +1,37 @@
 package com.usp.holdinghands.adapter
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.usp.holdinghands.R
+import com.usp.holdinghands.UserActivity
+import com.usp.holdinghands.controller.UserController
 import com.usp.holdinghands.model.User
 import com.usp.holdinghands.model.getHelpAsString
 
+const val USER = "user"
 
-class UserAdapter(private val users: MutableList<User>) :
+class UserAdapter(private val users: MutableList<User>, private val context: Context) :
     RecyclerView.Adapter<UserAdapter.ConstraintLayoutViewHolder>() {
 
-    class ConstraintLayoutViewHolder(val constraintLayout: ConstraintLayout) :
-        RecyclerView.ViewHolder(constraintLayout)
+    inner class ConstraintLayoutViewHolder(val constraintLayout: ConstraintLayout) :
+        RecyclerView.ViewHolder(constraintLayout), View.OnClickListener {
+
+        override fun onClick(v: View?) {
+            val intent = Intent(context, UserActivity::class.java).putExtra(
+                USER,
+                UserController(context).toJsonUser(users[adapterPosition])
+            )
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            context.startActivity(intent)
+        }
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -29,6 +45,8 @@ class UserAdapter(private val users: MutableList<User>) :
 
     override fun onBindViewHolder(holder: ConstraintLayoutViewHolder, position: Int) {
         val user = users[position]
+
+        holder.constraintLayout.setOnClickListener(holder)
 
         holder.constraintLayout.findViewById<TextView>(R.id.user_name).text = user.name
         holder.constraintLayout.findViewById<TextView>(R.id.user_age).text =

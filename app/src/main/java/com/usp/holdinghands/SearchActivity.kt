@@ -37,8 +37,7 @@ class SearchActivity : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK && requestCode == FILTER_ACTIVITY_REQUEST_CODE) {
             if (data != null && data.hasExtra(FILTERED_USERS)) {
                 users.clear()
-                val a = data.extras!!.getString(FILTERED_USERS)!!
-                users.addAll(userController.fromJsonString(a))
+                users.addAll(userController.fromJsonString(data.extras!!.getString(FILTERED_USERS)!!))
                 viewAdapter.notifyDataSetChanged()
             }
         }
@@ -48,7 +47,7 @@ class SearchActivity : AppCompatActivity() {
         users.addAll(userController.getUsers())
 
         viewManager = LinearLayoutManager(this)
-        viewAdapter = UserAdapter(users)
+        viewAdapter = UserAdapter(users, applicationContext)
 
         recyclerView = findViewById<RecyclerView>(R.id.search_recycler_view).apply {
             setHasFixedSize(true)

@@ -28,4 +28,10 @@
     <string name="filter_supported_radio">Amparado</string>
     <string name="filter_number_helps">Quantidade de ajudas</string>
     <string name="filter_categories_header">Categorias</string>
+    <string name="user_send_invitation">Mandar convite</string>
+    <string name="user_distance_long">A %1$s Km de você</string>
+    <string name="user_number_helps_singular">%1$s ajuda</string>
+    <string name="user_number_helps_plural">%1$s ajudas</string>
+    <string name="report_sucessful_message">Usuário reportado com sucesso!</string>
+    <string name="send_invitation_sucessful_message">Convite enviado para o usuário com sucesso!</string>
 </resources>

@@ -27,8 +27,16 @@ class UserController(val context: Context) {
         return gson.toJson(users, listUserType)
     }
 
+    fun toJsonUser(user: User): String {
+        return gson.toJson(user, User::class.java)
+    }
+
     fun fromJsonString(jsonString: String): List<User> {
         return gson.fromJson(jsonString, listUserType)
+    }
+
+    fun fromJsonStringUser(jsonString: String): User {
+        return gson.fromJson(jsonString, User::class.java)
     }
 
     fun makeSearch(userFilter: UserFilter): List<User> {

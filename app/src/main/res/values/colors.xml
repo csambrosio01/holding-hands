@@ -7,4 +7,5 @@
     <color name="lightgray">#D3D3D3</color>
     <color name="dimgray">#696969</color>
     <color name="black">#000000</color>
+    <color name="dimgray_transparant">#CC696969</color>
 </resources>
