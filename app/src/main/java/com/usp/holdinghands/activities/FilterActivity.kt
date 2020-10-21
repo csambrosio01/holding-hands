@@ -1,4 +1,4 @@
-package com.usp.holdinghands
+package com.usp.holdinghands.activities
 
 import android.app.Activity
 import android.content.Intent
@@ -13,6 +13,7 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.slider.RangeSlider
 import com.google.android.material.slider.Slider
+import com.usp.holdinghands.R
 import com.usp.holdinghands.controller.UserController
 import com.usp.holdinghands.model.Gender
 import com.usp.holdinghands.model.HelpType

@@ -10,8 +10,8 @@ import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.usp.holdinghands.FILTERED_USERS
-import com.usp.holdinghands.FilterActivity
+import com.usp.holdinghands.activities.FILTERED_USERS
+import com.usp.holdinghands.activities.FilterActivity
 import com.usp.holdinghands.R
 import com.usp.holdinghands.adapter.UserAdapter
 import com.usp.holdinghands.controller.UserController

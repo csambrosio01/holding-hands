@@ -1,9 +1,10 @@
-package com.usp.holdinghands
+package com.usp.holdinghands.activities
 
 import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.usp.holdinghands.R
 import com.usp.holdinghands.adapter.USER
 import com.usp.holdinghands.controller.UserController
 import com.usp.holdinghands.model.Gender

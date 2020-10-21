@@ -1,9 +1,10 @@
-package com.usp.holdinghands
+package com.usp.holdinghands.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.usp.holdinghands.R
 import com.usp.holdinghands.fragments.HelpFragment
 import com.usp.holdinghands.fragments.HomeFragment
 import com.usp.holdinghands.fragments.NotificationFragment
