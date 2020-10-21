@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.usp.holdinghands.R
-import com.usp.holdinghands.UserActivity
+import com.usp.holdinghands.activities.UserActivity
 import com.usp.holdinghands.controller.UserController
 import com.usp.holdinghands.model.User
 import com.usp.holdinghands.model.getHelpAsString

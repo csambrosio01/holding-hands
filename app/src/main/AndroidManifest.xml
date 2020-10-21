@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activities.NavigationActivity" />
-        <activity android:name=".UserActivity" />
+        <activity android:name=".activities.UserActivity" />
         <activity android:name=".activities.FilterActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
