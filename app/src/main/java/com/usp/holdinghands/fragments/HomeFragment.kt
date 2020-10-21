@@ -1,19 +1,25 @@
-package com.usp.holdinghands
+package com.usp.holdinghands.fragments
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageButton
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.usp.holdinghands.FILTERED_USERS
+import com.usp.holdinghands.FilterActivity
+import com.usp.holdinghands.R
 import com.usp.holdinghands.adapter.UserAdapter
 import com.usp.holdinghands.controller.UserController
 import com.usp.holdinghands.model.User
 
 const val FILTER_ACTIVITY_REQUEST_CODE = 10544
 
-class SearchActivity : AppCompatActivity() {
+class HomeFragment : Fragment() {
 
     private val users = mutableListOf<User>()
     private lateinit var userController: UserController
@@ -22,14 +28,20 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
-        userController = UserController(applicationContext)
+        userController = UserController(activity!!.applicationContext)
 
         configureRecyclerView()
         configureFilterButton()
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -46,10 +58,10 @@ class SearchActivity : AppCompatActivity() {
     private fun configureRecyclerView() {
         users.addAll(userController.getUsers())
 
-        viewManager = LinearLayoutManager(this)
-        viewAdapter = UserAdapter(users, applicationContext)
+        viewManager = LinearLayoutManager(activity!!.applicationContext)
+        viewAdapter = UserAdapter(users, activity!!.applicationContext)
 
-        recyclerView = findViewById<RecyclerView>(R.id.search_recycler_view).apply {
+        recyclerView = view!!.findViewById<RecyclerView>(R.id.search_recycler_view).apply {
             setHasFixedSize(true)
             layoutManager = viewManager
             adapter = viewAdapter
@@ -57,9 +69,14 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun configureFilterButton() {
-        findViewById<ImageButton>(R.id.search_filter).setOnClickListener {
-            val intent = Intent(this, FilterActivity::class.java)
+        view!!.findViewById<ImageButton>(R.id.search_filter).setOnClickListener {
+            val intent = Intent(activity!!, FilterActivity::class.java)
             startActivityForResult(intent, FILTER_ACTIVITY_REQUEST_CODE)
         }
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance() = HomeFragment()
     }
 }
