@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".NavigationActivity" />
         <activity android:name=".UserActivity" />
-        <activity android:name=".FilterActivity">
+        <activity android:name=".activities.FilterActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
