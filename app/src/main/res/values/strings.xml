@@ -49,4 +49,19 @@
     <string name="new_user">Não possui uma conta? Cadastre-se!</string>
     <string name="login_hint_email">Email</string>
     <string name="login_hint_password">Senha</string>
+    <string name="welcome_sign_up">Bem vindo!</string>
+    <string name="info_sign_up">Cadastre-se para começar sua jornada!</string>
+    <string name="personal_information">Informações pessoais</string>
+    <string name="sign_up_name">Nome completo</string>
+    <string name="sign_up_phone">Celular</string>
+    <string name="sign_up_birth">Data de nascimento</string>
+    <string name="address_information">Endereço</string>
+    <string name="sign_up_cep">CEP</string>
+    <string name="sign_up_number">Número</string>
+    <string name="sign_up_complement">Complemento</string>
+    <string name="login_information">Login</string>
+    <string name="sign_up_email">Email</string>
+    <string name="sign_up_password">Senha</string>
+    <string name="sign_up_confirm_password">Confirmar senha</string>
+    <string name="sign_up_button">Cadastrar</string>
 </resources>
