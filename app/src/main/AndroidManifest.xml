@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NavigationActivity" />
+        <activity android:name=".activities.NavigationActivity" />
         <activity android:name=".UserActivity" />
         <activity android:name=".activities.FilterActivity">
             <meta-data
