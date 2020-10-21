@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         text.startAnimation(bottomAnim)
 
         Handler().postDelayed({
-            val intent = Intent(this, NavigationActivity::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
         }, 2000)
