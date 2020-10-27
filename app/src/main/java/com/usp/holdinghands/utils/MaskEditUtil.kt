@@ -9,7 +9,7 @@ object MaskEditUtil {
     const val PHONE_MASK = "(##) #####-####"
     const val ZIP_MASK = "#####-###"
 
-    fun mask(ediTxt: EditText, mask: String): TextWatcher {
+    fun mask(editText: EditText, mask: String): TextWatcher {
         return object : TextWatcher {
             var isUpdating = false
             var old = ""
@@ -43,8 +43,8 @@ object MaskEditUtil {
                 }
 
                 isUpdating = true
-                ediTxt.setText(masked)
-                ediTxt.setSelection(masked.length)
+                editText.setText(masked)
+                editText.setSelection(masked.length)
             }
         }
     }
