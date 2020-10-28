@@ -66,4 +66,5 @@
     <string name="sign_up_button">Cadastrar</string>
     <string name="deny_help_button">Rejeitar</string>
     <string name="accept_help_button">Aceitar</string>
+    <string name="user_help_needed">Precisa de ajuda para:</string>
 </resources>

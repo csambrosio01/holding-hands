@@ -18,7 +18,8 @@
         android:layout_marginTop="1dp"
         android:contentDescription="@string/user_image"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/heloise"/>
 
     <View
         android:id="@+id/search_divider"
@@ -51,7 +52,8 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/hello_blank_fragment"/>
 
         <TextView
             android:id="@+id/user_age"
@@ -62,7 +64,8 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/user_name" />
+            app:layout_constraintTop_toBottomOf="@id/user_name"
+            android:text="@string/filter_age"/>
 
         <TextView
             android:id="@+id/user_distance"
@@ -73,7 +76,8 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/user_age" />
+            app:layout_constraintTop_toBottomOf="@id/user_age"
+            android:text="@string/filter_distance"/>
 
         <TextView
             android:id="@+id/user_help_types"
@@ -84,7 +88,8 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/user_distance" />
+            app:layout_constraintTop_toBottomOf="@id/user_distance"
+            android:text="@string/user_help_needed"/>
 
         <Button
             android:id="@+id/button_deny"
