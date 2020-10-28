@@ -42,13 +42,7 @@ class HelpFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == FILTER_ACTIVITY_REQUEST_CODE) {
-            if (data != null && data.hasExtra(FILTERED_USERS)) {
-                users.clear()
-                users.addAll(userController.fromJsonString(data.extras!!.getString(FILTERED_USERS)!!))
-                viewAdapter.notifyDataSetChanged()
-            }
-        }
+        //TO-DO
     }
 
     private fun configureRecyclerView() {
