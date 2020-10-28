@@ -64,4 +64,6 @@
     <string name="sign_up_password">Senha</string>
     <string name="sign_up_confirm_password">Confirmar senha</string>
     <string name="sign_up_button">Cadastrar</string>
+    <string name="deny_help_button">Rejeitar</string>
+    <string name="accept_help_button">Aceitar</string>
 </resources>
