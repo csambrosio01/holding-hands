@@ -9,10 +9,11 @@ import com.usp.holdinghands.R
 import com.usp.holdinghands.utils.validators.EmailValidator
 import com.usp.holdinghands.utils.validators.PasswordValidator
 import com.usp.holdinghands.utils.validators.Validator
+import com.usp.holdinghands.utils.validators.ValidatorActivity
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(), ValidatorActivity {
 
-    private val validators = mutableListOf<Validator>()
+    override val validators = mutableListOf<Validator>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,27 +24,15 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupButtons() {
-        findViewById<Button>(R.id.bt_login).setOnClickListener {
-            if (validateFields()) {
-                //TODO: Make login
-
-                val intent = Intent(this, NavigationActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK or
-                        Intent.FLAG_ACTIVITY_NEW_TASK
-                startActivity(intent)
-            } else {
-                //TODO: Show error message?
-            }
-        }
-
         findViewById<Button>(R.id.bt_sign_up).setOnClickListener {
             val intent = Intent(this, SignupActivity::class.java)
             startActivity(intent)
         }
+
+        super.setupMainButton(findViewById(R.id.bt_login))
     }
 
-    private fun setupValidators() {
+    override fun setupValidators() {
         val emailTextInputLayout = findViewById<TextInputLayout>(R.id.login_email)
         val emailValidator = EmailValidator(true, emailTextInputLayout)
         emailTextInputLayout.editText!!.onFocusChangeListener = emailValidator
@@ -60,12 +49,11 @@ class LoginActivity : AppCompatActivity() {
         )
     }
 
-    private fun validateFields(): Boolean {
-        var isValid = true
-        validators.forEach {
-            it.validate()
-            if (!it.isValid) isValid = false
-        }
-        return isValid
+    override fun mainButtonClicked() {
+        val intent = Intent(this, NavigationActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                Intent.FLAG_ACTIVITY_CLEAR_TASK or
+                Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
     }
 }

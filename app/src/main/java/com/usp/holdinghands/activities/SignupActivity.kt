@@ -2,7 +2,6 @@ package com.usp.holdinghands.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputLayout
@@ -10,9 +9,9 @@ import com.usp.holdinghands.R
 import com.usp.holdinghands.utils.MaskEditUtil
 import com.usp.holdinghands.utils.validators.*
 
-class SignupActivity : AppCompatActivity() {
+class SignupActivity : AppCompatActivity(), ValidatorActivity {
 
-    private val validators = mutableListOf<Validator>()
+    override val validators = mutableListOf<Validator>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,19 +25,7 @@ class SignupActivity : AppCompatActivity() {
     private fun setupButtons() {
         findViewById<ImageButton>(R.id.back_button).setOnClickListener { finish() }
 
-        findViewById<Button>(R.id.sign_up_button).setOnClickListener {
-            if (validateFields()) {
-                //TODO: Make signup
-
-                val intent = Intent(applicationContext, NavigationActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK or
-                        Intent.FLAG_ACTIVITY_NEW_TASK
-                startActivity(intent)
-            } else {
-                //TODO: Show error message?
-            }
-        }
+        super.setupMainButton(findViewById(R.id.sign_up_button))
     }
 
     private fun setupMasks() {
@@ -52,7 +39,7 @@ class SignupActivity : AppCompatActivity() {
         birthDateTextInputLayout.editText!!.addTextChangedListener(MaskEditUtil.mask(birthDateTextInputLayout.editText!!, MaskEditUtil.DATE_MASK))
     }
 
-    private fun setupValidators() {
+    override fun setupValidators() {
         val nameTextInputLayout = findViewById<TextInputLayout>(R.id.sign_up_name)
         val nameValidator = NameValidator(true, nameTextInputLayout)
         nameTextInputLayout.editText!!.onFocusChangeListener = nameValidator
@@ -106,12 +93,11 @@ class SignupActivity : AppCompatActivity() {
         )
     }
 
-    private fun validateFields(): Boolean {
-        var isValid = true
-        validators.forEach {
-            it.validate()
-            if (!it.isValid) isValid = false
-        }
-        return isValid
+    override fun mainButtonClicked() {
+        val intent = Intent(applicationContext, NavigationActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                Intent.FLAG_ACTIVITY_CLEAR_TASK or
+                Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
     }
 }
