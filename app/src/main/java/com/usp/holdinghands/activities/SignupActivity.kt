@@ -8,8 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputLayout
 import com.usp.holdinghands.R
 import com.usp.holdinghands.utils.MaskEditUtil
+import com.usp.holdinghands.utils.validators.*
 
 class SignupActivity : AppCompatActivity() {
+
+    private val validators = mutableListOf<Validator>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,19 +20,24 @@ class SignupActivity : AppCompatActivity() {
 
         setupButtons()
         setupMasks()
+        setupValidators()
     }
 
     private fun setupButtons() {
         findViewById<ImageButton>(R.id.back_button).setOnClickListener { finish() }
 
         findViewById<Button>(R.id.sign_up_button).setOnClickListener {
-            //TODO: Make signup
+            if (validateFields()) {
+                //TODO: Make signup
 
-            val intent = Intent(applicationContext, NavigationActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
-                    Intent.FLAG_ACTIVITY_CLEAR_TASK or
-                    Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(intent)
+                val intent = Intent(applicationContext, NavigationActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK or
+                        Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+            } else {
+                //TODO: Show error message?
+            }
         }
     }
 
@@ -42,5 +50,68 @@ class SignupActivity : AppCompatActivity() {
 
         val birthDateTextInputLayout = findViewById<TextInputLayout>(R.id.sign_up_birth)
         birthDateTextInputLayout.editText!!.addTextChangedListener(MaskEditUtil.mask(birthDateTextInputLayout.editText!!, MaskEditUtil.DATE_MASK))
+    }
+
+    private fun setupValidators() {
+        val nameTextInputLayout = findViewById<TextInputLayout>(R.id.sign_up_name)
+        val nameValidator = NameValidator(true, nameTextInputLayout)
+        nameTextInputLayout.editText!!.onFocusChangeListener = nameValidator
+
+        val phoneTextInputLayout = findViewById<TextInputLayout>(R.id.sign_up_phone)
+        val phoneValidator = TextValidator(true, phoneTextInputLayout, exactLength = 15)
+        phoneTextInputLayout.editText!!.onFocusChangeListener = phoneValidator
+
+        val dateTextInputLayout = findViewById<TextInputLayout>(R.id.sign_up_birth)
+        val dateValidator = DateValidator(true, dateTextInputLayout)
+        dateTextInputLayout.editText!!.onFocusChangeListener = dateValidator
+
+        val zipTextInputLayout = findViewById<TextInputLayout>(R.id.sign_up_zipcode)
+        val zipValidator = TextValidator(true, zipTextInputLayout, exactLength = 9)
+        zipTextInputLayout.editText!!.onFocusChangeListener = zipValidator
+
+        val addressTextInputLayout = findViewById<TextInputLayout>(R.id.sign_up_address)
+        val addressValidator = TextValidator(true, addressTextInputLayout)
+        addressTextInputLayout.editText!!.onFocusChangeListener = addressValidator
+
+        val numberTextInputLayout = findViewById<TextInputLayout>(R.id.sign_up_address_number)
+        val numberValidator = TextValidator(true, numberTextInputLayout)
+        numberTextInputLayout.editText!!.onFocusChangeListener = numberValidator
+
+        val emailTextInputLayout = findViewById<TextInputLayout>(R.id.sign_up_email)
+        val emailValidator = EmailValidator(true, emailTextInputLayout)
+        emailTextInputLayout.editText!!.onFocusChangeListener = emailValidator
+
+        val passwordTextInputLayout = findViewById<TextInputLayout>(R.id.sign_up_password)
+        val passwordValidator = PasswordValidator(true, passwordTextInputLayout)
+        passwordTextInputLayout.editText!!.onFocusChangeListener = passwordValidator
+
+        val confirmPasswordTextInputLayout =
+            findViewById<TextInputLayout>(R.id.sign_up_confirm_password)
+        val confirmPasswordValidator =
+            PasswordValidator(true, confirmPasswordTextInputLayout, passwordTextInputLayout)
+        confirmPasswordTextInputLayout.editText!!.onFocusChangeListener = confirmPasswordValidator
+
+        validators.addAll(
+            mutableListOf(
+                nameValidator,
+                phoneValidator,
+                dateValidator,
+                zipValidator,
+                addressValidator,
+                numberValidator,
+                emailValidator,
+                passwordValidator,
+                confirmPasswordValidator
+            )
+        )
+    }
+
+    private fun validateFields(): Boolean {
+        var isValid = true
+        validators.forEach {
+            it.validate()
+            if (!it.isValid) isValid = false
+        }
+        return isValid
     }
 }
