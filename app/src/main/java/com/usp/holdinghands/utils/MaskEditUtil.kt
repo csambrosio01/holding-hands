@@ -8,6 +8,7 @@ object MaskEditUtil {
 
     const val PHONE_MASK = "(##) #####-####"
     const val ZIP_MASK = "#####-###"
+    const val DATE_MASK = "##/##/####"
 
     fun mask(editText: EditText, mask: String): TextWatcher {
         return object : TextWatcher {
