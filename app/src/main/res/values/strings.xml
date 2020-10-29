@@ -67,4 +67,5 @@
     <string name="deny_help_button">Rejeitar</string>
     <string name="accept_help_button">Aceitar</string>
     <string name="user_help_needed">Precisa de ajuda para:</string>
+    <string name="accept_help_text">Ajuda aceita com sucesso!</string>
 </resources>
