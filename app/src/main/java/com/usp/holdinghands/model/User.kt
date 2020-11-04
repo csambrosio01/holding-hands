@@ -1,7 +1,12 @@
 package com.usp.holdinghands.model
 
+import androidx.annotation.NonNull
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
 import com.usp.holdinghands.App
 import com.usp.holdinghands.R
+import com.usp.holdinghands.model.entities.BaseEntity
 
 enum class Gender {
     MALE, FEMALE, BOTH
@@ -16,7 +21,39 @@ enum class HelpType(val type: String) {
     ALL(App.context!!.getString(R.string.help_type_all))
 }
 
+class UserConverters {
+    private inline fun <T : Enum<T>> T.toInt(): Int = this.ordinal
+
+    private inline fun <reified T : Enum<T>> Int.toEnum(): T = enumValues<T>()[this]
+
+    @TypeConverter
+    fun genderToTnt(value: Gender) = value.toInt()
+    @TypeConverter
+    fun intToGender(value: Int) = value.toEnum<Gender>()
+
+    @TypeConverter
+    fun storedStringToHelpType(value: String): List<HelpType>? {
+        val dbValues: List<String> =
+            value.split("\\s*,\\s*".toRegex()).toList()
+        val enums: MutableList<HelpType> = ArrayList()
+        for (s in dbValues) enums.add(HelpType.valueOf(s))
+        return enums
+    }
+
+    @TypeConverter
+    fun helpTypesToStoredString(cl: List<HelpType>): String? {
+        var value = ""
+        for (helpType in cl) value += helpType.name + ","
+        val a = value.dropLast(1)
+        return a
+    }
+}
+
+@Entity(tableName = "user")
 data class User(
+    @NonNull
+    @PrimaryKey(autoGenerate = true)
+    override val id: Int,
     val name: String,
     val age: Int,
     val distance: Double,
@@ -25,7 +62,7 @@ data class User(
     val gender: Gender,
     val profession: String,
     val numberOfHelps: Int
-) {
+) : BaseEntity() {
     override fun toString(): String {
         return "{name: ${this.name}, age: ${this.age}, name: ${this.distance}, name: ${this.distance}, helpTypes: ${this.getHelpAsString()}, image: ${this.image}, gender: ${this.gender}, profession: ${this.profession}, numberOfHelps: ${this.numberOfHelps}}"
     }
