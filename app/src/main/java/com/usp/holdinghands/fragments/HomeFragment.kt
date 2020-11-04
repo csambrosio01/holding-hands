@@ -17,6 +17,7 @@ import com.usp.holdinghands.R
 import com.usp.holdinghands.adapter.UserAdapter
 import com.usp.holdinghands.controller.UserController
 import com.usp.holdinghands.model.User
+import kotlinx.coroutines.*
 
 const val FILTER_ACTIVITY_REQUEST_CODE = 10544
 
@@ -57,8 +58,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun configureRecyclerView() {
-        users.addAll(userController.getUsers())
-
         viewManager = LinearLayoutManager(activity!!.applicationContext)
         viewAdapter = UserAdapter(users, activity!!.applicationContext)
 
@@ -66,6 +65,11 @@ class HomeFragment : Fragment() {
             setHasFixedSize(true)
             layoutManager = viewManager
             adapter = viewAdapter
+        }
+
+        CoroutineScope(Dispatchers.Main + Job()).launch {
+            users.addAll(userController.getUsers())
+            notifyDataSetChanged()
         }
     }
 
