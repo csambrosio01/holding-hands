@@ -41,10 +41,9 @@ class UserController(val context: Context) {
 
     fun makeSearch(userFilter: UserFilter): List<User> {
         val users = getUsers()
-        val a = users.filter { user ->
+        return users.filter { user ->
             shouldIncludeUser(userFilter, user)
         }
-        return a
     }
 
     private fun shouldIncludeUser(userFilter: UserFilter, user: User): Boolean {
