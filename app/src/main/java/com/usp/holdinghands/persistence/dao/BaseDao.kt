@@ -6,8 +6,7 @@ import androidx.sqlite.db.SupportSQLiteQuery
 import com.usp.holdinghands.model.entities.BaseEntity
 
 abstract class BaseDao<T : BaseEntity>(
-    private val tableName: String,
-    private val roomDatabase: RoomDatabase
+    private val tableName: String
 ) {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
