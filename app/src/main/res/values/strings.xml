@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Holding Hands</string>
     <string name="holding_hands">Holding Hands</string>
-    <string name="search_header">Sua pesquisa</string>
+    <string name="empty_view">Nenhum resultado encontrado.</string>
     <string name="search_edit_text">Pesquisar por nome</string>
     <string name="search_filter">Filtrar o conteúdo</string>
     <string name="back_button">Botão voltar</string>
