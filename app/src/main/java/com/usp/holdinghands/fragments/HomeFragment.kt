@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -50,7 +51,7 @@ class HomeFragment : Fragment() {
             if (data != null && data.hasExtra(FILTERED_USERS)) {
                 users.clear()
                 users.addAll(userController.fromJsonString(data.extras!!.getString(FILTERED_USERS)!!))
-                viewAdapter.notifyDataSetChanged()
+                notifyDataSetChanged()
             }
         }
     }
@@ -72,6 +73,18 @@ class HomeFragment : Fragment() {
         view!!.findViewById<ImageButton>(R.id.search_filter).setOnClickListener {
             val intent = Intent(activity!!, FilterActivity::class.java)
             startActivityForResult(intent, FILTER_ACTIVITY_REQUEST_CODE)
+        }
+    }
+
+    private fun notifyDataSetChanged() {
+        val emptyView = view!!.findViewById<TextView>(R.id.empty_view)
+        if (users.isEmpty()) {
+            recyclerView.visibility = View.GONE
+            emptyView.visibility = View.VISIBLE
+        } else {
+            emptyView.visibility = View.GONE
+            recyclerView.visibility = View.VISIBLE
+            viewAdapter.notifyDataSetChanged()
         }
     }
 
