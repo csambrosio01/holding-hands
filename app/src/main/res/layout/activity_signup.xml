@@ -195,7 +195,6 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:hint="@string/sign_up_complement"
-                app:layout_constraintBottom_toBottomOf="@id/sign_up_address_number"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/sign_up_address_number"
                 app:layout_constraintTop_toTopOf="@id/sign_up_address_number">
@@ -213,7 +212,7 @@
                 android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/sign_up_address_complement" />
+                app:layout_constraintTop_toBottomOf="@id/sign_up_address_number" />
 
             <TextView
                 android:id="@+id/sign_up_login_information"
