@@ -9,4 +9,6 @@
     <color name="black">#000000</color>
     <color name="dimgray_transparant">#CC696969</color>
     <color name="white">#FFFFFF</color>
+    <color name="pigmentIndigo">#3700A5</color>
+    <color name="kournikova">#FFE675</color>
 </resources>

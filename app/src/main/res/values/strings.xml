@@ -55,6 +55,7 @@
     <string name="sign_up_name">Nome completo</string>
     <string name="sign_up_phone">Celular</string>
     <string name="sign_up_birth">Data de nascimento</string>
+    <string name="sign_up_profession">Profissão</string>
     <string name="address_information">Endereço</string>
     <string name="sign_up_cep">CEP</string>
     <string name="sign_up_number">Número</string>
@@ -74,4 +75,9 @@
     <string name="wrong_max_length">O campo deve possuir no máximo %1$s caracteres</string>
     <string name="wrong_min_max_length">O campo deve possuir entre %1$s e %2$s caracteres</string>
     <string name="wrong_exact_length">O campo deve possuir exatamente %1$s caracteres</string>
+    <string name="card_help">Ajudas:</string>
+    <string name="volunteer_profile">Voluntário:</string>
+    <string name="toggle_volunteer">Sim</string>
+    <string name="toggle_supported">Não</string>
+    <string name="profile_help">Tipos de ajuda</string>
 </resources>
