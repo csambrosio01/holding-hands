@@ -80,4 +80,6 @@
     <string name="toggle_volunteer">Sim</string>
     <string name="toggle_supported">Não</string>
     <string name="profile_help">Tipos de ajuda</string>
+    <string name="deny_button">Rejeitar</string>
+    <string name="accept_button">Aceitar</string>
 </resources>
