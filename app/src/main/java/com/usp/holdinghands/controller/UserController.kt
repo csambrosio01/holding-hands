@@ -21,6 +21,9 @@ class UserController(val context: Context) {
     private val listUserType: Type = object : TypeToken<List<User>>() {}.type
     private val userDao: UserDao = AppDatabase.getDatabase(context).userDao()
 
+    val sharedPreferences = context.getSharedPreferences("", Context.MODE_PRIVATE)
+    val userKey = "userInfo"
+
     suspend fun getUsers(): List<User> = withContext(Dispatchers.IO) {
         var value: List<User>
         value = userDao.getAll()
@@ -35,6 +38,33 @@ class UserController(val context: Context) {
         value.sortedBy { it.distance }
     }
 
+    fun setLoggedUser() {
+        val user = User(
+            1,
+            "Heloise Cavalcante",
+            35,
+            10.0,
+            mutableListOf(HelpType.TYPE_1, HelpType.TYPE_5),
+            "heloise",
+            Gender.FEMALE,
+            "Desenvolvedora",
+            4,
+            "teste@teste.com",
+            "(11) 12345 6789",
+            "01/02/1995",
+            "Rua dos Testes, São Paulo - São Paulo"
+        )
+
+        sharedPreferences.edit().putString(userKey, toJsonUser(user)).apply()
+    }
+
+    fun getLoggedUser(): User {
+        //When integration with API is complete this logic will change to return an exception if there is no logged user
+        setLoggedUser()
+
+        return fromJsonStringUser(sharedPreferences.getString(userKey, null))
+    }
+
     fun toJson(users: List<User>): String {
         return gson.toJson(users, listUserType)
     }
@@ -47,7 +77,7 @@ class UserController(val context: Context) {
         return gson.fromJson(jsonString, listUserType)
     }
 
-    fun fromJsonStringUser(jsonString: String): User {
+    fun fromJsonStringUser(jsonString: String?): User {
         return gson.fromJson(jsonString, User::class.java)
     }
 
