@@ -9,7 +9,7 @@ import com.usp.holdinghands.model.User
 import com.usp.holdinghands.model.UserConverters
 import com.usp.holdinghands.persistence.dao.UserDao
 
-@Database(entities = [User::class], version = 1, exportSchema = false)
+@Database(entities = [User::class], version = 2, exportSchema = false)
 @TypeConverters(UserConverters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
@@ -24,7 +24,9 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "database"
-                ).build()
+                )
+                    .fallbackToDestructiveMigration()
+                    .build()
                 INSTANCE = instance
                 instance
             }

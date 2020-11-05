@@ -61,18 +61,22 @@ data class User(
     val image: String,
     val gender: Gender,
     val profession: String,
-    val numberOfHelps: Int
+    val numberOfHelps: Int,
+    val email: String? = null,
+    val phone: String? = null,
+    val birth: String? = null,
+    val address: String? = null
 ) : BaseEntity() {
     override fun toString(): String {
         return "{name: ${this.name}, age: ${this.age}, name: ${this.distance}, name: ${this.distance}, helpTypes: ${this.getHelpAsString()}, image: ${this.image}, gender: ${this.gender}, profession: ${this.profession}, numberOfHelps: ${this.numberOfHelps}}"
     }
 }
 
-fun User.getHelpAsString(): String {
+fun User.getHelpAsString(withHeader: Boolean = true): String {
     val sb = StringBuilder()
-    sb.append(App.context?.resources?.getText(R.string.user_help_types_header))
+    if (withHeader) sb.append(App.context?.resources?.getText(R.string.user_help_types_header))
     for (value in helpTypes) {
-        sb.append(" - ${value.type}\n")
+        sb.append("- ${value.type}\n")
     }
     return sb.toString().trim()
 }
