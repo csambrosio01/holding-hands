@@ -52,6 +52,10 @@ class SignupActivity : AppCompatActivity(), ValidatorActivity {
         val dateValidator = DateValidator(true, dateTextInputLayout)
         dateTextInputLayout.editText!!.onFocusChangeListener = dateValidator
 
+        val professionTextInputLayout = findViewById<TextInputLayout>(R.id.sign_up_profession)
+        val professionValidator = TextValidator(true, professionTextInputLayout)
+        professionTextInputLayout.editText!!.onFocusChangeListener = professionValidator
+
         val zipTextInputLayout = findViewById<TextInputLayout>(R.id.sign_up_zipcode)
         val zipValidator = TextValidator(true, zipTextInputLayout, exactLength = 9)
         zipTextInputLayout.editText!!.onFocusChangeListener = zipValidator
@@ -83,6 +87,7 @@ class SignupActivity : AppCompatActivity(), ValidatorActivity {
                 nameValidator,
                 phoneValidator,
                 dateValidator,
+                professionValidator,
                 zipValidator,
                 addressValidator,
                 numberValidator,
