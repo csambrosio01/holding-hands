@@ -82,4 +82,6 @@
     <string name="profile_help">Tipos de ajuda</string>
     <string name="deny_button">Rejeitar</string>
     <string name="accept_button">Aceitar</string>
+    <string name="help_accepted">Ajuda aceita com sucesso!</string>
+    <string name="help_denied">Ajuda recusada com sucesso!</string>
 </resources>

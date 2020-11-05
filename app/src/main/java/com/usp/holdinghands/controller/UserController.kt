@@ -88,6 +88,11 @@ class UserController(val context: Context) {
         }
     }
 
+    suspend fun getHelpRequests(): List<User> {
+        val users = getUsers()
+        return users.filter { it.sentRequest ?: false }
+    }
+
     private fun shouldIncludeUser(userFilter: UserFilter, user: User): Boolean {
         var isValid = true
 
