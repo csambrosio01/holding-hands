@@ -273,13 +273,52 @@
                     app:layout_constraintTop_toBottomOf="@id/profile_birth_info_title" />
 
                 <ImageView
+                    android:id="@+id/profile_profession_info_icon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/ic_baseline_profession"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/profile_birth_info_icon"
+                    app:tint="@color/black" />
+
+                <TextView
+                    android:id="@+id/profile_profession_info_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginLeft="12dp"
+                    android:fontFamily="@font/nunito_bold"
+                    android:text="@string/sign_up_profession"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/profile_profession_info_icon"
+                    app:layout_constraintTop_toTopOf="@id/profile_profession_info_icon" />
+
+                <TextView
+                    android:id="@+id/profile_profession_info"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginLeft="12dp"
+                    android:fontFamily="@font/nunito_regular"
+                    android:text="@string/sign_up_profession"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@id/profile_profession_info_icon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/profile_profession_info_icon"
+                    app:layout_constraintTop_toBottomOf="@id/profile_profession_info_title" />
+
+                <ImageView
                     android:id="@+id/profile_address_info_icon"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginTop="16dp"
                     android:src="@drawable/ic_map_marker"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/profile_birth_info_icon"
+                    app:layout_constraintTop_toBottomOf="@id/profile_profession_info_icon"
                     app:tint="@color/black" />
 
                 <TextView
