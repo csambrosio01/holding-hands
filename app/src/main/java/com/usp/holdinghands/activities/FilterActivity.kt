@@ -18,6 +18,8 @@ import com.usp.holdinghands.controller.UserController
 import com.usp.holdinghands.model.Gender
 import com.usp.holdinghands.model.HelpType
 import com.usp.holdinghands.model.UserFilter
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 const val FILTERED_USERS = "filtered_users"
 
@@ -113,14 +115,17 @@ class FilterActivity : AppCompatActivity() {
 
     private fun configureFilterButton() {
         findViewById<Button>(R.id.filter_button).setOnClickListener {
-            setResult(
-                Activity.RESULT_OK,
-                Intent().putExtra(
-                    FILTERED_USERS,
-                    userController.toJson(userController.makeSearch(makeUserFilter()))
+            GlobalScope.launch {
+                val users = userController.makeSearch(makeUserFilter())
+                setResult(
+                    Activity.RESULT_OK,
+                    Intent().putExtra(
+                        FILTERED_USERS,
+                        userController.toJson(users)
+                    )
                 )
-            )
-            finish()
+                finish()
+            }
         }
     }
 

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,7 @@ import com.usp.holdinghands.R
 import com.usp.holdinghands.adapter.UserAdapter
 import com.usp.holdinghands.controller.UserController
 import com.usp.holdinghands.model.User
+import kotlinx.coroutines.*
 
 const val FILTER_ACTIVITY_REQUEST_CODE = 10544
 
@@ -50,14 +52,12 @@ class HomeFragment : Fragment() {
             if (data != null && data.hasExtra(FILTERED_USERS)) {
                 users.clear()
                 users.addAll(userController.fromJsonString(data.extras!!.getString(FILTERED_USERS)!!))
-                viewAdapter.notifyDataSetChanged()
+                notifyDataSetChanged()
             }
         }
     }
 
     private fun configureRecyclerView() {
-        users.addAll(userController.getUsers())
-
         viewManager = LinearLayoutManager(activity!!.applicationContext)
         viewAdapter = UserAdapter(users, activity!!.applicationContext)
 
@@ -66,12 +66,29 @@ class HomeFragment : Fragment() {
             layoutManager = viewManager
             adapter = viewAdapter
         }
+
+        CoroutineScope(Dispatchers.Main + Job()).launch {
+            users.addAll(userController.getUsers())
+            notifyDataSetChanged()
+        }
     }
 
     private fun configureFilterButton() {
         view!!.findViewById<ImageButton>(R.id.search_filter).setOnClickListener {
             val intent = Intent(activity!!, FilterActivity::class.java)
             startActivityForResult(intent, FILTER_ACTIVITY_REQUEST_CODE)
+        }
+    }
+
+    private fun notifyDataSetChanged() {
+        val emptyView = view!!.findViewById<TextView>(R.id.empty_view)
+        if (users.isEmpty()) {
+            recyclerView.visibility = View.GONE
+            emptyView.visibility = View.VISIBLE
+        } else {
+            emptyView.visibility = View.GONE
+            recyclerView.visibility = View.VISIBLE
+            viewAdapter.notifyDataSetChanged()
         }
     }
 

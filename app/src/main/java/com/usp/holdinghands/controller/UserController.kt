@@ -8,6 +8,10 @@ import com.usp.holdinghands.model.Gender
 import com.usp.holdinghands.model.HelpType
 import com.usp.holdinghands.model.User
 import com.usp.holdinghands.model.UserFilter
+import com.usp.holdinghands.persistence.AppDatabase
+import com.usp.holdinghands.persistence.dao.UserDao
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.InputStreamReader
 import java.lang.reflect.Type
 
@@ -15,12 +19,20 @@ class UserController(val context: Context) {
 
     private val gson = Gson()
     private val listUserType: Type = object : TypeToken<List<User>>() {}.type
+    private val userDao: UserDao = AppDatabase.getDatabase(context).userDao()
 
-    fun getUsers(): List<User> {
-        return gson.fromJson(
-            InputStreamReader(context.resources.openRawResource(R.raw.users_mock)),
-            listUserType
-        )
+    suspend fun getUsers(): List<User> = withContext(Dispatchers.IO) {
+        var value: List<User>
+        value = userDao.getAll()
+        if (value.isEmpty()) {
+            value = gson.fromJson(
+                InputStreamReader(context.resources.openRawResource(R.raw.users_mock)),
+                listUserType
+            )
+            userDao.insert(value)
+            value = userDao.getAll()
+        }
+        value.sortedBy { it.distance }
     }
 
     fun toJson(users: List<User>): String {
@@ -39,12 +51,11 @@ class UserController(val context: Context) {
         return gson.fromJson(jsonString, User::class.java)
     }
 
-    fun makeSearch(userFilter: UserFilter): List<User> {
+    suspend fun makeSearch(userFilter: UserFilter): List<User> {
         val users = getUsers()
-        val a = users.filter { user ->
+        return users.filter { user ->
             shouldIncludeUser(userFilter, user)
         }
-        return a
     }
 
     private fun shouldIncludeUser(userFilter: UserFilter, user: User): Boolean {
