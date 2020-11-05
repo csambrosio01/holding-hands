@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchActivity">
+    tools:context=".fragments.HomeFragment">
 
     <EditText
         android:id="@+id/search_edit_text"
@@ -12,18 +12,18 @@
         android:layout_height="42dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="4dp"
         android:layout_marginRight="4dp"
-        android:layout_marginTop="24dp"
-        android:padding="10dp"
-        android:inputType="text"
-        android:importantForAutofill="no"
-        android:hint="@string/search_edit_text"
         android:background="@drawable/et_search_custom"
+        android:hint="@string/search_edit_text"
+        android:importantForAutofill="no"
+        android:inputType="text"
         android:lines="1"
+        android:padding="10dp"
+        app:layout_constraintEnd_toStartOf="@id/search_filter"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/search_filter"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/search_filter"
@@ -31,22 +31,21 @@
         android:layout_height="42dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:contentDescription="@string/search_filter"
         android:background="@null"
+        android:contentDescription="@string/search_filter"
         android:src="@drawable/ic_filter_solid"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/search_edit_text"
         app:layout_constraintBottom_toBottomOf="@+id/search_edit_text"
-        app:layout_constraintStart_toEndOf="@+id/search_edit_text" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/search_edit_text"
+        app:layout_constraintTop_toTopOf="@+id/search_edit_text" />
 
     <View
         android:id="@+id/search_divider"
+        style="@style/Divider.Horizontal"
         android:layout_marginTop="12dp"
-        app:layout_constraintTop_toBottomOf="@id/search_edit_text"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        style="@style/Divider.Horizontal"/>
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_edit_text" />
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -55,25 +54,22 @@
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:scrollbars="vertical"
-        app:layout_constraintTop_toBottomOf="@id/search_divider"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_divider" />
 
     <TextView
         android:id="@+id/empty_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
         android:fontFamily="sans-serif-black"
         android:text="@string/empty_view"
         android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:visibility="gone"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
