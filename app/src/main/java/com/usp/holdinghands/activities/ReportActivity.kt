@@ -1,5 +1,6 @@
 package com.usp.holdinghands.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -20,6 +21,7 @@ class ReportActivity : AppCompatActivity() {
     private fun configureButton() {
         findViewById<Button>(R.id.send_report).setOnClickListener {
             Toast.makeText(applicationContext, applicationContext.getString(R.string.report_sucessful_message), Toast.LENGTH_LONG).show()
+            finish()
         }
     }
 
