@@ -90,4 +90,7 @@
     <string name="report_fake">Está fingindo ser outra pessoa</string>
     <string name="report_hacked">Parece que a conta foi invadida</string>
     <string name="report_abusive">Conteúdo abusivo ou de propagação de ódio</string>
+    <string name="edit_profile">Edite suas informações</string>
+    <string name="edit_save">Salvar</string>
+    <string name="edit_save_success_message">Informações salvas com sucesso!</string>
 </resources>
