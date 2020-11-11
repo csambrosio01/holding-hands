@@ -1,12 +1,15 @@
 package com.usp.holdinghands.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.usp.holdinghands.R
+import com.usp.holdinghands.activities.EditProfileActivity
 import com.usp.holdinghands.controller.UserController
 import com.usp.holdinghands.model.User
 import com.usp.holdinghands.model.getHelpAsString
@@ -24,6 +27,7 @@ class UserProfileFragment : Fragment() {
         user = userController.getLoggedUser()
 
         setupViews()
+        configureButton()
     }
 
     override fun onCreateView(
@@ -49,6 +53,13 @@ class UserProfileFragment : Fragment() {
         view!!.findViewById<TextView>(R.id.profile_profession_info).text = user.profession
         view!!.findViewById<TextView>(R.id.profile_address_info).text = user.address
         view!!.findViewById<TextView>(R.id.profile_user_help_types).text = user.getHelpAsString(false)
+    }
+
+    private fun configureButton() {
+        view!!.findViewById<ImageButton>(R.id.profile_edit_button).setOnClickListener {
+            val intent = Intent(activity!!, EditProfileActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     companion object {
