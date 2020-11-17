@@ -73,13 +73,13 @@ class HelpFragment : Fragment(), OnItemClickListener {
 
     override fun onAccept(position: Int) {
         users.removeAt(position)
-        viewAdapter.notifyItemRemoved(position)
+        notifyDataSetChanged()
         Toast.makeText(activity!!.applicationContext, activity!!.applicationContext.getString(R.string.help_accepted), Toast.LENGTH_LONG).show()
     }
 
     override fun onDeny(position: Int) {
         users.removeAt(position)
-        viewAdapter.notifyItemRemoved(position)
+        notifyDataSetChanged()
         Toast.makeText(activity!!.applicationContext, activity!!.applicationContext.getString(R.string.help_denied), Toast.LENGTH_LONG).show()
     }
 
