@@ -14,10 +14,21 @@ import com.usp.holdinghands.activities.UserActivity
 import com.usp.holdinghands.controller.UserController
 import com.usp.holdinghands.model.User
 import com.usp.holdinghands.model.getHelpAsString
+import kotlinx.android.synthetic.main.layout_user_card.view.*
 
 const val USER = "user"
 
-class UserAdapter(private val users: MutableList<User>, private val context: Context) :
+interface OnItemClickListener {
+    fun onAccept(position: Int)
+    fun onDeny(position: Int)
+}
+
+class UserAdapter(
+    private val users: MutableList<User>,
+    private val context: Context,
+    private val shouldHideHelpButtons: Boolean = true,
+    private val listener: OnItemClickListener? = null
+) :
     RecyclerView.Adapter<UserAdapter.ConstraintLayoutViewHolder>() {
 
     inner class ConstraintLayoutViewHolder(val constraintLayout: ConstraintLayout) :
@@ -65,6 +76,22 @@ class UserAdapter(private val users: MutableList<User>, private val context: Con
             holder.constraintLayout.context.packageName
         )
         holder.constraintLayout.findViewById<ImageView>(R.id.user_image).setImageResource(imageId)
+
+        if (shouldHideHelpButtons) {
+            holder.constraintLayout.findViewById<ConstraintLayout>(R.id.help_buttons).visibility =
+                View.GONE
+        } else {
+            holder.constraintLayout.findViewById<ConstraintLayout>(R.id.help_buttons).visibility =
+                View.VISIBLE
+
+            holder.constraintLayout.button_accept.setOnClickListener {
+                listener?.onAccept(position)
+            }
+
+            holder.constraintLayout.button_deny.setOnClickListener {
+                listener?.onDeny(position)
+            }
+        }
     }
 
     override fun getItemCount(): Int = users.size

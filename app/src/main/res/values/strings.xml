@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Holding Hands</string>
     <string name="holding_hands">Holding Hands</string>
-    <string name="empty_view">Nenhum resultado encontrado.</string>
+    <string name="empty_view">Nenhum resultado encontrado</string>
     <string name="search_edit_text">Pesquisar por nome</string>
     <string name="search_filter">Filtrar o conteúdo</string>
     <string name="back_button">Botão voltar</string>
@@ -80,4 +80,8 @@
     <string name="toggle_volunteer">Sim</string>
     <string name="toggle_supported">Não</string>
     <string name="profile_help">Tipos de ajuda</string>
+    <string name="deny_button">Rejeitar</string>
+    <string name="accept_button">Aceitar</string>
+    <string name="help_accepted">Ajuda aceita com sucesso!</string>
+    <string name="help_denied">Ajuda recusada com sucesso!</string>
 </resources>

@@ -11,4 +11,6 @@
     <color name="white">#FFFFFF</color>
     <color name="pigmentIndigo">#3700A5</color>
     <color name="kournikova">#FFE675</color>
+    <color name="red">#FF0000</color>
+    <color name="green">#00FF00</color>
 </resources>
