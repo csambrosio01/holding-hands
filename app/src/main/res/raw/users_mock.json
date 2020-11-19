@@ -10,7 +10,9 @@
     "image": "heloise",
     "gender": "FEMALE",
     "profession": "Desenvolvedora",
-    "numberOfHelps": 4
+    "numberOfHelps": 4,
+    "email": "heloise@teste.com",
+    "phone": "11999999999"
   },
   {
     "name": "Mario da Silva",
@@ -23,7 +25,9 @@
     "gender": "MALE",
     "profession": "Analista de negócios",
     "numberOfHelps": 3,
-    "sentRequest": true
+    "sentRequest": true,
+    "email": "mario@teste.com",
+    "phone": "11999999999"
   },
   {
     "name": "Ruan Pereira",
@@ -35,7 +39,9 @@
     "image": "ruan",
     "gender": "MALE",
     "profession": "Estudante",
-    "numberOfHelps": 7
+    "numberOfHelps": 7,
+    "email": "ruan@teste.com",
+    "phone": "11999999999"
   },
   {
     "name": "Beatriz Aparecida de Melo",
@@ -49,7 +55,9 @@
     "image": "beatriz",
     "gender": "FEMALE",
     "profession": "Estudante",
-    "numberOfHelps": 1
+    "numberOfHelps": 1,
+    "email": "beatriz@teste.com",
+    "phone": "11999999999"
   },
   {
     "name": "Rafael Barreto de Souza",
@@ -63,7 +71,9 @@
     "gender": "MALE",
     "profession": "Motorista",
     "numberOfHelps": 9,
-    "sentRequest": true
+    "sentRequest": true,
+    "email": "rafael@teste.com",
+    "phone": "11999999999"
   },
   {
     "name": "Isabela Rezende",
@@ -77,7 +87,9 @@
     "gender": "FEMALE",
     "profession": "Assistende de RH",
     "numberOfHelps": 14,
-    "sentRequest": true
+    "sentRequest": true,
+    "email": "isabela@teste.com",
+    "phone": "11999999999"
   },
   {
     "name": "Gabriel Santos",
@@ -93,7 +105,9 @@
     "image": "gabriel",
     "gender": "MALE",
     "profession": "Desenvolvedor",
-    "numberOfHelps": 25
+    "numberOfHelps": 25,
+    "email": "gabriel@teste.com",
+    "phone": "11999999999"
   },
   {
     "name": "Amanda Gomes de Albuquerque",
@@ -107,7 +121,9 @@
     "gender": "FEMALE",
     "profession": "Advogada",
     "numberOfHelps": 41,
-    "sentRequest": true
+    "sentRequest": true,
+    "email": "amanda@teste.com",
+    "phone": "11999999999"
   },
   {
     "name": "Julio Assunção",
@@ -119,7 +135,9 @@
     "image": "julio",
     "gender": "MALE",
     "profession": "Advogado",
-    "numberOfHelps": 2
+    "numberOfHelps": 2,
+    "email": "julio@teste.com",
+    "phone": "11999999999"
   },
   {
     "name": "Julia Rodrigues",
@@ -133,7 +151,9 @@
     "image": "julia",
     "gender": "FEMALE",
     "profession": "Mestra de obras",
-    "numberOfHelps": 10
+    "numberOfHelps": 10,
+    "email": "julia@teste.com",
+    "phone": "11999999999"
   },
   {
     "name": "Ana dos Santos",
@@ -146,7 +166,9 @@
     "image": "ana",
     "gender": "FEMALE",
     "profession": "Professora",
-    "numberOfHelps": 2
+    "numberOfHelps": 2,
+    "email": "ana@teste.com",
+    "phone": "11999999999"
   },
   {
     "name": "Marcos Oliveira",
@@ -159,7 +181,9 @@
     "gender": "MALE",
     "profession": "Servente de pedreiro",
     "numberOfHelps": 50,
-    "sentRequest": true
+    "sentRequest": true,
+    "email": "marcos@teste.com",
+    "phone": "11999999999"
   },
   {
     "name": "Lucas Sanchez",
@@ -171,6 +195,8 @@
     "image": "lucas",
     "gender": "MALE",
     "profession": "Professor",
-    "numberOfHelps":15
+    "numberOfHelps":15,
+    "email": "lucas@teste.com",
+    "phone": "11999999999"
   }
 ]
