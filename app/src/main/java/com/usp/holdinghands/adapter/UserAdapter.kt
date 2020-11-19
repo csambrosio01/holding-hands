@@ -26,7 +26,7 @@ interface OnItemClickListener {
 class UserAdapter(
     private val users: MutableList<User>,
     private val context: Context,
-    private val shouldHideHelpButtons: Boolean = true,
+    private val isHelpView: Boolean = false,
     private val listener: OnItemClickListener? = null
 ) :
     RecyclerView.Adapter<UserAdapter.ConstraintLayoutViewHolder>() {
@@ -77,10 +77,7 @@ class UserAdapter(
         )
         holder.constraintLayout.findViewById<ImageView>(R.id.user_image).setImageResource(imageId)
 
-        if (shouldHideHelpButtons) {
-            holder.constraintLayout.findViewById<ConstraintLayout>(R.id.help_buttons).visibility =
-                View.GONE
-        } else {
+        if (isHelpView) {
             holder.constraintLayout.findViewById<ConstraintLayout>(R.id.help_buttons).visibility =
                 View.VISIBLE
 
@@ -91,6 +88,9 @@ class UserAdapter(
             holder.constraintLayout.button_deny.setOnClickListener {
                 listener?.onDeny(position)
             }
+        } else {
+            holder.constraintLayout.findViewById<ConstraintLayout>(R.id.help_buttons).visibility =
+                View.GONE
         }
     }
 
