@@ -23,6 +23,8 @@ interface OnItemClickListener {
     fun onDeny(position: Int)
 }
 
+const val IS_HELP_VIEW = "is_help_view"
+
 class UserAdapter(
     private val users: MutableList<User>,
     private val context: Context,
@@ -39,6 +41,7 @@ class UserAdapter(
                 USER,
                 UserController(context).toJsonUser(users[adapterPosition])
             )
+                .putExtra(IS_HELP_VIEW, isHelpView)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             context.startActivity(intent)
         }
