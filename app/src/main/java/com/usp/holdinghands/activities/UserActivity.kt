@@ -1,5 +1,6 @@
 package com.usp.holdinghands.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.*
@@ -61,7 +62,8 @@ class UserActivity : AppCompatActivity() {
         findViewById<ImageButton>(R.id.back_button).setOnClickListener { finish() }
 
         findViewById<ImageButton>(R.id.report_button).setOnClickListener {
-            Toast.makeText(applicationContext, applicationContext.getString(R.string.report_sucessful_message), Toast.LENGTH_LONG).show()
+            val intent = Intent(this, ReportUserActivity::class.java)
+            startActivity(intent)
         }
 
         findViewById<Button>(R.id.user_send_invitation).setOnClickListener {

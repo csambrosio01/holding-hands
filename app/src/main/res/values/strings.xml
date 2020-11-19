@@ -84,4 +84,11 @@
     <string name="accept_button">Aceitar</string>
     <string name="help_accepted">Ajuda aceita com sucesso!</string>
     <string name="help_denied">Ajuda recusada com sucesso!</string>
+    <string name="report_title">Ajude-nos a entender o problema. Qual o motivo da sua denúncia?</string>
+    <string name="report_button">Denunciar</string>
+    <string name="report_spam">É suspeito ou está enviando spam</string>
+    <string name="report_fake">Está fingindo ser outra pessoa</string>
+    <string name="report_hacked">Parece que a conta foi invadida</string>
+    <string name="report_abusive">Conteúdo abusivo ou de propagação de ódio</string>
+    <string name="report_other">Outro</string>
 </resources>
