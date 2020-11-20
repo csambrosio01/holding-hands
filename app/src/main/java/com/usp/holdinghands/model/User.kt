@@ -66,7 +66,8 @@ data class User(
     val phone: String? = null,
     val birth: String? = null,
     val address: String? = null,
-    val sentRequest: Boolean? = null
+    val sentRequest: Boolean? = null,
+    val rating: Double = 5.0
 ) : BaseEntity() {
     override fun toString(): String {
         return "{name: ${this.name}, age: ${this.age}, name: ${this.distance}, name: ${this.distance}, helpTypes: ${this.getHelpAsString()}, image: ${this.image}, gender: ${this.gender}, profession: ${this.profession}, numberOfHelps: ${this.numberOfHelps}}"

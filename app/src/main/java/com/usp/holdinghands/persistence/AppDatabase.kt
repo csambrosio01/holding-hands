@@ -9,7 +9,7 @@ import com.usp.holdinghands.model.User
 import com.usp.holdinghands.model.UserConverters
 import com.usp.holdinghands.persistence.dao.UserDao
 
-@Database(entities = [User::class], version = 3, exportSchema = false)
+@Database(entities = [User::class], version = 4, exportSchema = false)
 @TypeConverters(UserConverters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
