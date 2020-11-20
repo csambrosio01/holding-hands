@@ -12,7 +12,8 @@
     "profession": "Desenvolvedora",
     "numberOfHelps": 4,
     "email": "heloise@teste.com",
-    "phone": "11999999999"
+    "phone": "11999999999",
+    "rating": 5.0
   },
   {
     "name": "Mario da Silva",
@@ -27,7 +28,8 @@
     "numberOfHelps": 3,
     "sentRequest": true,
     "email": "mario@teste.com",
-    "phone": "11999999999"
+    "phone": "11999999999",
+    "rating": 3.9
   },
   {
     "name": "Ruan Pereira",
@@ -41,7 +43,8 @@
     "profession": "Estudante",
     "numberOfHelps": 7,
     "email": "ruan@teste.com",
-    "phone": "11999999999"
+    "phone": "11999999999",
+    "rating": 5.0
   },
   {
     "name": "Beatriz Aparecida de Melo",
@@ -57,7 +60,8 @@
     "profession": "Estudante",
     "numberOfHelps": 1,
     "email": "beatriz@teste.com",
-    "phone": "11999999999"
+    "phone": "11999999999",
+    "rating": 4.0
   },
   {
     "name": "Rafael Barreto de Souza",
@@ -73,7 +77,8 @@
     "numberOfHelps": 9,
     "sentRequest": true,
     "email": "rafael@teste.com",
-    "phone": "11999999999"
+    "phone": "11999999999",
+    "rating": 4.9
   },
   {
     "name": "Isabela Rezende",
@@ -89,7 +94,8 @@
     "numberOfHelps": 14,
     "sentRequest": true,
     "email": "isabela@teste.com",
-    "phone": "11999999999"
+    "phone": "11999999999",
+    "rating": 4.9
   },
   {
     "name": "Gabriel Santos",
@@ -107,7 +113,8 @@
     "profession": "Desenvolvedor",
     "numberOfHelps": 25,
     "email": "gabriel@teste.com",
-    "phone": "11999999999"
+    "phone": "11999999999",
+    "rating": 2.8
   },
   {
     "name": "Amanda Gomes de Albuquerque",
@@ -123,7 +130,8 @@
     "numberOfHelps": 41,
     "sentRequest": true,
     "email": "amanda@teste.com",
-    "phone": "11999999999"
+    "phone": "11999999999",
+    "rating": 5.0
   },
   {
     "name": "Julio Assunção",
@@ -137,7 +145,8 @@
     "profession": "Advogado",
     "numberOfHelps": 2,
     "email": "julio@teste.com",
-    "phone": "11999999999"
+    "phone": "11999999999",
+    "rating": 5.0
   },
   {
     "name": "Julia Rodrigues",
@@ -153,7 +162,8 @@
     "profession": "Mestra de obras",
     "numberOfHelps": 10,
     "email": "julia@teste.com",
-    "phone": "11999999999"
+    "phone": "11999999999",
+    "rating": 4.5
   },
   {
     "name": "Ana dos Santos",
@@ -168,7 +178,8 @@
     "profession": "Professora",
     "numberOfHelps": 2,
     "email": "ana@teste.com",
-    "phone": "11999999999"
+    "phone": "11999999999",
+    "rating": 4.3
   },
   {
     "name": "Marcos Oliveira",
@@ -183,7 +194,8 @@
     "numberOfHelps": 50,
     "sentRequest": true,
     "email": "marcos@teste.com",
-    "phone": "11999999999"
+    "phone": "11999999999",
+    "rating": 3.2
   },
   {
     "name": "Lucas Sanchez",
@@ -197,6 +209,7 @@
     "profession": "Professor",
     "numberOfHelps":15,
     "email": "lucas@teste.com",
-    "phone": "11999999999"
+    "phone": "11999999999",
+    "rating": 1.0
   }
 ]
