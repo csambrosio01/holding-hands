@@ -40,6 +40,7 @@ class UserActivity : AppCompatActivity() {
 
         findViewById<ImageView>(R.id.user_image).setImageResource(imageId)
         findViewById<TextView>(R.id.user_name).text = user.name
+        findViewById<TextView>(R.id.user_rating).text = applicationContext.getString(R.string.user_rating, user.rating.toString())
         findViewById<TextView>(R.id.user_age).text = applicationContext.getString(R.string.user_age, user.age.toString())
         findViewById<TextView>(R.id.user_distance).text = getString(
             R.string.user_distance_long,

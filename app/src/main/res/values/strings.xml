@@ -11,6 +11,7 @@
     <string name="user_distance">%1$s Km</string>
     <string name="user_rating_success_message">Usuário avaliado com sucesso!</string>
     <string name="send">Enviar</string>
+    <string name="user_rating">\u2605 %1$s</string>
     <string name="help_type_1">Ir ao mercado</string>
     <string name="help_type_2">Passear com o animal</string>
     <string name="help_type_3">Estudar junto</string>
