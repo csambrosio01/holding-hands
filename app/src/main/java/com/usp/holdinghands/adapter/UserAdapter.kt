@@ -63,6 +63,8 @@ class UserAdapter(
         holder.constraintLayout.setOnClickListener(holder)
 
         holder.constraintLayout.findViewById<TextView>(R.id.user_name).text = user.name
+        holder.constraintLayout.findViewById<TextView>(R.id.user_rating).text =
+            holder.constraintLayout.context.getString(R.string.user_rating, user.rating.toString())
         holder.constraintLayout.findViewById<TextView>(R.id.user_age).text =
             holder.constraintLayout.context.getString(R.string.user_age, user.age.toString())
         holder.constraintLayout.findViewById<TextView>(R.id.user_distance).text =
