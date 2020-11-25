@@ -45,7 +45,7 @@ class HelpFragment : Fragment(), OnItemClickListener {
 
     private fun configureRecyclerView() {
         viewManager = LinearLayoutManager(activity!!.applicationContext)
-        viewAdapter = UserAdapter(users, activity!!.applicationContext, false, this)
+        viewAdapter = UserAdapter(users, activity!!.applicationContext, true, this)
 
         recyclerView = view!!.findViewById<RecyclerView>(R.id.help_recycler_view).apply {
             setHasFixedSize(true)

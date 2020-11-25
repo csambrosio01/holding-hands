@@ -3,6 +3,7 @@ package com.usp.holdinghands.utils
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
+import java.lang.StringBuilder
 
 object MaskEditUtil {
 
@@ -48,6 +49,32 @@ object MaskEditUtil {
                 editText.setSelection(masked.length)
             }
         }
+    }
+
+    fun mask(text: String, mask: String): String {
+        if (text.isEmpty()) {
+            return ""
+        }
+
+        val format = StringBuilder("")
+        var i = 0
+
+        for (char in mask.toCharArray()) {
+            if (char != '#') {
+                format.append(char)
+                continue
+            }
+
+            try {
+                format.append(text[i])
+            } catch (e: Exception) {
+                break
+            }
+
+            i++
+        }
+
+        return format.toString()
     }
 
     fun unmask(s: String): String {

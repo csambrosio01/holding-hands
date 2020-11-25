@@ -23,10 +23,12 @@ interface OnItemClickListener {
     fun onDeny(position: Int)
 }
 
+const val IS_HELP_VIEW = "is_help_view"
+
 class UserAdapter(
     private val users: MutableList<User>,
     private val context: Context,
-    private val shouldHideHelpButtons: Boolean = true,
+    private val isHelpView: Boolean = false,
     private val listener: OnItemClickListener? = null
 ) :
     RecyclerView.Adapter<UserAdapter.ConstraintLayoutViewHolder>() {
@@ -39,6 +41,7 @@ class UserAdapter(
                 USER,
                 UserController(context).toJsonUser(users[adapterPosition])
             )
+                .putExtra(IS_HELP_VIEW, isHelpView)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             context.startActivity(intent)
         }
@@ -60,6 +63,8 @@ class UserAdapter(
         holder.constraintLayout.setOnClickListener(holder)
 
         holder.constraintLayout.findViewById<TextView>(R.id.user_name).text = user.name
+        holder.constraintLayout.findViewById<TextView>(R.id.user_rating).text =
+            holder.constraintLayout.context.getString(R.string.user_rating, user.rating.toString())
         holder.constraintLayout.findViewById<TextView>(R.id.user_age).text =
             holder.constraintLayout.context.getString(R.string.user_age, user.age.toString())
         holder.constraintLayout.findViewById<TextView>(R.id.user_distance).text =
@@ -77,10 +82,7 @@ class UserAdapter(
         )
         holder.constraintLayout.findViewById<ImageView>(R.id.user_image).setImageResource(imageId)
 
-        if (shouldHideHelpButtons) {
-            holder.constraintLayout.findViewById<ConstraintLayout>(R.id.help_buttons).visibility =
-                View.GONE
-        } else {
+        if (isHelpView) {
             holder.constraintLayout.findViewById<ConstraintLayout>(R.id.help_buttons).visibility =
                 View.VISIBLE
 
@@ -91,6 +93,9 @@ class UserAdapter(
             holder.constraintLayout.button_deny.setOnClickListener {
                 listener?.onDeny(position)
             }
+        } else {
+            holder.constraintLayout.findViewById<ConstraintLayout>(R.id.help_buttons).visibility =
+                View.GONE
         }
     }
 
