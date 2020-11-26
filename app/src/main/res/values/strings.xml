@@ -94,4 +94,6 @@
     <string name="report_hacked">Parece que a conta foi invadida</string>
     <string name="report_abusive">Conteúdo abusivo ou de propagação de ódio</string>
     <string name="report_other">Outro</string>
+    <string name="pending_fragment_title">Pendente</string>
+    <string name="history_fragment_title">Histórico</string>
 </resources>
