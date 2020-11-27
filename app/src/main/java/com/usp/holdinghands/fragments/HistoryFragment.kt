@@ -43,7 +43,7 @@ class HistoryFragment : Fragment() {
 
     private fun configureRecyclerView() {
         viewManager = LinearLayoutManager(activity!!.applicationContext)
-        viewAdapter = UserAdapter(users, activity!!.applicationContext, false, true)
+        viewAdapter = UserAdapter(users, activity!!.applicationContext, isHistoryView = true)
 
         recyclerView = view!!.findViewById<RecyclerView>(R.id.help_recycler_view).apply {
             setHasFixedSize(true)
