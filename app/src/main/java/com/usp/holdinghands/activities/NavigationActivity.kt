@@ -7,14 +7,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.usp.holdinghands.R
 import com.usp.holdinghands.fragments.HelpFragment
 import com.usp.holdinghands.fragments.HomeFragment
-import com.usp.holdinghands.fragments.NotificationFragment
 import com.usp.holdinghands.fragments.UserProfileFragment
 
 class NavigationActivity : AppCompatActivity() {
 
     private val homeFragment = HomeFragment.newInstance()
     private val helpFragment = HelpFragment.newInstance()
-    private val notificationFragment = NotificationFragment.newInstance()
     private val userProfileFragment = UserProfileFragment.newInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +25,6 @@ class NavigationActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.bottom_home -> replaceFragment(homeFragment)
                 R.id.bottom_help_request -> replaceFragment(helpFragment)
-                R.id.bottom_notification -> replaceFragment(notificationFragment)
                 R.id.bottom_profile -> replaceFragment(userProfileFragment)
             }
             true
