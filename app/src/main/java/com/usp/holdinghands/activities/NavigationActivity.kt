@@ -27,7 +27,6 @@ class NavigationActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.bottom_home -> replaceFragment(homeFragment)
                 R.id.bottom_help_request -> replaceFragment(helpFragment)
-                R.id.bottom_notification -> replaceFragment(notificationFragment)
                 R.id.bottom_profile -> replaceFragment(userProfileFragment)
             }
             true
