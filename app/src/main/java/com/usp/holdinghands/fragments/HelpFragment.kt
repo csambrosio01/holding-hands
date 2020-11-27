@@ -4,37 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.usp.holdinghands.R
-import com.usp.holdinghands.adapter.OnItemClickListener
-import com.usp.holdinghands.adapter.UserAdapter
-import com.usp.holdinghands.controller.UserController
-import com.usp.holdinghands.model.User
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import com.usp.holdinghands.adapter.ViewPagerAdapter
 
-class HelpFragment : Fragment(), OnItemClickListener {
+class HelpFragment : Fragment() {
 
-    private val users = mutableListOf<User>()
-    private lateinit var userController: UserController
-
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var viewAdapter: RecyclerView.Adapter<*>
-    private lateinit var viewManager: RecyclerView.LayoutManager
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        userController = UserController(activity!!.applicationContext)
-
-        configureRecyclerView()
-    }
+    private lateinit var viewPagerAdapter: ViewPagerAdapter
+    private lateinit var viewPager: ViewPager2
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,44 +23,20 @@ class HelpFragment : Fragment(), OnItemClickListener {
         return inflater.inflate(R.layout.fragment_help, container, false)
     }
 
-    private fun configureRecyclerView() {
-        viewManager = LinearLayoutManager(activity!!.applicationContext)
-        viewAdapter = UserAdapter(users, activity!!.applicationContext, true, this)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewPagerAdapter = ViewPagerAdapter(this)
+        viewPagerAdapter.addFragment(PendingFragment.newInstance(), activity!!.applicationContext.getString(R.string.pending_fragment_title))
+        viewPagerAdapter.addFragment(HistoryFragment.newInstance(), activity!!.applicationContext.getString(R.string.history_fragment_title))
 
-        recyclerView = view!!.findViewById<RecyclerView>(R.id.help_recycler_view).apply {
-            setHasFixedSize(true)
-            layoutManager = viewManager
-            adapter = viewAdapter
-        }
+        viewPager = view.findViewById(R.id.pager)
+        viewPager.adapter = viewPagerAdapter
+        viewPager.isSaveEnabled = false
 
-        CoroutineScope(Dispatchers.Main + Job()).launch {
-            users.addAll(userController.getHelpRequests())
-            notifyDataSetChanged()
-        }
-    }
+        val tabLayout = view.findViewById<TabLayout>(R.id.tab_layout)
 
-    private fun notifyDataSetChanged() {
-        val emptyView = view!!.findViewById<TextView>(R.id.empty_view)
-        if (users.isEmpty()) {
-            recyclerView.visibility = View.GONE
-            emptyView.visibility = View.VISIBLE
-        } else {
-            emptyView.visibility = View.GONE
-            recyclerView.visibility = View.VISIBLE
-            viewAdapter.notifyDataSetChanged()
-        }
-    }
-
-    override fun onAccept(position: Int) {
-        users.removeAt(position)
-        notifyDataSetChanged()
-        Toast.makeText(activity!!.applicationContext, activity!!.applicationContext.getString(R.string.help_accepted), Toast.LENGTH_LONG).show()
-    }
-
-    override fun onDeny(position: Int) {
-        users.removeAt(position)
-        notifyDataSetChanged()
-        Toast.makeText(activity!!.applicationContext, activity!!.applicationContext.getString(R.string.help_denied), Toast.LENGTH_LONG).show()
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text = viewPagerAdapter.getPageTitle(position)
+        }.attach()
     }
 
     companion object {

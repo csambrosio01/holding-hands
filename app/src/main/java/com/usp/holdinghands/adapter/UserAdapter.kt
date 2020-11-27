@@ -23,12 +23,14 @@ interface OnItemClickListener {
     fun onDeny(position: Int)
 }
 
-const val IS_HELP_VIEW = "is_help_view"
+const val IS_PENDING_VIEW = "is_pending_view"
+const val IS_HISTORY_VIEW = "is_history_view"
 
 class UserAdapter(
     private val users: MutableList<User>,
     private val context: Context,
-    private val isHelpView: Boolean = false,
+    private val isPendingView: Boolean = false,
+    private val isHistoryView: Boolean = false,
     private val listener: OnItemClickListener? = null
 ) :
     RecyclerView.Adapter<UserAdapter.ConstraintLayoutViewHolder>() {
@@ -41,7 +43,8 @@ class UserAdapter(
                 USER,
                 UserController(context).toJsonUser(users[adapterPosition])
             )
-                .putExtra(IS_HELP_VIEW, isHelpView)
+                .putExtra(IS_PENDING_VIEW, isPendingView)
+                    .putExtra(IS_HISTORY_VIEW, isHistoryView)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             context.startActivity(intent)
         }
@@ -82,7 +85,7 @@ class UserAdapter(
         )
         holder.constraintLayout.findViewById<ImageView>(R.id.user_image).setImageResource(imageId)
 
-        if (isHelpView) {
+        if (isPendingView) {
             holder.constraintLayout.findViewById<ConstraintLayout>(R.id.help_buttons).visibility =
                 View.VISIBLE
 

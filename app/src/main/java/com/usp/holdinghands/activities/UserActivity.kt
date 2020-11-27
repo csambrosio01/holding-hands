@@ -6,7 +6,8 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.usp.holdinghands.R
-import com.usp.holdinghands.adapter.IS_HELP_VIEW
+import com.usp.holdinghands.adapter.IS_HISTORY_VIEW
+import com.usp.holdinghands.adapter.IS_PENDING_VIEW
 import com.usp.holdinghands.adapter.USER
 import com.usp.holdinghands.controller.UserController
 import com.usp.holdinghands.model.Gender
@@ -18,7 +19,8 @@ class UserActivity : AppCompatActivity() {
 
     private lateinit var userController: UserController
     private lateinit var user: User
-    private var isHelpView: Boolean = false
+    private var isPendingView: Boolean = false
+    private var isHistoryView: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +28,8 @@ class UserActivity : AppCompatActivity() {
 
         userController = UserController(applicationContext)
         user = userController.fromJsonStringUser(intent.extras!!.getString(USER)!!)
-        isHelpView = intent.extras!!.getBoolean(IS_HELP_VIEW)
+        isPendingView = intent.extras!!.getBoolean(IS_PENDING_VIEW)
+        isHistoryView = intent.extras!!.getBoolean(IS_HISTORY_VIEW)
 
         configureViews()
         configureButtons()
@@ -65,7 +68,7 @@ class UserActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.user_email).text = user.email
         findViewById<TextView>(R.id.user_phone).text = MaskEditUtil.mask(user.phone ?: "", MaskEditUtil.PHONE_MASK)
 
-        if (isHelpView) {
+        if (isPendingView || isHistoryView) {
             setVisibilityOfContactViews(View.VISIBLE)
         } else {
             setVisibilityOfContactViews(View.GONE)
@@ -98,8 +101,10 @@ class UserActivity : AppCompatActivity() {
     private fun setVisibilityOfContactViews(visibility: Int) {
         findViewById<TextView>(R.id.user_email).visibility = visibility
         findViewById<TextView>(R.id.user_phone).visibility = visibility
-        findViewById<RatingBar>(R.id.user_rating_bar).visibility = visibility
-        findViewById<Button>(R.id.user_send_rating).visibility = visibility
+        findViewById<RatingBar>(R.id.user_rating_bar).visibility =
+                if(isHistoryView) View.VISIBLE else View.GONE
+        findViewById<Button>(R.id.user_send_rating).visibility =
+                if(isHistoryView) View.VISIBLE  else View.GONE
         findViewById<Button>(R.id.user_send_invitation).visibility =
             if (visibility == View.GONE) View.VISIBLE else View.GONE
     }
