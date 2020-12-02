@@ -56,13 +56,28 @@ class SignupActivity : AppCompatActivity(), ValidatorActivity, LocationService {
 
     private fun setupMasks() {
         val zipTextInputLayout = findViewById<TextInputLayout>(R.id.sign_up_zipcode)
-        zipTextInputLayout.editText!!.addTextChangedListener(MaskEditUtil.mask(zipTextInputLayout.editText!!, MaskEditUtil.ZIP_MASK))
+        zipTextInputLayout.editText!!.addTextChangedListener(
+            MaskEditUtil.mask(
+                zipTextInputLayout.editText!!,
+                MaskEditUtil.ZIP_MASK
+            )
+        )
 
         val phoneTextInputLayout = findViewById<TextInputLayout>(R.id.sign_up_phone)
-        phoneTextInputLayout.editText!!.addTextChangedListener(MaskEditUtil.mask(phoneTextInputLayout.editText!!, MaskEditUtil.PHONE_MASK))
+        phoneTextInputLayout.editText!!.addTextChangedListener(
+            MaskEditUtil.mask(
+                phoneTextInputLayout.editText!!,
+                MaskEditUtil.PHONE_MASK
+            )
+        )
 
         val birthDateTextInputLayout = findViewById<TextInputLayout>(R.id.sign_up_birth)
-        birthDateTextInputLayout.editText!!.addTextChangedListener(MaskEditUtil.mask(birthDateTextInputLayout.editText!!, MaskEditUtil.DATE_MASK))
+        birthDateTextInputLayout.editText!!.addTextChangedListener(
+            MaskEditUtil.mask(
+                birthDateTextInputLayout.editText!!,
+                MaskEditUtil.DATE_MASK
+            )
+        )
     }
 
     override fun setupValidators() {
