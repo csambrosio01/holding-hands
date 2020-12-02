@@ -4,8 +4,11 @@ import android.Manifest
 import android.content.Intent
 import android.location.Location
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
@@ -36,6 +39,7 @@ class SignupActivity : AppCompatActivity(), ValidatorActivity, LocationService {
         userController = UserController(applicationContext)
 
         setupButtons()
+        setupViews()
         setupMasks()
         setupValidators()
     }
@@ -54,15 +58,14 @@ class SignupActivity : AppCompatActivity(), ValidatorActivity, LocationService {
         super.setupMainButton(findViewById(R.id.sign_up_button))
     }
 
-    private fun setupMasks() {
-        val zipTextInputLayout = findViewById<TextInputLayout>(R.id.sign_up_zipcode)
-        zipTextInputLayout.editText!!.addTextChangedListener(
-            MaskEditUtil.mask(
-                zipTextInputLayout.editText!!,
-                MaskEditUtil.ZIP_MASK
-            )
-        )
+    private fun setupViews() {
+        findViewById<SwitchCompat>(R.id.sign_up_is_volunteer_switch).setOnCheckedChangeListener { _, isChecked ->
+            findViewById<ConstraintLayout>(R.id.sign_up_help_types).visibility =
+                if (isChecked) View.VISIBLE else View.GONE
+        }
+    }
 
+    private fun setupMasks() {
         val phoneTextInputLayout = findViewById<TextInputLayout>(R.id.sign_up_phone)
         phoneTextInputLayout.editText!!.addTextChangedListener(
             MaskEditUtil.mask(
@@ -97,18 +100,6 @@ class SignupActivity : AppCompatActivity(), ValidatorActivity, LocationService {
         val professionValidator = TextValidator(true, professionTextInputLayout)
         professionTextInputLayout.editText!!.onFocusChangeListener = professionValidator
 
-        val zipTextInputLayout = findViewById<TextInputLayout>(R.id.sign_up_zipcode)
-        val zipValidator = TextValidator(true, zipTextInputLayout, exactLength = 9)
-        zipTextInputLayout.editText!!.onFocusChangeListener = zipValidator
-
-        val addressTextInputLayout = findViewById<TextInputLayout>(R.id.sign_up_address)
-        val addressValidator = TextValidator(true, addressTextInputLayout)
-        addressTextInputLayout.editText!!.onFocusChangeListener = addressValidator
-
-        val numberTextInputLayout = findViewById<TextInputLayout>(R.id.sign_up_address_number)
-        val numberValidator = TextValidator(true, numberTextInputLayout)
-        numberTextInputLayout.editText!!.onFocusChangeListener = numberValidator
-
         val emailTextInputLayout = findViewById<TextInputLayout>(R.id.sign_up_email)
         val emailValidator = EmailValidator(true, emailTextInputLayout)
         emailTextInputLayout.editText!!.onFocusChangeListener = emailValidator
@@ -129,9 +120,6 @@ class SignupActivity : AppCompatActivity(), ValidatorActivity, LocationService {
                 phoneValidator,
                 dateValidator,
                 professionValidator,
-                zipValidator,
-                addressValidator,
-                numberValidator,
                 emailValidator,
                 passwordValidator,
                 confirmPasswordValidator
