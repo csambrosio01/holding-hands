@@ -1,25 +1,51 @@
 package com.usp.holdinghands.activities
 
+import android.Manifest
 import android.content.Intent
+import android.location.Location
 import android.os.Bundle
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.textfield.TextInputLayout
+import com.usp.holdinghands.LocationService
 import com.usp.holdinghands.R
+import com.usp.holdinghands.controller.UserController
 import com.usp.holdinghands.utils.MaskEditUtil
 import com.usp.holdinghands.utils.validators.*
 
-class SignupActivity : AppCompatActivity(), ValidatorActivity {
+const val PERMISSION_GRANTED_REQUEST_CODE = 156
+
+class SignupActivity : AppCompatActivity(), ValidatorActivity, LocationService {
 
     override val validators = mutableListOf<Validator>()
+
+    private lateinit var userController: UserController
+
+    override lateinit var fusedLocationClient: FusedLocationProviderClient
+    override lateinit var locationCallback: LocationCallback
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        userController = UserController(applicationContext)
+
         setupButtons()
         setupMasks()
         setupValidators()
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        onRequestPermissionsResult(requestCode, grantResults)
     }
 
     private fun setupButtons() {
@@ -98,7 +124,27 @@ class SignupActivity : AppCompatActivity(), ValidatorActivity {
         )
     }
 
+    override fun requestPermissions() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ),
+            PERMISSION_GRANTED_REQUEST_CODE
+        )
+        return
+    }
+
+    override fun onLocationResult(location: Location) {
+        createUser()
+    }
+
     override fun mainButtonClicked() {
+        getLocation()
+    }
+
+    private fun createUser() {
         val intent = Intent(applicationContext, NavigationActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
                 Intent.FLAG_ACTIVITY_CLEAR_TASK or
