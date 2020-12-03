@@ -3,7 +3,9 @@ package com.usp.holdinghands.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.textfield.TextInputLayout
 import com.usp.holdinghands.R
 import com.usp.holdinghands.controller.UserController
@@ -62,8 +64,10 @@ class LoginActivity : AppCompatActivity(), ValidatorActivity {
     override fun mainButtonClicked() {
         val login = makeLogin()
 
+        findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.VISIBLE
         userController.login(login, object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
                 if (response.isSuccessful && response.body() != null) {
                     val loginResponse = response.body()!!
                     userController.setLogin(loginResponse)
