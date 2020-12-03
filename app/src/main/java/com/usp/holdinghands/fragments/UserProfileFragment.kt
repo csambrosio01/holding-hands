@@ -60,13 +60,12 @@ class UserProfileFragment : Fragment() {
 
         view!!.findViewById<SwitchCompat>(R.id.profile_card_volunteer_switch)
             .setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
-                if (isChecked) {
-                    view!!.findViewById<ConstraintLayout>(R.id.helper_section).visibility =
+                view!!.findViewById<ConstraintLayout>(R.id.helper_section).visibility =
+                    if (isChecked) {
                         View.VISIBLE
-                } else {
-                    view!!.findViewById<ConstraintLayout>(R.id.helper_section).visibility =
+                    } else {
                         View.GONE
-                }
+                    }
             }
     }
 
