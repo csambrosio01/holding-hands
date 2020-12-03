@@ -47,6 +47,11 @@ class UserController(val context: Context) {
         call.enqueue(listener)
     }
 
+    fun login(loginDTO: LoginDTO, listener: Callback<LoginResponse>) {
+        val call = request.login(loginDTO)
+        call.enqueue(listener)
+    }
+
     fun setLogin(setLogin: LoginResponse) {
         val jsonUser = JsonUtil.toJson(setLogin.user)
         sharedPreferences
