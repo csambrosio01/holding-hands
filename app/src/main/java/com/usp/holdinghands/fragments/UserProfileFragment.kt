@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import android.widget.TextView
+import androidx.appcompat.widget.SwitchCompat
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.usp.holdinghands.R
 import com.usp.holdinghands.controller.UserController
@@ -47,8 +50,15 @@ class UserProfileFragment : Fragment() {
         view!!.findViewById<TextView>(R.id.profile_phone_info).text = user.phone
         view!!.findViewById<TextView>(R.id.profile_birth_info).text = user.birth
         view!!.findViewById<TextView>(R.id.profile_profession_info).text = user.profession
-        view!!.findViewById<TextView>(R.id.profile_address_info).text = user.address
         view!!.findViewById<TextView>(R.id.profile_user_help_types).text = user.getHelpAsString(false)
+
+        view!!.findViewById<SwitchCompat>(R.id.profile_card_volunteer_switch).setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
+            if (isChecked) {
+                view!!.findViewById<ConstraintLayout>(R.id.helper_section).visibility = View.VISIBLE
+            } else {
+                view!!.findViewById<ConstraintLayout>(R.id.helper_section).visibility = View.GONE
+            }
+        }
     }
 
     companion object {
