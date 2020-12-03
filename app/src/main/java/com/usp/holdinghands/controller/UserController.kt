@@ -52,6 +52,14 @@ class UserController(val context: Context) {
         call.enqueue(listener)
     }
 
+    fun logout() {
+        sharedPreferences
+            .edit()
+            .remove(userKey)
+            .remove(tokenKey)
+            .apply()
+    }
+
     fun setLogin(setLogin: LoginResponse) {
         val jsonUser = JsonUtil.toJson(setLogin.user)
         sharedPreferences
