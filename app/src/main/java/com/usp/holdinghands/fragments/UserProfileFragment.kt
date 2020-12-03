@@ -53,17 +53,21 @@ class UserProfileFragment : Fragment() {
         view!!.findViewById<TextView>(R.id.profile_card_help_number).text = "15"
         view!!.findViewById<TextView>(R.id.profile_email_info).text = user.email
         view!!.findViewById<TextView>(R.id.profile_phone_info).text = user.phone
-        view!!.findViewById<TextView>(R.id.profile_birth_info).text = SimpleDateFormat("dd/MM/yyyy", Locale("pt", "BR")).format(user.birth)
+        view!!.findViewById<TextView>(R.id.profile_birth_info).text =
+            SimpleDateFormat("dd/MM/yyyy", Locale("pt", "BR")).format(user.birth)
         view!!.findViewById<TextView>(R.id.profile_profession_info).text = user.profession
         view!!.findViewById<TextView>(R.id.profile_user_help_types).text = user.helpTypes
 
-        view!!.findViewById<SwitchCompat>(R.id.profile_card_volunteer_switch).setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
-            if (isChecked) {
-                view!!.findViewById<ConstraintLayout>(R.id.helper_section).visibility = View.VISIBLE
-            } else {
-                view!!.findViewById<ConstraintLayout>(R.id.helper_section).visibility = View.GONE
+        view!!.findViewById<SwitchCompat>(R.id.profile_card_volunteer_switch)
+            .setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
+                if (isChecked) {
+                    view!!.findViewById<ConstraintLayout>(R.id.helper_section).visibility =
+                        View.VISIBLE
+                } else {
+                    view!!.findViewById<ConstraintLayout>(R.id.helper_section).visibility =
+                        View.GONE
+                }
             }
-        }
     }
 
     private fun setupButtons() {
