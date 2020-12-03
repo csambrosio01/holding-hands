@@ -24,7 +24,7 @@ class UserProfileFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         userController = UserController(activity!!.applicationContext)
-        user = userController.getLoggedUser()
+        user = userController.getLoggedUser()!!
 
         setupViews()
     }
