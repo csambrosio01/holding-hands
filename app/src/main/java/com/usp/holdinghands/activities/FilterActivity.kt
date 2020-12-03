@@ -18,6 +18,7 @@ import com.usp.holdinghands.controller.UserController
 import com.usp.holdinghands.model.Gender
 import com.usp.holdinghands.model.HelpType
 import com.usp.holdinghands.model.UserFilter
+import com.usp.holdinghands.utils.JsonUtil
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -121,7 +122,7 @@ class FilterActivity : AppCompatActivity() {
                     Activity.RESULT_OK,
                     Intent().putExtra(
                         FILTERED_USERS,
-                        userController.toJson(users)
+                        JsonUtil.toJson(users)
                     )
                 )
                 finish()

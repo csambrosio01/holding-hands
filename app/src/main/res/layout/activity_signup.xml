@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="16dp"
     tools:context=".activities.SignupActivity">
 
     <ImageButton
         android:id="@+id/back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:background="@null"
         android:contentDescription="@string/back_button"
         android:src="@drawable/ic_baseline_arrow_back_black"
@@ -21,6 +21,7 @@
         android:id="@+id/logo_holding_hands"
         android:layout_width="150dp"
         android:layout_height="150dp"
+        android:layout_marginTop="16dp"
         android:contentDescription="@string/logo_description"
         android:src="@mipmap/ic_holding_hands"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,6 +32,10 @@
         android:id="@+id/sign_up_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@id/sign_up_button"
         app:layout_constraintEnd_toEndOf="parent"
@@ -135,100 +140,41 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <View
-                android:id="@+id/address_information_divider"
-                style="@style/Divider.Horizontal"
-                android:layout_marginTop="16dp"
+            <RadioGroup
+                android:id="@+id/sign_up_gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/sign_up_profession" />
+                app:layout_constraintTop_toBottomOf="@id/sign_up_profession">
 
-            <TextView
-                android:id="@+id/sign_up_address_information"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="@string/address_information"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                app:layout_constraintTop_toBottomOf="@id/address_information_divider" />
+                <View style="@style/Divider.Horizontal" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/sign_up_zipcode"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:hint="@string/sign_up_cep"
-                app:layout_constraintTop_toBottomOf="@id/sign_up_address_information">
-
-                <com.google.android.material.textfield.TextInputEditText
+                <RadioButton
+                    android:id="@+id/sign_up_male"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number" />
+                    android:layout_marginTop="8dp"
+                    android:checked="true"
+                    android:text="@string/filter_male_switch"
+                    android:textSize="18sp" />
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/sign_up_address"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:hint="@string/address_information"
-                app:layout_constraintTop_toBottomOf="@id/sign_up_zipcode">
-
-                <com.google.android.material.textfield.TextInputEditText
+                <RadioButton
+                    android:id="@+id/sign_up_female"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text" />
+                    android:text="@string/filter_female_switch"
+                    android:textSize="18sp" />
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/sign_up_address_number"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:hint="@string/sign_up_number"
-                app:layout_constraintEnd_toStartOf="@id/sign_up_address_complement"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/sign_up_address">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/sign_up_address_complement"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:hint="@string/sign_up_complement"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/sign_up_address_number"
-                app:layout_constraintTop_toTopOf="@id/sign_up_address_number">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
-
-            </com.google.android.material.textfield.TextInputLayout>
+            </RadioGroup>
 
             <View
                 android:id="@+id/login_information_divider"
                 style="@style/Divider.Horizontal"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/sign_up_address_number" />
+                app:layout_constraintTop_toBottomOf="@id/sign_up_gender" />
 
             <TextView
                 android:id="@+id/sign_up_login_information"
@@ -290,14 +236,164 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <View
+                android:id="@+id/helper_information_divider"
+                style="@style/Divider.Horizontal"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sign_up_confirm_password" />
+
+            <TextView
+                android:id="@+id/sign_up_helper_information"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/helper_information"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@id/helper_information_divider" />
+
+            <TextView
+                android:id="@+id/sign_up_is_volunteer_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/volunteer"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sign_up_helper_information" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/sign_up_is_volunteer_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:textOff="@string/toggle_supported"
+                android:textOn="@string/toggle_volunteer"
+                android:thumb="@drawable/sw_thumb"
+                app:layout_constraintBottom_toBottomOf="@id/sign_up_is_volunteer_title"
+                app:layout_constraintStart_toEndOf="@id/sign_up_is_volunteer_title"
+                app:layout_constraintTop_toTopOf="@id/sign_up_is_volunteer_title"
+                app:showText="true"
+                app:track="@drawable/sw_track" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/sign_up_help_types"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sign_up_is_volunteer_switch">
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/help_type__1_switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/help_type_1"
+                    android:textColor="@color/dimgray"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/help_type__2_switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/help_type_2"
+                    android:textColor="@color/dimgray"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/help_type__1_switch" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/help_type__3_switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/help_type_3"
+                    android:textColor="@color/dimgray"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/help_type__2_switch" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/help_type__4_switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/help_type_4"
+                    android:textColor="@color/dimgray"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/help_type__3_switch" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/help_type__5_switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/help_type_5"
+                    android:textColor="@color/dimgray"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/help_type__4_switch" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/progress_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.4"
+            android:background="@color/dimgray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/sign_up_button"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/sign_up_button"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"

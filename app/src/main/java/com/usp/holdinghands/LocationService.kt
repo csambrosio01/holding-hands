@@ -11,6 +11,9 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.usp.holdinghands.activities.PERMISSION_GRANTED_REQUEST_CODE
+import java.util.*
+
+const val TEN_MINUTES = 10*60*1000
 
 interface LocationService {
     var fusedLocationClient: FusedLocationProviderClient
@@ -48,10 +51,10 @@ interface LocationService {
 
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location ->
-                if (location == null) {
-                    requestLocation()
-                } else {
+                if (location != null && (Date().time - location.time) <= TEN_MINUTES) {
                     onLocationResult(location)
+                } else {
+                    requestLocation()
                 }
             }
     }

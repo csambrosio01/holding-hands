@@ -4,25 +4,28 @@ import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.usp.holdinghands.R
-import com.usp.holdinghands.model.Gender
-import com.usp.holdinghands.model.HelpType
-import com.usp.holdinghands.model.User
-import com.usp.holdinghands.model.UserFilter
+import com.usp.holdinghands.api.UserService
+import com.usp.holdinghands.configurations.RetrofitBuilder
+import com.usp.holdinghands.model.*
 import com.usp.holdinghands.persistence.AppDatabase
 import com.usp.holdinghands.persistence.dao.UserDao
+import com.usp.holdinghands.utils.JsonUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import retrofit2.Callback
 import java.io.InputStreamReader
 import java.lang.reflect.Type
 
 class UserController(val context: Context) {
 
-    private val gson = Gson()
+    val gson = Gson()
     private val listUserType: Type = object : TypeToken<List<User>>() {}.type
     private val userDao: UserDao = AppDatabase.getDatabase(context).userDao()
 
     val sharedPreferences = context.getSharedPreferences("", Context.MODE_PRIVATE)
     val userKey = "userInfo"
+
+    val request = RetrofitBuilder.buildService(UserService::class.java)
 
     suspend fun getUsers(): List<User> = withContext(Dispatchers.IO) {
         var value: List<User>
@@ -38,47 +41,23 @@ class UserController(val context: Context) {
         value.sortedBy { it.distance }
     }
 
-    fun setLoggedUser() {
-        val user = User(
-            1,
-            "Heloise Cavalcante",
-            35,
-            10.0,
-            mutableListOf(HelpType.TYPE_1, HelpType.TYPE_5),
-            "heloise",
-            Gender.FEMALE,
-            "Desenvolvedora",
-            4,
-            "teste@teste.com",
-            "(11) 12345 6789",
-            "01/02/1995",
-            "Rua dos Testes, São Paulo - São Paulo"
-        )
+    fun createUser(user: UserDTO, listener: Callback<LoginResponse>) {
+        val call = request.createUser(user)
+        call.enqueue(listener)
+    }
 
-        sharedPreferences.edit().putString(userKey, toJsonUser(user)).apply()
+    fun setLogin(setLogin: LoginResponse) {
+        val jsonUser = JsonUtil.toJson(setLogin.user)
+        sharedPreferences.edit().putString(userKey, jsonUser).apply()
     }
 
     fun getLoggedUser(): User {
-        //When integration with API is complete this logic will change to return an exception if there is no logged user
-        setLoggedUser()
-
-        return fromJsonStringUser(sharedPreferences.getString(userKey, null))
-    }
-
-    fun toJson(users: List<User>): String {
-        return gson.toJson(users, listUserType)
-    }
-
-    fun toJsonUser(user: User): String {
-        return gson.toJson(user, User::class.java)
-    }
-
-    fun fromJsonString(jsonString: String): List<User> {
-        return gson.fromJson(jsonString, listUserType)
-    }
-
-    fun fromJsonStringUser(jsonString: String?): User {
-        return gson.fromJson(jsonString, User::class.java)
+        val userString = sharedPreferences.getString(userKey, null)
+        return if (userString != null) {
+            JsonUtil.fromJson(userString)
+        } else {
+            throw Exception()
+        }
     }
 
     suspend fun makeSearch(userFilter: UserFilter): List<User> {

@@ -24,7 +24,11 @@ import com.usp.holdinghands.activities.PERMISSION_GRANTED_REQUEST_CODE
 import com.usp.holdinghands.adapter.UserAdapter
 import com.usp.holdinghands.controller.UserController
 import com.usp.holdinghands.model.User
-import kotlinx.coroutines.*
+import com.usp.holdinghands.utils.JsonUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 const val FILTER_ACTIVITY_REQUEST_CODE = 10544
 
@@ -63,7 +67,7 @@ class HomeFragment : Fragment(), LocationService {
         if (resultCode == Activity.RESULT_OK && requestCode == FILTER_ACTIVITY_REQUEST_CODE) {
             if (data != null && data.hasExtra(FILTERED_USERS)) {
                 users.clear()
-                users.addAll(userController.fromJsonString(data.extras!!.getString(FILTERED_USERS)!!))
+                users.addAll(JsonUtil.fromJson(data.extras!!.getString(FILTERED_USERS)!!))
                 notifyDataSetChanged()
             }
         }

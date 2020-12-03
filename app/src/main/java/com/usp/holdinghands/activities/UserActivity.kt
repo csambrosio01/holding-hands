@@ -9,15 +9,14 @@ import com.usp.holdinghands.R
 import com.usp.holdinghands.adapter.IS_HISTORY_VIEW
 import com.usp.holdinghands.adapter.IS_PENDING_VIEW
 import com.usp.holdinghands.adapter.USER
-import com.usp.holdinghands.controller.UserController
 import com.usp.holdinghands.model.Gender
 import com.usp.holdinghands.model.User
 import com.usp.holdinghands.model.getHelpAsString
+import com.usp.holdinghands.utils.JsonUtil
 import com.usp.holdinghands.utils.MaskEditUtil
 
 class UserActivity : AppCompatActivity() {
 
-    private lateinit var userController: UserController
     private lateinit var user: User
     private var isPendingView: Boolean = false
     private var isHistoryView: Boolean = false
@@ -26,8 +25,7 @@ class UserActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user)
 
-        userController = UserController(applicationContext)
-        user = userController.fromJsonStringUser(intent.extras!!.getString(USER)!!)
+        user = JsonUtil.fromJson(intent.extras!!.getString(USER)!!)
         isPendingView = intent.extras!!.getBoolean(IS_PENDING_VIEW)
         isHistoryView = intent.extras!!.getBoolean(IS_HISTORY_VIEW)
 

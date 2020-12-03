@@ -59,14 +59,11 @@
     <string name="sign_up_phone">Celular</string>
     <string name="sign_up_birth">Data de nascimento</string>
     <string name="sign_up_profession">Profissão</string>
-    <string name="address_information">Endereço</string>
-    <string name="sign_up_cep">CEP</string>
-    <string name="sign_up_number">Número</string>
-    <string name="sign_up_complement">Complemento</string>
     <string name="login_information">Login</string>
     <string name="sign_up_email">Email</string>
     <string name="sign_up_password">Senha</string>
     <string name="sign_up_confirm_password">Confirmar senha</string>
+    <string name="helper_information">Informações de ajuda</string>
     <string name="sign_up_button">Cadastrar</string>
     <string name="mandatory_field">Este campo é obrigatório</string>
     <string name="wrong_email">Preencha o campo com um email válido</string>
@@ -79,7 +76,7 @@
     <string name="wrong_min_max_length">O campo deve possuir entre %1$s e %2$s caracteres</string>
     <string name="wrong_exact_length">O campo deve possuir exatamente %1$s caracteres</string>
     <string name="card_help">Ajudas:</string>
-    <string name="volunteer_profile">Voluntário:</string>
+    <string name="volunteer">Voluntário:</string>
     <string name="toggle_volunteer">Sim</string>
     <string name="toggle_supported">Não</string>
     <string name="profile_help">Tipos de ajuda</string>

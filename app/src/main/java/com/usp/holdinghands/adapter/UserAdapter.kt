@@ -11,9 +11,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.usp.holdinghands.R
 import com.usp.holdinghands.activities.UserActivity
-import com.usp.holdinghands.controller.UserController
 import com.usp.holdinghands.model.User
 import com.usp.holdinghands.model.getHelpAsString
+import com.usp.holdinghands.utils.JsonUtil
 import kotlinx.android.synthetic.main.layout_user_card.view.*
 
 const val USER = "user"
@@ -41,7 +41,7 @@ class UserAdapter(
         override fun onClick(v: View?) {
             val intent = Intent(context, UserActivity::class.java).putExtra(
                 USER,
-                UserController(context).toJsonUser(users[adapterPosition])
+                JsonUtil.toJson(users[adapterPosition])
             )
                 .putExtra(IS_PENDING_VIEW, isPendingView)
                     .putExtra(IS_HISTORY_VIEW, isHistoryView)
