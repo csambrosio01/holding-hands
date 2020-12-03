@@ -65,9 +65,15 @@ class LoginActivity : AppCompatActivity(), ValidatorActivity {
         val login = makeLogin()
 
         findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.VISIBLE
+        findViewById<Button>(R.id.bt_sign_up).isEnabled = false
+        findViewById<Button>(R.id.bt_login).isEnabled = false
+        findViewById<Button>(R.id.bt_forgot_password).isEnabled = false
         userController.login(login, object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
+                findViewById<Button>(R.id.bt_sign_up).isEnabled = true
+                findViewById<Button>(R.id.bt_login).isEnabled = true
+                findViewById<Button>(R.id.bt_forgot_password).isEnabled = true
                 if (response.isSuccessful && response.body() != null) {
                     val loginResponse = response.body()!!
                     userController.setLogin(loginResponse)

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.location.Location
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.RadioButton
 import android.widget.RadioGroup
@@ -213,9 +214,11 @@ class SignupActivity : AppCompatActivity(), ValidatorActivity, LocationService {
         val user = makeUser(location)
 
         findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.VISIBLE
+        findViewById<Button>(R.id.sign_up_button).isEnabled = false
         userController.createUser(user, object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
+                findViewById<Button>(R.id.sign_up_button).isEnabled = true
                 if (response.isSuccessful && response.body() != null) {
                     val loginResponse = response.body()!!
                     userController.setLogin(loginResponse)
