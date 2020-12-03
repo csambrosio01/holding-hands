@@ -11,13 +11,14 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.usp.holdinghands.R
 import com.usp.holdinghands.controller.UserController
-import com.usp.holdinghands.model.User
-import com.usp.holdinghands.model.getHelpAsString
+import com.usp.holdinghands.model.LoggedUser
 import de.hdodenhof.circleimageview.CircleImageView
+import java.text.SimpleDateFormat
+import java.util.*
 
 class UserProfileFragment : Fragment() {
 
-    private lateinit var user: User
+    private lateinit var user: LoggedUser
     private lateinit var userController: UserController
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -38,19 +39,19 @@ class UserProfileFragment : Fragment() {
 
     private fun setupViews() {
         val imageId = activity!!.applicationContext.resources.getIdentifier(
-            user.image,
+            "caio",
             "drawable",
             activity!!.applicationContext.packageName
         )
 
         view!!.findViewById<CircleImageView>(R.id.profile_image).setImageResource(imageId)
         view!!.findViewById<TextView>(R.id.profile_name).text = user.name
-        view!!.findViewById<TextView>(R.id.profile_card_help_number).text = user.numberOfHelps.toString()
+        view!!.findViewById<TextView>(R.id.profile_card_help_number).text = "15"
         view!!.findViewById<TextView>(R.id.profile_email_info).text = user.email
         view!!.findViewById<TextView>(R.id.profile_phone_info).text = user.phone
-        view!!.findViewById<TextView>(R.id.profile_birth_info).text = user.birth
+        view!!.findViewById<TextView>(R.id.profile_birth_info).text = SimpleDateFormat("dd/MM/yyyy", Locale("pt", "BR")).format(user.birth)
         view!!.findViewById<TextView>(R.id.profile_profession_info).text = user.profession
-        view!!.findViewById<TextView>(R.id.profile_user_help_types).text = user.getHelpAsString(false)
+        view!!.findViewById<TextView>(R.id.profile_user_help_types).text = user.helpTypes
 
         view!!.findViewById<SwitchCompat>(R.id.profile_card_volunteer_switch).setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
             if (isChecked) {

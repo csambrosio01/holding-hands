@@ -61,7 +61,7 @@ class UserController(val context: Context) {
             .apply()
     }
 
-    fun getLoggedUser(): User? {
+    fun getLoggedUser(): LoggedUser? {
         val userString = sharedPreferences.getString(userKey, null)
         return if (userString != null) {
             JsonUtil.fromJson(userString)
