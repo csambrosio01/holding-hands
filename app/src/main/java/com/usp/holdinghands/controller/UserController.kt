@@ -10,6 +10,7 @@ import com.usp.holdinghands.model.User
 import com.usp.holdinghands.model.UserFilter
 import com.usp.holdinghands.persistence.AppDatabase
 import com.usp.holdinghands.persistence.dao.UserDao
+import com.usp.holdinghands.utils.JsonUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.InputStreamReader
@@ -55,7 +56,7 @@ class UserController(val context: Context) {
             "Rua dos Testes, São Paulo - São Paulo"
         )
 
-        sharedPreferences.edit().putString(userKey, toJson(user)).apply()
+        sharedPreferences.edit().putString(userKey, JsonUtil.toJson(user)).apply()
     }
 
     fun getLoggedUser(): User {
@@ -64,18 +65,10 @@ class UserController(val context: Context) {
 
         val userString = sharedPreferences.getString(userKey, null)
         return if (userString != null) {
-            fromJson(userString)
+            JsonUtil.fromJson(userString)
         } else {
             throw Exception()
         }
-    }
-
-    inline fun <reified T> toJson(user: T): String {
-        return gson.toJson(user, T::class.java)
-    }
-
-    inline fun <reified T> fromJson(jsonString: String): T {
-        return gson.fromJson(jsonString, T::class.java)
     }
 
     suspend fun makeSearch(userFilter: UserFilter): List<User> {
