@@ -1,15 +1,18 @@
 package com.usp.holdinghands.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.usp.holdinghands.R
+import com.usp.holdinghands.activities.LoginActivity
 import com.usp.holdinghands.controller.UserController
 import com.usp.holdinghands.model.LoggedUser
 import de.hdodenhof.circleimageview.CircleImageView
@@ -28,6 +31,7 @@ class UserProfileFragment : Fragment() {
         user = userController.getLoggedUser()!!
 
         setupViews()
+        setupButtons()
     }
 
     override fun onCreateView(
@@ -59,6 +63,18 @@ class UserProfileFragment : Fragment() {
             } else {
                 view!!.findViewById<ConstraintLayout>(R.id.helper_section).visibility = View.GONE
             }
+        }
+    }
+
+    private fun setupButtons() {
+        view!!.findViewById<ImageButton>(R.id.profile_logout_button).setOnClickListener {
+            userController.logout()
+
+            val intent = Intent(activity, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK or
+                    Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
         }
     }
 
