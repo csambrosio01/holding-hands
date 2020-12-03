@@ -17,7 +17,7 @@ import java.lang.reflect.Type
 
 class UserController(val context: Context) {
 
-    private val gson = Gson()
+    val gson = Gson()
     private val listUserType: Type = object : TypeToken<List<User>>() {}.type
     private val userDao: UserDao = AppDatabase.getDatabase(context).userDao()
 
@@ -55,30 +55,27 @@ class UserController(val context: Context) {
             "Rua dos Testes, São Paulo - São Paulo"
         )
 
-        sharedPreferences.edit().putString(userKey, toJsonUser(user)).apply()
+        sharedPreferences.edit().putString(userKey, toJson(user)).apply()
     }
 
     fun getLoggedUser(): User {
         //When integration with API is complete this logic will change to return an exception if there is no logged user
         setLoggedUser()
 
-        return fromJsonStringUser(sharedPreferences.getString(userKey, null))
+        val userString = sharedPreferences.getString(userKey, null)
+        return if (userString != null) {
+            fromJson(userString)
+        } else {
+            throw Exception()
+        }
     }
 
-    fun toJson(users: List<User>): String {
-        return gson.toJson(users, listUserType)
+    inline fun <reified T> toJson(user: T): String {
+        return gson.toJson(user, T::class.java)
     }
 
-    fun toJsonUser(user: User): String {
-        return gson.toJson(user, User::class.java)
-    }
-
-    fun fromJsonString(jsonString: String): List<User> {
-        return gson.fromJson(jsonString, listUserType)
-    }
-
-    fun fromJsonStringUser(jsonString: String?): User {
-        return gson.fromJson(jsonString, User::class.java)
+    inline fun <reified T> fromJson(jsonString: String): T {
+        return gson.fromJson(jsonString, T::class.java)
     }
 
     suspend fun makeSearch(userFilter: UserFilter): List<User> {

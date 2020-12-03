@@ -41,7 +41,7 @@ class UserAdapter(
         override fun onClick(v: View?) {
             val intent = Intent(context, UserActivity::class.java).putExtra(
                 USER,
-                UserController(context).toJsonUser(users[adapterPosition])
+                UserController(context).toJson(users[adapterPosition])
             )
                 .putExtra(IS_PENDING_VIEW, isPendingView)
                     .putExtra(IS_HISTORY_VIEW, isHistoryView)

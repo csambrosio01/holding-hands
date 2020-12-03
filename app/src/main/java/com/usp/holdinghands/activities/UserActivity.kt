@@ -27,7 +27,7 @@ class UserActivity : AppCompatActivity() {
         setContentView(R.layout.activity_user)
 
         userController = UserController(applicationContext)
-        user = userController.fromJsonStringUser(intent.extras!!.getString(USER)!!)
+        user = userController.fromJson(intent.extras!!.getString(USER)!!)
         isPendingView = intent.extras!!.getBoolean(IS_PENDING_VIEW)
         isHistoryView = intent.extras!!.getBoolean(IS_HISTORY_VIEW)
 

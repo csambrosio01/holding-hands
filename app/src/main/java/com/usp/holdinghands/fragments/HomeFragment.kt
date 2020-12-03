@@ -63,7 +63,7 @@ class HomeFragment : Fragment(), LocationService {
         if (resultCode == Activity.RESULT_OK && requestCode == FILTER_ACTIVITY_REQUEST_CODE) {
             if (data != null && data.hasExtra(FILTERED_USERS)) {
                 users.clear()
-                users.addAll(userController.fromJsonString(data.extras!!.getString(FILTERED_USERS)!!))
+                users.addAll(userController.fromJson(data.extras!!.getString(FILTERED_USERS)!!))
                 notifyDataSetChanged()
             }
         }
