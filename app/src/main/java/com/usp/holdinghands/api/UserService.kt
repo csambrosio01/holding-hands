@@ -1,11 +1,11 @@
 package com.usp.holdinghands.api
 
-import com.usp.holdinghands.model.LoginDTO
-import com.usp.holdinghands.model.LoginResponse
-import com.usp.holdinghands.model.UserDTO
+import com.usp.holdinghands.model.*
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface UserService {
 
@@ -14,4 +14,7 @@ interface UserService {
 
     @POST("/api/user/login")
     fun login(@Body login: LoginDTO): Call<LoginResponse>
+
+    @POST("/api/user")
+    fun getUsers(@Header("Authorization") authorization: String, @Body location: Location, @Query("distance") distance: Double? = null): Call<List<UserResponse>>
 }
