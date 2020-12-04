@@ -12,6 +12,7 @@ import com.usp.holdinghands.R
 import com.usp.holdinghands.adapter.UserAdapter
 import com.usp.holdinghands.controller.UserController
 import com.usp.holdinghands.model.User
+import com.usp.holdinghands.model.UserResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -19,7 +20,7 @@ import kotlinx.coroutines.launch
 
 class HistoryFragment : Fragment() {
 
-    private val users = mutableListOf<User>()
+    private val users = mutableListOf<UserResponse>()
     private lateinit var userController: UserController
 
     private lateinit var recyclerView: RecyclerView
@@ -49,11 +50,6 @@ class HistoryFragment : Fragment() {
             setHasFixedSize(true)
             layoutManager = viewManager
             adapter = viewAdapter
-        }
-
-        CoroutineScope(Dispatchers.Main + Job()).launch {
-            users.addAll(userController.getHelpRequests())
-            notifyDataSetChanged()
         }
     }
 
