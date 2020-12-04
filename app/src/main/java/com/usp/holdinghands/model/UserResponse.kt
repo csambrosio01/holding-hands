@@ -1,15 +1,17 @@
 package com.usp.holdinghands.model
 
-data class UserDTO(
+import java.util.*
+
+data class UserResponse(
+    val userId: Long,
     val name: String,
-    val helpTypes: List<HelpType>,
+    val helpTypes: String,
     val gender: Gender,
     val profession: String,
-    val birth: String,
     val email: String,
     val phone: String,
-    val password: String,
     val isHelper: Boolean,
-    val latitude: Double,
-    val longitude: Double
+    val birth: Date,
+    val imageId: String?,
+    val rating: Double
 )

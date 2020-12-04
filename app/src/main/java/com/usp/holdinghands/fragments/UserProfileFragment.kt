@@ -14,14 +14,16 @@ import androidx.fragment.app.Fragment
 import com.usp.holdinghands.R
 import com.usp.holdinghands.activities.LoginActivity
 import com.usp.holdinghands.controller.UserController
-import com.usp.holdinghands.model.LoggedUser
+import com.usp.holdinghands.model.Gender
+import com.usp.holdinghands.model.UserResponse
+import com.usp.holdinghands.utils.EnumConverter
 import de.hdodenhof.circleimageview.CircleImageView
 import java.text.SimpleDateFormat
 import java.util.*
 
 class UserProfileFragment : Fragment() {
 
-    private lateinit var user: LoggedUser
+    private lateinit var user: UserResponse
     private lateinit var userController: UserController
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -43,7 +45,7 @@ class UserProfileFragment : Fragment() {
 
     private fun setupViews() {
         val imageId = activity!!.applicationContext.resources.getIdentifier(
-            "caio",
+            user.imageId ?: (if (user.gender == Gender.MALE) "lucas" else "heloise"),
             "drawable",
             activity!!.applicationContext.packageName
         )
@@ -56,7 +58,7 @@ class UserProfileFragment : Fragment() {
         view!!.findViewById<TextView>(R.id.profile_birth_info).text =
             SimpleDateFormat("dd/MM/yyyy", Locale("pt", "BR")).format(user.birth)
         view!!.findViewById<TextView>(R.id.profile_profession_info).text = user.profession
-        view!!.findViewById<TextView>(R.id.profile_user_help_types).text = user.helpTypes
+        view!!.findViewById<TextView>(R.id.profile_user_help_types).text = EnumConverter.getHelpAsString(EnumConverter.stringToEnumList(user.helpTypes))
 
         view!!.findViewById<SwitchCompat>(R.id.profile_card_volunteer_switch)
             .setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->

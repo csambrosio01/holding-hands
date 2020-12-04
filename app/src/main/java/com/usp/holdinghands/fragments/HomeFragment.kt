@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,18 +24,17 @@ import com.usp.holdinghands.activities.FilterActivity
 import com.usp.holdinghands.activities.PERMISSION_GRANTED_REQUEST_CODE
 import com.usp.holdinghands.adapter.UserAdapter
 import com.usp.holdinghands.controller.UserController
-import com.usp.holdinghands.model.User
+import com.usp.holdinghands.model.UserResponse
 import com.usp.holdinghands.utils.JsonUtil
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 const val FILTER_ACTIVITY_REQUEST_CODE = 10544
 
 class HomeFragment : Fragment(), LocationService {
 
-    private val users = mutableListOf<User>()
+    private val users = mutableListOf<UserResponse>()
 
     private lateinit var userController: UserController
 
@@ -99,14 +99,32 @@ class HomeFragment : Fragment(), LocationService {
     }
 
     override fun onLocationResult(location: Location) {
-        fetchUsers()
+        fetchUsers(location)
     }
 
-    private fun fetchUsers() {
-        CoroutineScope(Dispatchers.Main + Job()).launch {
-            users.addAll(userController.getUsers())
-            notifyDataSetChanged()
-        }
+    private fun fetchUsers(location: Location) {
+
+        view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.VISIBLE
+        view!!.findViewById<RecyclerView>(R.id.search_recycler_view).visibility = View.GONE
+
+        userController.getUsers(location, object : Callback<List<UserResponse>> {
+            override fun onResponse(call: Call<List<UserResponse>>, response: Response<List<UserResponse>>) {
+                if (response.isSuccessful && response.body() != null) {
+                    val usersList = response.body()!!
+                    users.addAll(usersList)
+                    notifyDataSetChanged()
+                    view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
+                    view!!.findViewById<RecyclerView>(R.id.search_recycler_view).visibility = View.VISIBLE
+                } else {
+                    //TODO: Show error message
+                }
+            }
+
+            override fun onFailure(call: Call<List<UserResponse>>, t: Throwable) {
+                print(t.localizedMessage)
+                // TODO: Show error message
+            }
+        })
     }
 
     private fun configureFilterButton() {

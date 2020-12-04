@@ -11,8 +11,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.usp.holdinghands.R
 import com.usp.holdinghands.activities.UserActivity
-import com.usp.holdinghands.model.User
-import com.usp.holdinghands.model.getHelpAsString
+import com.usp.holdinghands.model.Gender
+import com.usp.holdinghands.model.UserResponse
+import com.usp.holdinghands.utils.EnumConverter
 import com.usp.holdinghands.utils.JsonUtil
 import kotlinx.android.synthetic.main.layout_user_card.view.*
 
@@ -27,7 +28,7 @@ const val IS_PENDING_VIEW = "is_pending_view"
 const val IS_HISTORY_VIEW = "is_history_view"
 
 class UserAdapter(
-    private val users: MutableList<User>,
+    private val users: MutableList<UserResponse>,
     private val context: Context,
     private val isPendingView: Boolean = false,
     private val isHistoryView: Boolean = false,
@@ -69,17 +70,24 @@ class UserAdapter(
         holder.constraintLayout.findViewById<TextView>(R.id.user_rating).text =
             holder.constraintLayout.context.getString(R.string.user_rating, user.rating.toString())
         holder.constraintLayout.findViewById<TextView>(R.id.user_age).text =
-            holder.constraintLayout.context.getString(R.string.user_age, user.age.toString())
+            holder.constraintLayout.context.getString(R.string.user_age, 15.toString())
         holder.constraintLayout.findViewById<TextView>(R.id.user_distance).text =
             holder.constraintLayout.context.getString(
                 R.string.user_distance,
-                user.distance.toString()
+                5.0.toString()
             )
+
         holder.constraintLayout.findViewById<TextView>(R.id.user_help_types).text =
-            user.getHelpAsString()
+            if (user.isHelper) {
+                EnumConverter.getHelpAsString(
+                    EnumConverter.stringToEnumList(user.helpTypes)
+                )
+            } else {
+                holder.constraintLayout.context.getString(R.string.filter_supported_radio)
+            }
 
         val imageId = holder.constraintLayout.context.resources.getIdentifier(
-            user.image,
+            user.imageId ?: (if (user.gender == Gender.MALE) "lucas" else "heloise"),
             "drawable",
             holder.constraintLayout.context.packageName
         )
