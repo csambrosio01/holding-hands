@@ -24,6 +24,7 @@ class UserController(val context: Context) {
 
     val sharedPreferences = context.getSharedPreferences("", Context.MODE_PRIVATE)
     val userKey = "userInfo"
+    val tokenKey = "token"
 
     val request = RetrofitBuilder.buildService(UserService::class.java)
 
@@ -46,17 +47,34 @@ class UserController(val context: Context) {
         call.enqueue(listener)
     }
 
-    fun setLogin(setLogin: LoginResponse) {
-        val jsonUser = JsonUtil.toJson(setLogin.user)
-        sharedPreferences.edit().putString(userKey, jsonUser).apply()
+    fun login(loginDTO: LoginDTO, listener: Callback<LoginResponse>) {
+        val call = request.login(loginDTO)
+        call.enqueue(listener)
     }
 
-    fun getLoggedUser(): User {
+    fun logout() {
+        sharedPreferences
+            .edit()
+            .remove(userKey)
+            .remove(tokenKey)
+            .apply()
+    }
+
+    fun setLogin(setLogin: LoginResponse) {
+        val jsonUser = JsonUtil.toJson(setLogin.user)
+        sharedPreferences
+            .edit()
+            .putString(userKey, jsonUser)
+            .putString(tokenKey, setLogin.token)
+            .apply()
+    }
+
+    fun getLoggedUser(): LoggedUser? {
         val userString = sharedPreferences.getString(userKey, null)
         return if (userString != null) {
             JsonUtil.fromJson(userString)
         } else {
-            throw Exception()
+            null
         }
     }
 
