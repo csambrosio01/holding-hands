@@ -1,26 +1,14 @@
 package com.usp.holdinghands.controller
 
 import android.content.Context
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import com.usp.holdinghands.R
+import android.location.Location
 import com.usp.holdinghands.api.UserService
 import com.usp.holdinghands.configurations.RetrofitBuilder
 import com.usp.holdinghands.model.*
-import com.usp.holdinghands.persistence.AppDatabase
-import com.usp.holdinghands.persistence.dao.UserDao
 import com.usp.holdinghands.utils.JsonUtil
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import retrofit2.Callback
-import java.io.InputStreamReader
-import java.lang.reflect.Type
 
 class UserController(val context: Context) {
-
-    val gson = Gson()
-    private val listUserType: Type = object : TypeToken<List<User>>() {}.type
-    private val userDao: UserDao = AppDatabase.getDatabase(context).userDao()
 
     val sharedPreferences = context.getSharedPreferences("", Context.MODE_PRIVATE)
     val userKey = "userInfo"
@@ -28,18 +16,10 @@ class UserController(val context: Context) {
 
     val request = RetrofitBuilder.buildService(UserService::class.java)
 
-    suspend fun getUsers(): List<User> = withContext(Dispatchers.IO) {
-        var value: List<User>
-        value = userDao.getAll()
-        if (value.isEmpty()) {
-            value = gson.fromJson(
-                InputStreamReader(context.resources.openRawResource(R.raw.users_mock)),
-                listUserType
-            )
-            userDao.insert(value)
-            value = userDao.getAll()
-        }
-        value.sortedBy { it.distance }
+    fun getUsers(location: Location, listener: Callback<List<UserResponse>>) {
+        val token = sharedPreferences.getString(tokenKey, "")!!
+        val call = request.getUsers(token, Location(location.latitude, location.longitude))
+        call.enqueue(listener)
     }
 
     fun createUser(user: UserDTO, listener: Callback<LoginResponse>) {
@@ -76,18 +56,6 @@ class UserController(val context: Context) {
         } else {
             null
         }
-    }
-
-    suspend fun makeSearch(userFilter: UserFilter): List<User> {
-        val users = getUsers()
-        return users.filter { user ->
-            shouldIncludeUser(userFilter, user)
-        }
-    }
-
-    suspend fun getHelpRequests(): List<User> {
-        val users = getUsers()
-        return users.filter { it.sentRequest ?: false }
     }
 
     private fun shouldIncludeUser(userFilter: UserFilter, user: User): Boolean {
