@@ -70,17 +70,17 @@ class UserAdapter(
         holder.constraintLayout.findViewById<TextView>(R.id.user_rating).text =
             holder.constraintLayout.context.getString(R.string.user_rating, user.rating.toString())
         holder.constraintLayout.findViewById<TextView>(R.id.user_age).text =
-            holder.constraintLayout.context.getString(R.string.user_age, 15.toString())
+            holder.constraintLayout.context.getString(R.string.user_age, user.age.toString())
         holder.constraintLayout.findViewById<TextView>(R.id.user_distance).text =
             holder.constraintLayout.context.getString(
                 R.string.user_distance,
-                5.0.toString()
+                user.distance.toString()
             )
 
         holder.constraintLayout.findViewById<TextView>(R.id.user_help_types).text =
             if (user.isHelper) {
                 EnumConverter.getHelpAsString(
-                    EnumConverter.stringToEnumList(user.helpTypes)
+                    EnumConverter.stringToEnumList(user.helpTypes!!)
                 )
             } else {
                 holder.constraintLayout.context.getString(R.string.filter_supported_radio)

@@ -45,15 +45,15 @@ class UserActivity : AppCompatActivity() {
         findViewById<ImageView>(R.id.user_image).setImageResource(imageId)
         findViewById<TextView>(R.id.user_name).text = user.name
         findViewById<TextView>(R.id.user_rating).text = applicationContext.getString(R.string.user_rating, user.rating.toString())
-        findViewById<TextView>(R.id.user_age).text = applicationContext.getString(R.string.user_age, 15.toString())
+        findViewById<TextView>(R.id.user_age).text = applicationContext.getString(R.string.user_age, user.age.toString())
         findViewById<TextView>(R.id.user_distance).text = getString(
             R.string.user_distance_long,
-            5.0.toString()
+            user.distance.toString()
         )
 
         if (user.isHelper) {
             findViewById<TextView>(R.id.user_help_types).text = EnumConverter.getHelpAsString(
-                EnumConverter.stringToEnumList(user.helpTypes)
+                EnumConverter.stringToEnumList(user.helpTypes!!)
             )
 
             //        if (user.numberOfHelps <= 1) {
@@ -76,7 +76,7 @@ class UserActivity : AppCompatActivity() {
         }
 
         findViewById<TextView>(R.id.user_email).text = user.email
-        findViewById<TextView>(R.id.user_phone).text = MaskEditUtil.mask(user.phone ?: "", MaskEditUtil.PHONE_MASK)
+        findViewById<TextView>(R.id.user_phone).text = MaskEditUtil.mask(user.phone, MaskEditUtil.PHONE_MASK)
 
         if (isPendingView || isHistoryView) {
             setVisibilityOfContactViews(View.VISIBLE)
