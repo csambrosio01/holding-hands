@@ -56,11 +56,11 @@ class UserActivity : AppCompatActivity() {
                 EnumConverter.stringToEnumList(user.helpTypes!!)
             )
 
-            //        if (user.numberOfHelps <= 1) {
-//            findViewById<TextView>(R.id.user_number_helps).text = applicationContext.getString(R.string.user_number_helps_singular, user.numberOfHelps.toString())
-//        } else {
-            findViewById<TextView>(R.id.user_number_helps).text = applicationContext.getString(R.string.user_number_helps_plural, 20.toString())
-//        }
+            if (user.numberOfHelps <= 1) {
+                findViewById<TextView>(R.id.user_number_helps).text = applicationContext.getString(R.string.user_number_helps_singular, user.numberOfHelps.toString())
+            } else {
+                findViewById<TextView>(R.id.user_number_helps).text = applicationContext.getString(R.string.user_number_helps_plural, user.numberOfHelps.toString())
+            }
 
         } else {
             findViewById<TextView>(R.id.user_help_types).text = getString(R.string.filter_supported_radio)
