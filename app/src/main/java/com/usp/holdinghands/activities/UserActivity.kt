@@ -5,21 +5,25 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.usp.holdinghands.R
 import com.usp.holdinghands.adapter.IS_HISTORY_VIEW
 import com.usp.holdinghands.adapter.IS_PENDING_VIEW
 import com.usp.holdinghands.adapter.USER
-import com.usp.holdinghands.model.Gender
-import com.usp.holdinghands.model.User
-import com.usp.holdinghands.model.UserResponse
-import com.usp.holdinghands.model.getHelpAsString
+import com.usp.holdinghands.controller.MatchController
+import com.usp.holdinghands.model.*
 import com.usp.holdinghands.utils.EnumConverter
 import com.usp.holdinghands.utils.JsonUtil
 import com.usp.holdinghands.utils.MaskEditUtil
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class UserActivity : AppCompatActivity() {
 
     private lateinit var user: UserResponse
+    private lateinit var matchController: MatchController
+
     private var isPendingView: Boolean = false
     private var isHistoryView: Boolean = false
 
@@ -28,6 +32,8 @@ class UserActivity : AppCompatActivity() {
         setContentView(R.layout.activity_user)
 
         user = JsonUtil.fromJson(intent.extras!!.getString(USER)!!)
+        matchController = MatchController(this)
+
         isPendingView = intent.extras!!.getBoolean(IS_PENDING_VIEW)
         isHistoryView = intent.extras!!.getBoolean(IS_HISTORY_VIEW)
 
@@ -94,7 +100,7 @@ class UserActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.user_send_invitation).setOnClickListener {
-            Toast.makeText(applicationContext, applicationContext.getString(R.string.send_invitation_sucessful_message), Toast.LENGTH_LONG).show()
+            sendInvite()
         }
 
         findViewById<RatingBar>(R.id.user_rating_bar).setOnRatingBarChangeListener { _, rating, _ ->
@@ -106,6 +112,31 @@ class UserActivity : AppCompatActivity() {
             findViewById<RatingBar>(R.id.user_rating_bar).setIsIndicator(true)
             it.isEnabled = false
         }
+    }
+
+    private fun sendInvite() {
+        findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.VISIBLE
+        findViewById<Button>(R.id.user_send_invitation).isEnabled = false
+
+        matchController.sendInvite(user.userId, object : Callback<MatchResponse> {
+            override fun onResponse(call: Call<MatchResponse>, response: Response<MatchResponse>) {
+                findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
+                findViewById<Button>(R.id.user_send_invitation).isEnabled = true
+
+                if (response.isSuccessful && response.body() != null) {
+                    Toast.makeText(applicationContext, applicationContext.getString(R.string.send_invitation_sucessful_message), Toast.LENGTH_LONG).show()
+                    finish()
+                } else {
+                    //TODO: Show error message
+                }
+            }
+
+            override fun onFailure(call: Call<MatchResponse>, t: Throwable) {
+                findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
+                findViewById<Button>(R.id.user_send_invitation).isEnabled = true
+                //TODO: Show error message
+            }
+        })
     }
 
     private fun setVisibilityOfContactViews(visibility: Int) {
