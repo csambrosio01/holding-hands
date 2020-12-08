@@ -15,5 +15,6 @@ data class UserResponse(
     val isHelper: Boolean,
     val birth: Date,
     val imageId: String?,
-    val rating: Double
+    val rating: Double,
+    val numberOfHelps: Int
 )
