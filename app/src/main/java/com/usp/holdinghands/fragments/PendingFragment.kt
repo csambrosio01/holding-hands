@@ -103,23 +103,51 @@ class PendingFragment : Fragment(), OnItemClickListener {
     }
 
     override fun onAccept(position: Int) {
-        matchs.removeAt(position)
-        notifyDataSetChanged()
-        Toast.makeText(
-            activity!!.applicationContext,
-            activity!!.applicationContext.getString(R.string.help_accepted),
-            Toast.LENGTH_LONG
-        ).show()
+        acceptRejectMatch(MatchStatus.ACCEPT, position)
     }
 
     override fun onDeny(position: Int) {
-        matchs.removeAt(position)
-        notifyDataSetChanged()
-        Toast.makeText(
-            activity!!.applicationContext,
-            activity!!.applicationContext.getString(R.string.help_denied),
-            Toast.LENGTH_LONG
-        ).show()
+        acceptRejectMatch(MatchStatus.REJECT, position)
+    }
+
+    private fun acceptRejectMatch(matchStatus: MatchStatus, position: Int) {
+        view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.VISIBLE
+        view!!.findViewById<View>(R.id.progress_view).visibility = View.VISIBLE
+
+        matchController.acceptRejectMatch(
+            matchStatus,
+            matchs[position].matchId,
+            object : Callback<MatchResponse> {
+                override fun onResponse(
+                    call: Call<MatchResponse>,
+                    response: Response<MatchResponse>
+                ) {
+                    view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility =
+                        View.GONE
+                    view!!.findViewById<View>(R.id.progress_view).visibility = View.GONE
+
+                    if (response.isSuccessful) {
+                        matchs.removeAt(position)
+                        Toast.makeText(
+                            activity!!.applicationContext,
+                            if (matchStatus == MatchStatus.ACCEPT) activity!!.applicationContext.getString(
+                                R.string.help_accepted
+                            ) else activity!!.applicationContext.getString(R.string.help_denied),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    } else {
+                        //TODO: Show error message
+                    }
+                    notifyDataSetChanged()
+                }
+
+                override fun onFailure(call: Call<MatchResponse>, t: Throwable) {
+                    view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility =
+                        View.GONE
+                    view!!.findViewById<View>(R.id.progress_view).visibility = View.GONE
+                    //TODO: Show error message
+                }
+            })
     }
 
     companion object {
