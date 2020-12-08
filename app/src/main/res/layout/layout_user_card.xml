@@ -58,10 +58,10 @@
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
+            android:gravity="center"
             android:lines="1"
             android:textColor="@color/colorSecondary"
             android:textSize="18sp"
-            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="@id/user_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/user_name" />
@@ -104,10 +104,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/user_help_types"
-            android:visibility="gone">
+            app:layout_constraintTop_toBottomOf="@id/user_help_types">
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_accept"
@@ -136,6 +136,18 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/match_status"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:lines="1"
+            android:textSize="18sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/user_help_types" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
