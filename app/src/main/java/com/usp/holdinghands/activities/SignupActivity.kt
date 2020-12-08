@@ -234,7 +234,8 @@ class SignupActivity : AppCompatActivity(), ValidatorActivity, LocationService {
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                print(t.localizedMessage)
+                findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
+                findViewById<Button>(R.id.sign_up_button).isEnabled = true
                 // TODO: Show error message
             }
         })
