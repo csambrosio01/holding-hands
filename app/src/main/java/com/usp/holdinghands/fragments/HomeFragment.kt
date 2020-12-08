@@ -103,7 +103,6 @@ class HomeFragment : Fragment(), LocationService {
     }
 
     private fun fetchUsers(location: Location) {
-
         view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.VISIBLE
         view!!.findViewById<RecyclerView>(R.id.search_recycler_view).visibility = View.GONE
 
@@ -111,17 +110,21 @@ class HomeFragment : Fragment(), LocationService {
             override fun onResponse(call: Call<List<UserResponse>>, response: Response<List<UserResponse>>) {
                 if (response.isSuccessful && response.body() != null) {
                     val usersList = response.body()!!
+                    users.clear()
                     users.addAll(usersList)
-                    notifyDataSetChanged()
                     view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
                     view!!.findViewById<RecyclerView>(R.id.search_recycler_view).visibility = View.VISIBLE
                 } else {
                     //TODO: Show error message
                 }
+
+                notifyDataSetChanged()
             }
 
             override fun onFailure(call: Call<List<UserResponse>>, t: Throwable) {
-                print(t.localizedMessage)
+                view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
+                view!!.findViewById<RecyclerView>(R.id.search_recycler_view).visibility = View.VISIBLE
+                notifyDataSetChanged()
                 // TODO: Show error message
             }
         })
