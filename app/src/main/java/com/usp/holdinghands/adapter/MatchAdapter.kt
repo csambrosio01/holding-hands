@@ -11,6 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.usp.holdinghands.R
 import com.usp.holdinghands.activities.UserActivity
+import com.usp.holdinghands.controller.UserController
 import com.usp.holdinghands.model.Gender
 import com.usp.holdinghands.model.MatchResponse
 import com.usp.holdinghands.model.MatchStatus
@@ -62,38 +63,46 @@ class MatchAdapter(
 
     override fun onBindViewHolder(holder: ConstraintLayoutViewHolder, position: Int) {
         val match = matchs[position]
-        val userReceived = match.userReceived
+        val currentUser = UserController(context).getLoggedUser()!!
+        val user =
+            if (match.userReceived.userId == currentUser.userId) match.userSent else match.userReceived
 
         holder.constraintLayout.setOnClickListener(holder)
 
-        holder.constraintLayout.findViewById<TextView>(R.id.user_name).text = userReceived.name
+        holder.constraintLayout.findViewById<TextView>(R.id.user_name).text =
+            if (match.userReceived.userId == currentUser.userId) {
+                context.getString(R.string.received_from, user.name)
+            } else {
+                context.getString(R.string.sent_to, user.name)
+            }
+
         holder.constraintLayout.findViewById<TextView>(R.id.user_rating).text =
             holder.constraintLayout.context.getString(
                 R.string.user_rating,
-                userReceived.rating.toString()
+                user.rating.toString()
             )
         holder.constraintLayout.findViewById<TextView>(R.id.user_age).text =
             holder.constraintLayout.context.getString(
                 R.string.user_age,
-                userReceived.age.toString()
+                user.age.toString()
             )
         holder.constraintLayout.findViewById<TextView>(R.id.user_distance).text =
             holder.constraintLayout.context.getString(
                 R.string.user_distance,
-                userReceived.distance.toString()
+                user.distance.toString()
             )
 
         holder.constraintLayout.findViewById<TextView>(R.id.user_help_types).text =
-            if (userReceived.isHelper) {
+            if (user.isHelper) {
                 EnumConverter.getHelpAsString(
-                    EnumConverter.stringToEnumList(userReceived.helpTypes!!)
+                    EnumConverter.stringToEnumList(user.helpTypes!!)
                 )
             } else {
                 holder.constraintLayout.context.getString(R.string.filter_supported_radio)
             }
 
         val imageId = holder.constraintLayout.context.resources.getIdentifier(
-            userReceived.imageId ?: (if (userReceived.gender == Gender.MALE) "lucas" else "heloise"),
+            user.imageId ?: (if (user.gender == Gender.MALE) "lucas" else "heloise"),
             "drawable",
             holder.constraintLayout.context.packageName
         )
@@ -116,13 +125,15 @@ class MatchAdapter(
                 holder.constraintLayout.findViewById<TextView>(R.id.match_status).visibility =
                     View.VISIBLE
                 holder.constraintLayout.findViewById<TextView>(R.id.match_status).text =
-                    when (match.status) {
-                        MatchStatus.ACCEPT -> context.getString(R.string.accepted)
-                        MatchStatus.REJECT -> context.getString(R.string.rejected)
-                        MatchStatus.DONE -> context.getString(R.string.done)
-                        MatchStatus.PENDING -> context.getString(R.string.pending_fragment_title)
-                        else -> ""
-                    }
+                    context.getString(
+                        R.string.status, when (match.status) {
+                            MatchStatus.ACCEPT -> context.getString(R.string.accepted)
+                            MatchStatus.REJECT -> context.getString(R.string.rejected)
+                            MatchStatus.DONE -> context.getString(R.string.done)
+                            MatchStatus.PENDING -> context.getString(R.string.pending_fragment_title)
+                            else -> ""
+                        }
+                    )
             }
             else -> {
                 holder.constraintLayout.findViewById<ConstraintLayout>(R.id.help_buttons).visibility =

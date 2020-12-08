@@ -46,7 +46,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:maxLines="2"
+            android:maxLines="3"
             android:textSize="22sp"
             app:layout_constraintEnd_toStartOf="@id/user_rating"
             app:layout_constraintStart_toStartOf="parent"
