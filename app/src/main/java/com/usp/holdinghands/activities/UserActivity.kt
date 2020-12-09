@@ -95,7 +95,7 @@ class UserActivity : AppCompatActivity() {
         }
 
         findViewById<TextView>(R.id.user_email).text = user.email
-        findViewById<TextView>(R.id.user_phone).text = MaskEditUtil.mask(user.phone, MaskEditUtil.PHONE_MASK)
+        findViewById<TextView>(R.id.user_phone).text = MaskEditUtil.mask(user.phone.removePrefix("55"), MaskEditUtil.PHONE_MASK)
 
         if (isPendingView || isHistoryView) {
             setVisibilityOfContactViews(View.VISIBLE)
