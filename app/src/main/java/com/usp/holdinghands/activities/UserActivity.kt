@@ -124,9 +124,7 @@ class UserActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.user_send_rating).setOnClickListener {
-            Toast.makeText(applicationContext, applicationContext.getString(R.string.user_rating_success_message), Toast.LENGTH_LONG).show()
-            findViewById<RatingBar>(R.id.user_rating_bar).setIsIndicator(true)
-            it.isEnabled = false
+            rate()
         }
     }
 
@@ -150,6 +148,31 @@ class UserActivity : AppCompatActivity() {
             override fun onFailure(call: Call<MatchResponse>, t: Throwable) {
                 findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
                 findViewById<Button>(R.id.user_send_invitation).isEnabled = true
+                //TODO: Show error message
+            }
+        })
+    }
+
+    private fun rate() {
+        findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.VISIBLE
+        findViewById<Button>(R.id.user_send_rating).isEnabled = false
+
+        userController.rate(user, findViewById<RatingBar>(R.id.user_rating_bar).rating, object : Callback<Double> {
+            override fun onResponse(call: Call<Double>, response: Response<Double>) {
+                findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
+
+                if (response.isSuccessful && response.body() != null && response.body() != 0.0) {
+                    findViewById<TextView>(R.id.user_rating).text = applicationContext.getString(R.string.user_rating, response.body()!!.toString())
+                    Toast.makeText(applicationContext, applicationContext.getString(R.string.user_rating_success_message), Toast.LENGTH_LONG).show()
+                    findViewById<RatingBar>(R.id.user_rating_bar).setIsIndicator(true)
+                } else {
+                    findViewById<Button>(R.id.user_send_rating).isEnabled = true
+                }
+            }
+
+            override fun onFailure(call: Call<Double>, t: Throwable) {
+                findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
+                findViewById<Button>(R.id.user_send_rating).isEnabled = true
                 //TODO: Show error message
             }
         })
