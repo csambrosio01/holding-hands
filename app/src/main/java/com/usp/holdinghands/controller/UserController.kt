@@ -71,6 +71,18 @@ class UserController(val context: Context) {
         call.enqueue(listener)
     }
 
+    fun rate(user: UserResponse, rate: Float, listener: Callback<Double>) {
+        val token = sharedPreferences.getString(tokenKey, "")!!
+
+        val rating = Rating(
+            user.userId,
+            rate
+        )
+
+        val call = request.rate(token, rating)
+        call.enqueue(listener)
+    }
+
     private fun shouldIncludeUser(userFilter: UserFilter, user: User): Boolean {
         var isValid = true
 

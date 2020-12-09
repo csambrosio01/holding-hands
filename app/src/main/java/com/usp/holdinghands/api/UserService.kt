@@ -20,4 +20,7 @@ interface UserService {
 
     @POST("/api/user/report")
     fun report(@Header("Authorization") authorization: String, @Body report: Report): Call<ReportResponse>
+
+    @POST("/api/user/rate")
+    fun rate(@Header("Authorization") authorization: String, @Body rating: Rating): Call<Double>
 }
