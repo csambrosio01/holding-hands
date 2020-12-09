@@ -10,6 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.usp.holdinghands.R
 import com.usp.holdinghands.adapter.MatchAdapter
 import com.usp.holdinghands.adapter.OnItemClickListener
@@ -54,6 +55,10 @@ class PendingFragment : Fragment(), OnItemClickListener {
             adapter = viewAdapter
         }
 
+        view!!.findViewById<SwipeRefreshLayout>(R.id.swipe_container).setOnRefreshListener {
+            getMatchs()
+        }
+
         getMatchs()
     }
 
@@ -66,6 +71,7 @@ class PendingFragment : Fragment(), OnItemClickListener {
                 call: Call<List<MatchResponse>>,
                 response: Response<List<MatchResponse>>
             ) {
+                view!!.findViewById<SwipeRefreshLayout>(R.id.swipe_container).isRefreshing = false
                 view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility =
                     View.GONE
                 view!!.findViewById<RecyclerView>(R.id.help_recycler_view).visibility =
@@ -82,6 +88,7 @@ class PendingFragment : Fragment(), OnItemClickListener {
             }
 
             override fun onFailure(call: Call<List<MatchResponse>>, t: Throwable) {
+                view!!.findViewById<SwipeRefreshLayout>(R.id.swipe_container).isRefreshing = false
                 view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
                 view!!.findViewById<RecyclerView>(R.id.help_recycler_view).visibility = View.VISIBLE
                 notifyDataSetChanged()
