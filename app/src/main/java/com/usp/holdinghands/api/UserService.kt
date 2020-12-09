@@ -16,10 +16,17 @@ interface UserService {
     fun login(@Body login: LoginDTO): Call<LoginResponse>
 
     @POST("/api/user")
-    fun getUsers(@Header("Authorization") authorization: String, @Body location: Location, @Query("distance") distance: Double? = null): Call<List<UserResponse>>
+    fun getUsers(
+        @Header("Authorization") authorization: String,
+        @Body location: Location,
+        @Query("distance") distance: Double? = null
+    ): Call<List<UserResponse>>
 
     @POST("/api/user/report")
-    fun report(@Header("Authorization") authorization: String, @Body report: Report): Call<ReportResponse>
+    fun report(
+        @Header("Authorization") authorization: String,
+        @Body report: Report
+    ): Call<ReportResponse>
 
     @POST("/api/user/rate")
     fun rate(@Header("Authorization") authorization: String, @Body rating: Rating): Call<Double>
