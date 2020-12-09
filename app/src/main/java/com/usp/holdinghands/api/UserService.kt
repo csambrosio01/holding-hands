@@ -17,4 +17,7 @@ interface UserService {
 
     @POST("/api/user")
     fun getUsers(@Header("Authorization") authorization: String, @Body location: Location, @Query("distance") distance: Double? = null): Call<List<UserResponse>>
+
+    @POST("/api/user/report")
+    fun report(@Header("Authorization") authorization: String, @Body report: Report): Call<ReportResponse>
 }
