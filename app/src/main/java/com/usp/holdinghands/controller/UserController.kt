@@ -59,6 +59,18 @@ class UserController(val context: Context) {
         }
     }
 
+    fun report(user: UserResponse, message: String, listener: Callback<ReportResponse>) {
+        val token = sharedPreferences.getString(tokenKey, "")!!
+
+        val report = Report(
+            user.userId,
+            message
+        )
+
+        val call = request.report(token, report)
+        call.enqueue(listener)
+    }
+
     private fun shouldIncludeUser(userFilter: UserFilter, user: User): Boolean {
         var isValid = true
 

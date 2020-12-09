@@ -95,7 +95,10 @@ class UserActivity : AppCompatActivity() {
         findViewById<ImageButton>(R.id.back_button).setOnClickListener { finish() }
 
         findViewById<ImageButton>(R.id.report_button).setOnClickListener {
-            val intent = Intent(this, ReportUserActivity::class.java)
+            val intent = Intent(this, ReportUserActivity::class.java).putExtra(
+                USER,
+                JsonUtil.toJson(user)
+            )
             startActivity(intent)
         }
 
