@@ -9,8 +9,10 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.usp.holdinghands.R
 import com.usp.holdinghands.adapter.IS_HISTORY_VIEW
 import com.usp.holdinghands.adapter.IS_PENDING_VIEW
+import com.usp.holdinghands.adapter.MATCH
 import com.usp.holdinghands.adapter.USER
 import com.usp.holdinghands.controller.MatchController
+import com.usp.holdinghands.controller.UserController
 import com.usp.holdinghands.model.*
 import com.usp.holdinghands.utils.EnumConverter
 import com.usp.holdinghands.utils.JsonUtil
@@ -23,7 +25,10 @@ class UserActivity : AppCompatActivity() {
 
     private lateinit var user: UserResponse
     private lateinit var matchController: MatchController
+    private lateinit var userController: UserController
 
+    private var match: MatchResponse? = null
+    private var userReceived: Boolean = false
     private var isPendingView: Boolean = false
     private var isHistoryView: Boolean = false
 
@@ -31,8 +36,16 @@ class UserActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user)
 
-        user = JsonUtil.fromJson(intent.extras!!.getString(USER)!!)
         matchController = MatchController(this)
+        userController = UserController(this)
+
+        if (intent.extras?.getString(USER) != null) {
+            user = JsonUtil.fromJson(intent.extras!!.getString(USER)!!)
+        } else {
+            match = JsonUtil.fromJson(intent.extras!!.getString(MATCH)!!)
+            userReceived = match!!.userReceived.userId == userController.getLoggedUser()!!.userId
+            user = if (userReceived) match!!.userSent else match!!.userReceived
+        }
 
         isPendingView = intent.extras!!.getBoolean(IS_PENDING_VIEW)
         isHistoryView = intent.extras!!.getBoolean(IS_HISTORY_VIEW)
