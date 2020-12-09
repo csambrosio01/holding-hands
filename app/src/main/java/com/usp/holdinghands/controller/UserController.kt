@@ -8,11 +8,12 @@ import com.usp.holdinghands.model.*
 import com.usp.holdinghands.utils.JsonUtil
 import retrofit2.Callback
 
+const val tokenKey = "token"
+
 class UserController(val context: Context) {
 
     val sharedPreferences = context.getSharedPreferences("", Context.MODE_PRIVATE)
     val userKey = "userInfo"
-    val tokenKey = "token"
 
     val request = RetrofitBuilder.buildService(UserService::class.java)
 

@@ -17,6 +17,7 @@ import com.usp.holdinghands.controller.UserController
 import com.usp.holdinghands.model.Gender
 import com.usp.holdinghands.model.UserResponse
 import com.usp.holdinghands.utils.EnumConverter
+import com.usp.holdinghands.utils.MaskEditUtil
 import de.hdodenhof.circleimageview.CircleImageView
 import java.text.SimpleDateFormat
 import java.util.*
@@ -52,23 +53,29 @@ class UserProfileFragment : Fragment() {
 
         view!!.findViewById<CircleImageView>(R.id.profile_image).setImageResource(imageId)
         view!!.findViewById<TextView>(R.id.profile_name).text = user.name
-        view!!.findViewById<TextView>(R.id.profile_card_help_number).text = "15"
+        view!!.findViewById<TextView>(R.id.profile_card_help_number).text = user.numberOfHelps.toString()
         view!!.findViewById<TextView>(R.id.profile_email_info).text = user.email
-        view!!.findViewById<TextView>(R.id.profile_phone_info).text = user.phone
+        view!!.findViewById<TextView>(R.id.profile_phone_info).text = MaskEditUtil.mask(user.phone.removePrefix("55"), MaskEditUtil.PHONE_MASK)
         view!!.findViewById<TextView>(R.id.profile_birth_info).text =
             SimpleDateFormat("dd/MM/yyyy", Locale("pt", "BR")).format(user.birth)
         view!!.findViewById<TextView>(R.id.profile_profession_info).text = user.profession
         view!!.findViewById<TextView>(R.id.profile_user_help_types).text = EnumConverter.getHelpAsString(EnumConverter.stringToEnumList(user.helpTypes))
 
-        view!!.findViewById<SwitchCompat>(R.id.profile_card_volunteer_switch)
+        val switch = view!!.findViewById<SwitchCompat>(R.id.profile_card_volunteer_switch)
+        switch
             .setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
-                view!!.findViewById<ConstraintLayout>(R.id.helper_section).visibility =
-                    if (isChecked) {
-                        View.VISIBLE
-                    } else {
-                        View.GONE
-                    }
+                val helperSection = view!!.findViewById<ConstraintLayout>(R.id.helper_section)
+                val profileCard = view!!.findViewById<ConstraintLayout>(R.id.profile_card)
+                if (isChecked) {
+                    helperSection.visibility = View.VISIBLE
+                    profileCard.visibility = View.VISIBLE
+                } else {
+                    helperSection.visibility = View.GONE
+                    profileCard.visibility = View.GONE
+                }
             }
+
+        switch.isChecked = user.isHelper
     }
 
     private fun setupButtons() {

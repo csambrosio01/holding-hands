@@ -93,4 +93,10 @@
     <string name="report_other">Outro</string>
     <string name="pending_fragment_title">Pendente</string>
     <string name="history_fragment_title">Histórico</string>
+    <string name="accepted">Aceito</string>
+    <string name="rejected">Rejeitado</string>
+    <string name="done">Concluído</string>
+    <string name="status">Situação: %1$s</string>
+    <string name="received_from">Recebido de: %1$s</string>
+    <string name="sent_to">Enviado para: %1$s</string>
 </resources>

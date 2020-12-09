@@ -5,7 +5,9 @@ import java.util.*
 data class UserResponse(
     val userId: Long,
     val name: String,
-    val helpTypes: String,
+    val age: Int,
+    val distance: Double,
+    val helpTypes: String?,
     val gender: Gender,
     val profession: String,
     val email: String,
@@ -13,5 +15,6 @@ data class UserResponse(
     val isHelper: Boolean,
     val birth: Date,
     val imageId: String?,
-    val rating: Double
+    val rating: Double,
+    val numberOfHelps: Int
 )

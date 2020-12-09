@@ -6,12 +6,16 @@ import com.usp.holdinghands.model.HelpType
 
 object EnumConverter {
 
-    inline fun <reified T : Enum<T>> stringToEnumList(value: String): List<T> {
-        val dbValues: List<String> =
-            value.split("\\s*,\\s*".toRegex()).toList()
-        val enums: MutableList<T> = ArrayList()
-        for (s in dbValues) enums.add(enumValueOf(s))
-        return enums
+    inline fun <reified T : Enum<T>> stringToEnumList(value: String?): List<T> {
+        return if (value == null) {
+             mutableListOf()
+        } else {
+            val dbValues: List<String> =
+                value.split("\\s*,\\s*".toRegex()).toList()
+            val enums: MutableList<T> = ArrayList()
+            for (s in dbValues) enums.add(enumValueOf(s))
+            enums
+        }
     }
 
     fun <T : Enum<T>> enumListToString(cl: List<T>): String {

@@ -5,21 +5,25 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.usp.holdinghands.R
 import com.usp.holdinghands.adapter.IS_HISTORY_VIEW
 import com.usp.holdinghands.adapter.IS_PENDING_VIEW
 import com.usp.holdinghands.adapter.USER
-import com.usp.holdinghands.model.Gender
-import com.usp.holdinghands.model.User
-import com.usp.holdinghands.model.UserResponse
-import com.usp.holdinghands.model.getHelpAsString
+import com.usp.holdinghands.controller.MatchController
+import com.usp.holdinghands.model.*
 import com.usp.holdinghands.utils.EnumConverter
 import com.usp.holdinghands.utils.JsonUtil
 import com.usp.holdinghands.utils.MaskEditUtil
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class UserActivity : AppCompatActivity() {
 
     private lateinit var user: UserResponse
+    private lateinit var matchController: MatchController
+
     private var isPendingView: Boolean = false
     private var isHistoryView: Boolean = false
 
@@ -28,6 +32,8 @@ class UserActivity : AppCompatActivity() {
         setContentView(R.layout.activity_user)
 
         user = JsonUtil.fromJson(intent.extras!!.getString(USER)!!)
+        matchController = MatchController(this)
+
         isPendingView = intent.extras!!.getBoolean(IS_PENDING_VIEW)
         isHistoryView = intent.extras!!.getBoolean(IS_HISTORY_VIEW)
 
@@ -45,22 +51,22 @@ class UserActivity : AppCompatActivity() {
         findViewById<ImageView>(R.id.user_image).setImageResource(imageId)
         findViewById<TextView>(R.id.user_name).text = user.name
         findViewById<TextView>(R.id.user_rating).text = applicationContext.getString(R.string.user_rating, user.rating.toString())
-        findViewById<TextView>(R.id.user_age).text = applicationContext.getString(R.string.user_age, 15.toString())
+        findViewById<TextView>(R.id.user_age).text = applicationContext.getString(R.string.user_age, user.age.toString())
         findViewById<TextView>(R.id.user_distance).text = getString(
             R.string.user_distance_long,
-            5.0.toString()
+            user.distance.toString()
         )
 
         if (user.isHelper) {
             findViewById<TextView>(R.id.user_help_types).text = EnumConverter.getHelpAsString(
-                EnumConverter.stringToEnumList(user.helpTypes)
+                EnumConverter.stringToEnumList(user.helpTypes!!)
             )
 
-            //        if (user.numberOfHelps <= 1) {
-//            findViewById<TextView>(R.id.user_number_helps).text = applicationContext.getString(R.string.user_number_helps_singular, user.numberOfHelps.toString())
-//        } else {
-            findViewById<TextView>(R.id.user_number_helps).text = applicationContext.getString(R.string.user_number_helps_plural, 20.toString())
-//        }
+            if (user.numberOfHelps <= 1) {
+                findViewById<TextView>(R.id.user_number_helps).text = applicationContext.getString(R.string.user_number_helps_singular, user.numberOfHelps.toString())
+            } else {
+                findViewById<TextView>(R.id.user_number_helps).text = applicationContext.getString(R.string.user_number_helps_plural, user.numberOfHelps.toString())
+            }
 
         } else {
             findViewById<TextView>(R.id.user_help_types).text = getString(R.string.filter_supported_radio)
@@ -76,7 +82,7 @@ class UserActivity : AppCompatActivity() {
         }
 
         findViewById<TextView>(R.id.user_email).text = user.email
-        findViewById<TextView>(R.id.user_phone).text = MaskEditUtil.mask(user.phone ?: "", MaskEditUtil.PHONE_MASK)
+        findViewById<TextView>(R.id.user_phone).text = MaskEditUtil.mask(user.phone, MaskEditUtil.PHONE_MASK)
 
         if (isPendingView || isHistoryView) {
             setVisibilityOfContactViews(View.VISIBLE)
@@ -94,7 +100,7 @@ class UserActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.user_send_invitation).setOnClickListener {
-            Toast.makeText(applicationContext, applicationContext.getString(R.string.send_invitation_sucessful_message), Toast.LENGTH_LONG).show()
+            sendInvite()
         }
 
         findViewById<RatingBar>(R.id.user_rating_bar).setOnRatingBarChangeListener { _, rating, _ ->
@@ -106,6 +112,31 @@ class UserActivity : AppCompatActivity() {
             findViewById<RatingBar>(R.id.user_rating_bar).setIsIndicator(true)
             it.isEnabled = false
         }
+    }
+
+    private fun sendInvite() {
+        findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.VISIBLE
+        findViewById<Button>(R.id.user_send_invitation).isEnabled = false
+
+        matchController.sendInvite(user.userId, object : Callback<MatchResponse> {
+            override fun onResponse(call: Call<MatchResponse>, response: Response<MatchResponse>) {
+                findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
+                findViewById<Button>(R.id.user_send_invitation).isEnabled = true
+
+                if (response.isSuccessful && response.body() != null) {
+                    Toast.makeText(applicationContext, applicationContext.getString(R.string.send_invitation_sucessful_message), Toast.LENGTH_LONG).show()
+                    finish()
+                } else {
+                    //TODO: Show error message
+                }
+            }
+
+            override fun onFailure(call: Call<MatchResponse>, t: Throwable) {
+                findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
+                findViewById<Button>(R.id.user_send_invitation).isEnabled = true
+                //TODO: Show error message
+            }
+        })
     }
 
     private fun setVisibilityOfContactViews(visibility: Int) {
