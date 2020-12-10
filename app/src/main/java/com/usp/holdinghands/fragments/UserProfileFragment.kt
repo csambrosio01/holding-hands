@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CompoundButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -15,6 +16,7 @@ import com.usp.holdinghands.R
 import com.usp.holdinghands.activities.LoginActivity
 import com.usp.holdinghands.controller.UserController
 import com.usp.holdinghands.model.Gender
+import com.usp.holdinghands.model.MatchStatus
 import com.usp.holdinghands.model.UserResponse
 import com.usp.holdinghands.utils.EnumConverter
 import com.usp.holdinghands.utils.MaskEditUtil
@@ -110,8 +112,10 @@ class UserProfileFragment : Fragment() {
                     user = response.body()!!
                     view!!.findViewById<SwitchCompat>(R.id.profile_card_volunteer_switch).isChecked = user.isHelper
                 } else {
-                    //TODO: Show error message
+                    Toast.makeText(activity!!.applicationContext, activity!!.applicationContext.getString(R.string.update_error), Toast.LENGTH_LONG).show()
                 }
+
+                view!!.findViewById<SwitchCompat>(R.id.profile_card_volunteer_switch).isChecked = user.isHelper
             }
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
