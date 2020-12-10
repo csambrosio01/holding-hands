@@ -53,8 +53,14 @@ class UserAdapter(
         holder.constraintLayout.setOnClickListener(holder)
 
         holder.constraintLayout.findViewById<TextView>(R.id.user_name).text = user.name
-        holder.constraintLayout.findViewById<TextView>(R.id.user_rating).text =
+
+        val userRating = holder.constraintLayout.findViewById<TextView>(R.id.user_rating)
+        userRating.text =
             holder.constraintLayout.context.getString(R.string.user_rating, user.rating.toString())
+        if (user.rating == 0.0) {
+            userRating.visibility = View.GONE
+        }
+
         holder.constraintLayout.findViewById<TextView>(R.id.user_age).text =
             holder.constraintLayout.context.getString(R.string.user_age, user.age.toString())
         holder.constraintLayout.findViewById<TextView>(R.id.user_distance).text =

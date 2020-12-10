@@ -170,7 +170,7 @@ class HomeFragment : Fragment(), LocationService {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (!s.isNullOrBlank()) {
                     val usersFiltered = users.filter {
-                        val a = it.name.toLowerCase().startsWith(s.toString())
+                        val a = it.name.toLowerCase().startsWith(s.toString().toLowerCase())
                         a
                     }
                     (viewAdapter as UserAdapter).users = usersFiltered.toMutableList()
