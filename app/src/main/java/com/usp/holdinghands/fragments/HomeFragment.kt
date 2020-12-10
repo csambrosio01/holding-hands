@@ -111,15 +111,16 @@ class HomeFragment : Fragment(), LocationService {
         view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.VISIBLE
         view!!.findViewById<RecyclerView>(R.id.search_recycler_view).visibility = View.GONE
 
+        users.clear()
         userController.getUsers(location, object : Callback<List<UserResponse>> {
             override fun onResponse(call: Call<List<UserResponse>>, response: Response<List<UserResponse>>) {
                 view!!.findViewById<SwipeRefreshLayout>(R.id.swipe_container).isRefreshing = false
+                view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
+                view!!.findViewById<RecyclerView>(R.id.search_recycler_view).visibility = View.VISIBLE
+
                 if (response.isSuccessful && response.body() != null) {
                     val usersList = response.body()!!
-                    users.clear()
                     users.addAll(usersList)
-                    view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
-                    view!!.findViewById<RecyclerView>(R.id.search_recycler_view).visibility = View.VISIBLE
                 } else {
                     //TODO: Show error message
                 }
