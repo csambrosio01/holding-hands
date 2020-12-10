@@ -110,7 +110,6 @@ class UserProfileFragment : Fragment() {
 
                 if (response.isSuccessful && response.body() != null) {
                     user = response.body()!!
-                    view!!.findViewById<SwitchCompat>(R.id.profile_card_volunteer_switch).isChecked = user.isHelper
                 } else {
                     Toast.makeText(activity!!.applicationContext, activity!!.applicationContext.getString(R.string.update_error), Toast.LENGTH_LONG).show()
                 }
