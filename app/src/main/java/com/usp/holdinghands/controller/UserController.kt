@@ -5,6 +5,7 @@ import android.location.Location
 import com.usp.holdinghands.api.UserService
 import com.usp.holdinghands.configurations.RetrofitBuilder
 import com.usp.holdinghands.model.*
+import com.usp.holdinghands.utils.EnumConverter
 import com.usp.holdinghands.utils.JsonUtil
 import retrofit2.Callback
 
@@ -17,9 +18,19 @@ class UserController(val context: Context) {
 
     val request = RetrofitBuilder.buildService(UserService::class.java)
 
-    fun getUsers(location: Location, listener: Callback<List<UserResponse>>) {
+    fun getUsers(location: Location, filter: UserFilter?, listener: Callback<List<UserResponse>>) {
         val token = sharedPreferences.getString(tokenKey, "")!!
-        val call = request.getUsers(token, Location(location.latitude, location.longitude))
+        val call = request.getUsers(
+            token,
+            Location(location.latitude, location.longitude),
+            filter?.distance,
+            filter?.gender?.name,
+            filter?.ageMin,
+            filter?.ageMax,
+            filter?.helpNumberMin,
+            filter?.helpNumberMax,
+            EnumConverter.enumListToString(filter?.helpTypes ?: mutableListOf())
+        )
         call.enqueue(listener)
     }
 
