@@ -19,7 +19,7 @@ import com.usp.holdinghands.utils.JsonUtil
 const val USER = "user"
 
 class UserAdapter(
-    private val users: MutableList<UserResponse>,
+    var users: MutableList<UserResponse>,
     private val context: Context
 ) :
     RecyclerView.Adapter<UserAdapter.ConstraintLayoutViewHolder>() {
@@ -72,8 +72,22 @@ class UserAdapter(
                 holder.constraintLayout.context.getString(R.string.filter_supported_radio)
             }
 
+        val defaultImageId = if (user.gender == Gender.MALE) {
+            if (user.isHelper) {
+                "young_man"
+            } else {
+                "old_man"
+            }
+        } else {
+            if (user.isHelper) {
+                "young_woman"
+            } else {
+                "old_woman"
+            }
+        }
+
         val imageId = holder.constraintLayout.context.resources.getIdentifier(
-            user.imageId ?: (if (user.gender == Gender.MALE) "lucas" else "heloise"),
+            user.imageId ?: defaultImageId,
             "drawable",
             holder.constraintLayout.context.packageName
         )

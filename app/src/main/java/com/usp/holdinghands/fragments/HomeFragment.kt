@@ -5,9 +5,12 @@ import android.app.Activity
 import android.content.Intent
 import android.location.Location
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -56,6 +59,7 @@ class HomeFragment : Fragment(), LocationService {
 
         configureRecyclerView()
         configureFilterButton()
+        configureView()
     }
 
     override fun onCreateView(
@@ -112,6 +116,8 @@ class HomeFragment : Fragment(), LocationService {
         view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.VISIBLE
         view!!.findViewById<RecyclerView>(R.id.search_recycler_view).visibility = View.GONE
 
+        view!!.findViewById<EditText>(R.id.search_edit_text).text.clear()
+
         users.clear()
         userController.getUsers(location, userFilter, object : Callback<List<UserResponse>> {
             override fun onResponse(call: Call<List<UserResponse>>, response: Response<List<UserResponse>>) {
@@ -149,6 +155,32 @@ class HomeFragment : Fragment(), LocationService {
 
             startActivityForResult(intent, FILTER_ACTIVITY_REQUEST_CODE)
         }
+    }
+
+    private fun configureView() {
+        view!!.findViewById<EditText>(R.id.search_edit_text).addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                //Not needed
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                //Not needed
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (!s.isNullOrBlank()) {
+                    val usersFiltered = users.filter {
+                        val a = it.name.toLowerCase().startsWith(s.toString())
+                        a
+                    }
+                    (viewAdapter as UserAdapter).users = usersFiltered.toMutableList()
+                } else {
+                    (viewAdapter as UserAdapter).users = users
+                }
+
+                notifyDataSetChanged()
+            }
+        })
     }
 
     private fun notifyDataSetChanged() {

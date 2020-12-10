@@ -56,8 +56,22 @@ class UserActivity : AppCompatActivity() {
     }
 
     private fun configureViews() {
+        val defaultImageId = if (user.gender == Gender.MALE) {
+            if (user.isHelper) {
+                "young_man"
+            } else {
+                "old_man"
+            }
+        } else {
+            if (user.isHelper) {
+                "young_woman"
+            } else {
+                "old_woman"
+            }
+        }
+
         val imageId = applicationContext.resources.getIdentifier(
-            user.imageId ?: (if (user.gender == Gender.MALE) "lucas" else "heloise"),
+            user.imageId ?: defaultImageId,
             "drawable",
             applicationContext.packageName
         )
