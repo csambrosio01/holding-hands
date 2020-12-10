@@ -5,9 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.CompoundButton
-import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -15,6 +16,7 @@ import com.usp.holdinghands.R
 import com.usp.holdinghands.activities.LoginActivity
 import com.usp.holdinghands.controller.UserController
 import com.usp.holdinghands.model.Gender
+import com.usp.holdinghands.model.MatchStatus
 import com.usp.holdinghands.model.UserResponse
 import com.usp.holdinghands.utils.EnumConverter
 import com.usp.holdinghands.utils.MaskEditUtil
@@ -86,7 +88,7 @@ class UserProfileFragment : Fragment() {
     }
 
     private fun setupButtons() {
-        view!!.findViewById<ImageButton>(R.id.profile_logout_button).setOnClickListener {
+        view!!.findViewById<Button>(R.id.profile_logout_button).setOnClickListener {
             userController.logout()
 
             val intent = Intent(activity, LoginActivity::class.java)
@@ -99,24 +101,25 @@ class UserProfileFragment : Fragment() {
 
     private fun update() {
         view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.VISIBLE
-        view!!.findViewById<ImageButton>(R.id.profile_logout_button).isEnabled = false
+        view!!.findViewById<Button>(R.id.profile_logout_button).isEnabled = false
 
         userController.update(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
-                view!!.findViewById<ImageButton>(R.id.profile_logout_button).isEnabled = true
+                view!!.findViewById<Button>(R.id.profile_logout_button).isEnabled = true
 
                 if (response.isSuccessful && response.body() != null) {
                     user = response.body()!!
-                    view!!.findViewById<SwitchCompat>(R.id.profile_card_volunteer_switch).isChecked = user.isHelper
                 } else {
-                    //TODO: Show error message
+                    Toast.makeText(activity!!.applicationContext, activity!!.applicationContext.getString(R.string.update_error), Toast.LENGTH_LONG).show()
                 }
+
+                view!!.findViewById<SwitchCompat>(R.id.profile_card_volunteer_switch).isChecked = user.isHelper
             }
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
-                view!!.findViewById<ImageButton>(R.id.profile_logout_button).isEnabled = true
+                view!!.findViewById<Button>(R.id.profile_logout_button).isEnabled = true
                 //TODO: Show error message
             }
         })
