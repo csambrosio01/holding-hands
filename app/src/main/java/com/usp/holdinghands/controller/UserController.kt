@@ -5,6 +5,7 @@ import android.location.Location
 import com.usp.holdinghands.api.UserService
 import com.usp.holdinghands.configurations.RetrofitBuilder
 import com.usp.holdinghands.model.*
+import com.usp.holdinghands.utils.EnumConverter
 import com.usp.holdinghands.utils.JsonUtil
 import retrofit2.Callback
 
@@ -17,9 +18,19 @@ class UserController(val context: Context) {
 
     val request = RetrofitBuilder.buildService(UserService::class.java)
 
-    fun getUsers(location: Location, listener: Callback<List<UserResponse>>) {
+    fun getUsers(location: Location, filter: UserFilter?, listener: Callback<List<UserResponse>>) {
         val token = sharedPreferences.getString(tokenKey, "")!!
-        val call = request.getUsers(token, Location(location.latitude, location.longitude))
+        val call = request.getUsers(
+            token,
+            Location(location.latitude, location.longitude),
+            filter?.distance,
+            filter?.gender?.name,
+            filter?.ageMin,
+            filter?.ageMax,
+            filter?.helpNumberMin,
+            filter?.helpNumberMax,
+            EnumConverter.enumListToString(filter?.helpTypes ?: mutableListOf())
+        )
         call.enqueue(listener)
     }
 
@@ -83,25 +94,10 @@ class UserController(val context: Context) {
         call.enqueue(listener)
     }
 
-    private fun shouldIncludeUser(userFilter: UserFilter, user: User): Boolean {
-        var isValid = true
+    fun update(listener: Callback<UserResponse>) {
+        val token = sharedPreferences.getString(tokenKey, "")!!
 
-        if (userFilter.gender != Gender.BOTH) {
-            if (user.gender != userFilter.gender) isValid = false
-        }
-
-        if (user.age < userFilter.ageMin || user.age > userFilter.ageMax) isValid = false
-
-        if (user.distance > userFilter.distance) isValid = false
-
-        var contains = false
-        if (!userFilter.helpTypes.contains(HelpType.ALL)) {
-            for (helpType in user.helpTypes) {
-                if (userFilter.helpTypes.contains(helpType)) contains = true
-            }
-            if (!contains) isValid = false
-        }
-
-        return isValid
+        val call = request.update(token)
+        call.enqueue(listener)
     }
 }

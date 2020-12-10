@@ -1,11 +1,10 @@
 package com.usp.holdinghands.activities
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.CompoundButton
-import android.widget.RadioButton
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -16,26 +15,37 @@ import com.usp.holdinghands.controller.UserController
 import com.usp.holdinghands.model.Gender
 import com.usp.holdinghands.model.HelpType
 import com.usp.holdinghands.model.UserFilter
+import com.usp.holdinghands.model.UserResponse
+import com.usp.holdinghands.utils.EnumConverter
+import com.usp.holdinghands.utils.JsonUtil
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-const val FILTERED_USERS = "filtered_users"
+const val USER_FILTER = "user_filter"
 
 class FilterActivity : AppCompatActivity() {
 
     private lateinit var userController: UserController
+    private lateinit var user: UserResponse
+
+    private var userFilter: UserFilter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_filter)
 
         userController = UserController(applicationContext)
+        user = userController.getLoggedUser()!!
+
+        if (intent.extras?.getString(USER_FILTER) != null) {
+            userFilter = JsonUtil.fromJson(intent.extras!!.getString(USER_FILTER)!!)
+        }
 
         configureToolbar()
+        configureGenderLayout()
         configureAgeSliderLayout()
         configureDistanceSlidesLayout()
-        configureNumberOfHelpsSliderLayout()
-        configureAllCategoriesSwitch()
+        configureSupportedExclusiveViews()
         configureFilterButton()
     }
 
@@ -45,12 +55,45 @@ class FilterActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 
-    private fun configureAgeSliderLayout() {
-        findViewById<TextView>(R.id.age_slider_values).text =
-            getString(R.string.range_slider_value, "18", "25")
+    private fun configureGenderLayout() {
+        val maleSwitch = findViewById<SwitchCompat>(R.id.male_switch)
+        val femaleSwitch = findViewById<SwitchCompat>(R.id.female_switch)
 
-        findViewById<RangeSlider>(R.id.age_slider).addOnChangeListener { slider: RangeSlider, _: Float, _: Boolean ->
-            findViewById<TextView>(R.id.age_slider_values).text = getString(
+        if (userFilter != null) {
+            when (userFilter!!.gender) {
+                Gender.MALE -> {
+                    maleSwitch.isChecked = true
+                    femaleSwitch.isChecked = false
+                }
+                Gender.FEMALE -> {
+                    maleSwitch.isChecked = false
+                    femaleSwitch.isChecked = true
+                }
+                Gender.BOTH -> {
+                    maleSwitch.isChecked = true
+                    femaleSwitch.isChecked = true
+                }
+            }
+        } else {
+            maleSwitch.isChecked = true
+            femaleSwitch.isChecked = true
+        }
+    }
+
+    private fun configureAgeSliderLayout() {
+        val ageSliderValues = findViewById<TextView>(R.id.age_slider_values)
+        val ageSlider = findViewById<RangeSlider>(R.id.age_slider)
+
+        if (userFilter != null) {
+            ageSliderValues.text = getString(R.string.range_slider_value, userFilter!!.ageMin.toString(), userFilter!!.ageMax.toString())
+            ageSlider.values = mutableListOf(userFilter!!.ageMin.toFloat(), userFilter!!.ageMax.toFloat())
+        } else {
+            ageSliderValues.text = getString(R.string.range_slider_value, "18", "25")
+            ageSlider.values = mutableListOf(18F, 25F)
+        }
+
+        ageSlider.addOnChangeListener { slider: RangeSlider, _: Float, _: Boolean ->
+            ageSliderValues.text = getString(
                 R.string.range_slider_value,
                 slider.values[0].toInt().toString(),
                 slider.values[1].toInt().toString()
@@ -59,11 +102,19 @@ class FilterActivity : AppCompatActivity() {
     }
 
     private fun configureDistanceSlidesLayout() {
-        findViewById<TextView>(R.id.distance_slider_value).text =
-            getString(R.string.distance_slider_value, "30")
+        val distanceSliderValues = findViewById<TextView>(R.id.distance_slider_value)
+        val distanceSlider = findViewById<Slider>(R.id.distance_slider)
 
-        findViewById<Slider>(R.id.distance_slider).addOnChangeListener { slider: Slider, _: Float, _: Boolean ->
-            findViewById<TextView>(R.id.distance_slider_value).text = getString(
+        if (userFilter != null) {
+            distanceSliderValues.text = getString(R.string.distance_slider_value, userFilter!!.distance.toString())
+            distanceSlider.value = userFilter!!.distance.toFloat()
+        } else {
+            distanceSliderValues.text = getString(R.string.distance_slider_value, "30")
+            distanceSlider.value = 30F
+        }
+
+        distanceSlider.addOnChangeListener { slider: Slider, _: Float, _: Boolean ->
+            distanceSliderValues.text = getString(
                 R.string.distance_slider_value,
                 slider.value.toInt().toString()
             )
@@ -71,11 +122,19 @@ class FilterActivity : AppCompatActivity() {
     }
 
     private fun configureNumberOfHelpsSliderLayout() {
-        findViewById<TextView>(R.id.number_helps_slider_value).text =
-            getString(R.string.range_slider_value, "0", "50")
+        val numberOfHelpsSliderValues = findViewById<TextView>(R.id.number_helps_slider_value)
+        val numberOfHelpsSlider = findViewById<RangeSlider>(R.id.number_helps_slider)
 
-        findViewById<RangeSlider>(R.id.number_helps_slider).addOnChangeListener { slider: RangeSlider, _: Float, _: Boolean ->
-            findViewById<TextView>(R.id.number_helps_slider_value).text = getString(
+        if (userFilter != null) {
+            numberOfHelpsSliderValues.text = getString(R.string.range_slider_value, userFilter!!.helpNumberMin.toString(), userFilter!!.helpNumberMax.toString())
+            numberOfHelpsSlider.values = mutableListOf(userFilter!!.helpNumberMin!!.toFloat(), userFilter!!.helpNumberMax!!.toFloat())
+        } else {
+            numberOfHelpsSliderValues.text = getString(R.string.range_slider_value, "0", "50")
+            numberOfHelpsSlider.values = mutableListOf(0F, 50F)
+        }
+
+        numberOfHelpsSlider.addOnChangeListener { slider: RangeSlider, _: Float, _: Boolean ->
+            numberOfHelpsSliderValues.text = getString(
                 R.string.range_slider_value,
                 slider.values[0].toInt().toString(),
                 if (slider.values[1].toInt() == 100) "100+" else slider.values[1].toInt().toString()
@@ -83,51 +142,67 @@ class FilterActivity : AppCompatActivity() {
         }
     }
 
-    fun onRadioButtonClicked(view: View) {
-        if (view is RadioButton) {
-            val checked = view.isChecked
-            when (view.getId()) {
-                R.id.volunteer_radio ->
-                    if (checked) {
-                        findViewById<ConstraintLayout>(R.id.filter_number_helps).visibility =
-                            View.VISIBLE
-                    }
-                R.id.supported_radio ->
-                    if (checked) {
-                        findViewById<ConstraintLayout>(R.id.filter_number_helps).visibility =
-                            View.GONE
-                    }
-            }
+    private fun configureSupportedExclusiveViews() {
+        if (user.isHelper) {
+            findViewById<ConstraintLayout>(R.id.filter_number_helps).visibility =
+                View.GONE
+            findViewById<ConstraintLayout>(R.id.filter_categories).visibility =
+                View.GONE
+        } else {
+            findViewById<ConstraintLayout>(R.id.filter_number_helps).visibility =
+                View.VISIBLE
+            findViewById<ConstraintLayout>(R.id.filter_categories).visibility =
+                View.VISIBLE
+            configureNumberOfHelpsSliderLayout()
+            configureCategoriesLayout()
         }
     }
 
-    private fun configureAllCategoriesSwitch() {
-        findViewById<SwitchCompat>(R.id.filter_category_6_switch).setOnCheckedChangeListener { view: CompoundButton?, isChecked: Boolean ->
-            findViewById<SwitchCompat>(R.id.filter_category_1_switch).isChecked = isChecked
-            findViewById<SwitchCompat>(R.id.filter_category_2_switch).isChecked = isChecked
-            findViewById<SwitchCompat>(R.id.filter_category_3_switch).isChecked = isChecked
-            findViewById<SwitchCompat>(R.id.filter_category_4_switch).isChecked = isChecked
-            findViewById<SwitchCompat>(R.id.filter_category_5_switch).isChecked = isChecked
+    private fun configureCategoriesLayout() {
+        val helpTypeOneSwitch = findViewById<SwitchCompat>(R.id.filter_category_1_switch)
+        val helpTypeTwoSwitch = findViewById<SwitchCompat>(R.id.filter_category_2_switch)
+        val helpTypeThreeSwitch = findViewById<SwitchCompat>(R.id.filter_category_3_switch)
+        val helpTypeFourSwitch = findViewById<SwitchCompat>(R.id.filter_category_4_switch)
+        val helpTypeFiveSwitch = findViewById<SwitchCompat>(R.id.filter_category_5_switch)
+        val helpTypeAllSwitch = findViewById<SwitchCompat>(R.id.filter_category_6_switch)
+
+        if (userFilter != null) {
+            val helpTypeList = userFilter!!.helpTypes
+
+            helpTypeOneSwitch.isChecked = helpTypeList!!.contains(HelpType.TYPE_1)
+            helpTypeTwoSwitch.isChecked = helpTypeList.contains(HelpType.TYPE_2)
+            helpTypeThreeSwitch.isChecked = helpTypeList.contains(HelpType.TYPE_3)
+            helpTypeFourSwitch.isChecked = helpTypeList.contains(HelpType.TYPE_4)
+            helpTypeFiveSwitch.isChecked = helpTypeList.contains(HelpType.TYPE_5)
+            helpTypeAllSwitch.isChecked = helpTypeList.size == 5
+        }
+
+        helpTypeAllSwitch.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
+            helpTypeOneSwitch.isChecked = isChecked
+            helpTypeTwoSwitch.isChecked = isChecked
+            helpTypeThreeSwitch.isChecked = isChecked
+            helpTypeFourSwitch.isChecked = isChecked
+            helpTypeFiveSwitch.isChecked = isChecked
         }
     }
 
     private fun configureFilterButton() {
         findViewById<Button>(R.id.filter_button).setOnClickListener {
             GlobalScope.launch {
-//                val users = userController.makeSearch(makeUserFilter())
-//                setResult(
-//                    Activity.RESULT_OK,
-//                    Intent().putExtra(
-//                        FILTERED_USERS,
-//                        JsonUtil.toJson(users)
-//                    )
-//                )
+                setResult(
+                    Activity.RESULT_OK,
+                    Intent().putExtra(
+                        USER_FILTER,
+                        JsonUtil.toJson(makeUserFilter())
+                    )
+                )
                 finish()
             }
         }
     }
 
     private fun makeUserFilter(): UserFilter {
+        //TODO: Fix gender when both are unchecked
         val gender: Gender = if (findViewById<SwitchCompat>(R.id.male_switch).isChecked) {
             if (findViewById<SwitchCompat>(R.id.female_switch).isChecked) {
                 Gender.BOTH
@@ -138,11 +213,14 @@ class FilterActivity : AppCompatActivity() {
             Gender.FEMALE
         }
 
-        val helpTypes: MutableList<HelpType> = mutableListOf()
+        var helpTypes: MutableList<HelpType>? = null
+        var helpNumberMin: Int? = null
+        var helpNumberMax: Int? = null
 
-        if (findViewById<SwitchCompat>(R.id.filter_category_6_switch).isChecked) {
-            helpTypes.add(HelpType.ALL)
-        } else {
+        if (!user.isHelper) {
+            //TODO: Fix helpTypes when everyone are unchecked
+            helpTypes = mutableListOf()
+
             if (findViewById<SwitchCompat>(R.id.filter_category_1_switch).isChecked) helpTypes.add(
                 HelpType.TYPE_1
             )
@@ -158,6 +236,10 @@ class FilterActivity : AppCompatActivity() {
             if (findViewById<SwitchCompat>(R.id.filter_category_5_switch).isChecked) helpTypes.add(
                 HelpType.TYPE_5
             )
+
+            val helpNumberSlider = findViewById<RangeSlider>(R.id.number_helps_slider)
+            helpNumberMin = helpNumberSlider.values[0].toInt()
+            helpNumberMax = helpNumberSlider.values[1].toInt()
         }
 
         return UserFilter(
@@ -165,7 +247,9 @@ class FilterActivity : AppCompatActivity() {
             ageMin = findViewById<RangeSlider>(R.id.age_slider).values[0].toInt(),
             ageMax = findViewById<RangeSlider>(R.id.age_slider).values[1].toInt(),
             distance = findViewById<Slider>(R.id.distance_slider).value.toDouble(),
-            helpTypes = helpTypes
+            helpTypes = helpTypes,
+            helpNumberMin = helpNumberMin,
+            helpNumberMax = helpNumberMax
         )
     }
 }
