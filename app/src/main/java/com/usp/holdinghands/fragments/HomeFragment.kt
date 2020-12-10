@@ -20,11 +20,12 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationServices
 import com.usp.holdinghands.LocationService
 import com.usp.holdinghands.R
-import com.usp.holdinghands.activities.FILTERED_USERS
 import com.usp.holdinghands.activities.FilterActivity
 import com.usp.holdinghands.activities.PERMISSION_GRANTED_REQUEST_CODE
+import com.usp.holdinghands.activities.USER_FILTER
 import com.usp.holdinghands.adapter.UserAdapter
 import com.usp.holdinghands.controller.UserController
+import com.usp.holdinghands.model.UserFilter
 import com.usp.holdinghands.model.UserResponse
 import com.usp.holdinghands.utils.JsonUtil
 import retrofit2.Call
@@ -36,6 +37,7 @@ const val FILTER_ACTIVITY_REQUEST_CODE = 10544
 class HomeFragment : Fragment(), LocationService {
 
     private val users = mutableListOf<UserResponse>()
+    private var userFilter: UserFilter? = null
 
     private lateinit var userController: UserController
 
@@ -66,10 +68,9 @@ class HomeFragment : Fragment(), LocationService {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == FILTER_ACTIVITY_REQUEST_CODE) {
-            if (data != null && data.hasExtra(FILTERED_USERS)) {
-                users.clear()
-                users.addAll(JsonUtil.fromJson(data.extras!!.getString(FILTERED_USERS)!!))
-                notifyDataSetChanged()
+            if (data != null && data.hasExtra(USER_FILTER)) {
+                userFilter = JsonUtil.fromJson(data.extras!!.getString(USER_FILTER)!!)
+                getLocation()
             }
         }
     }
@@ -112,7 +113,7 @@ class HomeFragment : Fragment(), LocationService {
         view!!.findViewById<RecyclerView>(R.id.search_recycler_view).visibility = View.GONE
 
         users.clear()
-        userController.getUsers(location, object : Callback<List<UserResponse>> {
+        userController.getUsers(location, userFilter, object : Callback<List<UserResponse>> {
             override fun onResponse(call: Call<List<UserResponse>>, response: Response<List<UserResponse>>) {
                 view!!.findViewById<SwipeRefreshLayout>(R.id.swipe_container).isRefreshing = false
                 view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
@@ -141,6 +142,11 @@ class HomeFragment : Fragment(), LocationService {
     private fun configureFilterButton() {
         view!!.findViewById<ImageButton>(R.id.search_filter).setOnClickListener {
             val intent = Intent(activity!!, FilterActivity::class.java)
+
+            if (userFilter != null) {
+                intent.putExtra(USER_FILTER, JsonUtil.toJson(userFilter))
+            }
+
             startActivityForResult(intent, FILTER_ACTIVITY_REQUEST_CODE)
         }
     }
