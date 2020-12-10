@@ -96,7 +96,7 @@ class FilterActivity : AppCompatActivity() {
             ageSliderValues.text = getString(
                 R.string.range_slider_value,
                 slider.values[0].toInt().toString(),
-                slider.values[1].toInt().toString()
+                if (slider.values[1].toInt() == 80) "80+" else slider.values[1].toInt().toString()
             )
         }
     }

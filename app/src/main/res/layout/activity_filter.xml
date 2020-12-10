@@ -137,7 +137,7 @@
                     android:layout_height="wrap_content"
                     android:stepSize="1.0"
                     android:valueFrom="18.0"
-                    android:valueTo="60.0"
+                    android:valueTo="80.0"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/age_header"
