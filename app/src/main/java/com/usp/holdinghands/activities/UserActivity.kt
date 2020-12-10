@@ -50,6 +50,7 @@ class UserActivity : AppCompatActivity() {
         isPendingView = intent.extras!!.getBoolean(IS_PENDING_VIEW)
         isHistoryView = intent.extras!!.getBoolean(IS_HISTORY_VIEW)
 
+        getRate()
         configureViews()
         configureButtons()
     }
@@ -174,6 +175,25 @@ class UserActivity : AppCompatActivity() {
                 findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
                 findViewById<Button>(R.id.user_send_rating).isEnabled = true
                 //TODO: Show error message
+            }
+        })
+    }
+
+    private fun getRate() {
+        findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.VISIBLE
+
+        userController.getRate(user, object : Callback<Double> {
+            override fun onResponse(call: Call<Double>, response: Response<Double>) {
+                findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
+
+                if (response.isSuccessful && response.body() != null && response.body() != 0.0) {
+                    findViewById<RatingBar>(R.id.user_rating_bar).rating = response.body()!!.toFloat()
+                    findViewById<Button>(R.id.user_send_rating).isEnabled = false
+                }
+            }
+
+            override fun onFailure(call: Call<Double>, t: Throwable) {
+                findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
             }
         })
     }
