@@ -18,10 +18,14 @@ object EnumConverter {
         }
     }
 
-    fun <T : Enum<T>> enumListToString(cl: List<T>): String {
-        var value = ""
-        for (enum in cl) value += enum.name + ","
-        return value.dropLast(1)
+    fun <T : Enum<T>> enumListToString(cl: List<T>): String? {
+        return if (cl.isEmpty()) {
+            null
+        } else {
+            var value = ""
+            for (enum in cl) value += enum.name + ","
+            value.dropLast(1)
+        }
     }
 
     fun getHelpAsString(helpTypes: List<HelpType>, withHeader: Boolean = true): String {
