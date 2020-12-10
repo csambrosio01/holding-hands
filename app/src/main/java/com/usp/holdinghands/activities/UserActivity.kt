@@ -9,8 +9,10 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.usp.holdinghands.R
 import com.usp.holdinghands.adapter.IS_HISTORY_VIEW
 import com.usp.holdinghands.adapter.IS_PENDING_VIEW
+import com.usp.holdinghands.adapter.MATCH
 import com.usp.holdinghands.adapter.USER
 import com.usp.holdinghands.controller.MatchController
+import com.usp.holdinghands.controller.UserController
 import com.usp.holdinghands.model.*
 import com.usp.holdinghands.utils.EnumConverter
 import com.usp.holdinghands.utils.JsonUtil
@@ -23,7 +25,10 @@ class UserActivity : AppCompatActivity() {
 
     private lateinit var user: UserResponse
     private lateinit var matchController: MatchController
+    private lateinit var userController: UserController
 
+    private var match: MatchResponse? = null
+    private var userReceived: Boolean = false
     private var isPendingView: Boolean = false
     private var isHistoryView: Boolean = false
 
@@ -31,8 +36,16 @@ class UserActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user)
 
-        user = JsonUtil.fromJson(intent.extras!!.getString(USER)!!)
         matchController = MatchController(this)
+        userController = UserController(this)
+
+        if (intent.extras?.getString(USER) != null) {
+            user = JsonUtil.fromJson(intent.extras!!.getString(USER)!!)
+        } else {
+            match = JsonUtil.fromJson(intent.extras!!.getString(MATCH)!!)
+            userReceived = match!!.userReceived.userId == userController.getLoggedUser()!!.userId
+            user = if (userReceived) match!!.userSent else match!!.userReceived
+        }
 
         isPendingView = intent.extras!!.getBoolean(IS_PENDING_VIEW)
         isHistoryView = intent.extras!!.getBoolean(IS_HISTORY_VIEW)
@@ -82,7 +95,7 @@ class UserActivity : AppCompatActivity() {
         }
 
         findViewById<TextView>(R.id.user_email).text = user.email
-        findViewById<TextView>(R.id.user_phone).text = MaskEditUtil.mask(user.phone, MaskEditUtil.PHONE_MASK)
+        findViewById<TextView>(R.id.user_phone).text = MaskEditUtil.mask(user.phone.removePrefix("55"), MaskEditUtil.PHONE_MASK)
 
         if (isPendingView || isHistoryView) {
             setVisibilityOfContactViews(View.VISIBLE)
@@ -111,9 +124,7 @@ class UserActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.user_send_rating).setOnClickListener {
-            Toast.makeText(applicationContext, applicationContext.getString(R.string.user_rating_success_message), Toast.LENGTH_LONG).show()
-            findViewById<RatingBar>(R.id.user_rating_bar).setIsIndicator(true)
-            it.isEnabled = false
+            rate()
         }
     }
 
@@ -137,6 +148,31 @@ class UserActivity : AppCompatActivity() {
             override fun onFailure(call: Call<MatchResponse>, t: Throwable) {
                 findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
                 findViewById<Button>(R.id.user_send_invitation).isEnabled = true
+                //TODO: Show error message
+            }
+        })
+    }
+
+    private fun rate() {
+        findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.VISIBLE
+        findViewById<Button>(R.id.user_send_rating).isEnabled = false
+
+        userController.rate(user, findViewById<RatingBar>(R.id.user_rating_bar).rating, object : Callback<Double> {
+            override fun onResponse(call: Call<Double>, response: Response<Double>) {
+                findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
+
+                if (response.isSuccessful && response.body() != null && response.body() != 0.0) {
+                    findViewById<TextView>(R.id.user_rating).text = applicationContext.getString(R.string.user_rating, response.body()!!.toString())
+                    Toast.makeText(applicationContext, applicationContext.getString(R.string.user_rating_success_message), Toast.LENGTH_LONG).show()
+                    findViewById<RatingBar>(R.id.user_rating_bar).setIsIndicator(true)
+                } else {
+                    findViewById<Button>(R.id.user_send_rating).isEnabled = true
+                }
+            }
+
+            override fun onFailure(call: Call<Double>, t: Throwable) {
+                findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
+                findViewById<Button>(R.id.user_send_rating).isEnabled = true
                 //TODO: Show error message
             }
         })
