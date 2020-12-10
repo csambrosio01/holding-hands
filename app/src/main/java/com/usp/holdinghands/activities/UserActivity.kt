@@ -218,6 +218,6 @@ class UserActivity : AppCompatActivity() {
         findViewById<RatingBar>(R.id.user_rating_bar).visibility = visibility
         findViewById<Button>(R.id.user_send_rating).visibility = visibility
         findViewById<Button>(R.id.user_send_invitation).visibility =
-            if (visibility == View.GONE) View.VISIBLE else View.GONE
+            if (isHistoryView || isPendingView) View.GONE else View.VISIBLE
     }
 }
