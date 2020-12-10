@@ -19,7 +19,13 @@ interface UserService {
     fun getUsers(
         @Header("Authorization") authorization: String,
         @Body location: Location,
-        @Query("distance") distance: Double? = null
+        @Query("distance") distance: Double? = null,
+        @Query("gender") gender: String? = null,
+        @Query("ageMin") ageMin: Int? = null,
+        @Query("ageMax") ageMax: Int? = null,
+        @Query("helpNumberMin") helpNumberMin: Int? = null,
+        @Query("helpNumberMax") helpNumberMax: Int? = null,
+        @Query("helpTypes") helpTypes: String? = null
     ): Call<List<UserResponse>>
 
     @POST("/api/user/report")
