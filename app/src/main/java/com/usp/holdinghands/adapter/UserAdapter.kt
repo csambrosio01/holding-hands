@@ -19,7 +19,7 @@ import com.usp.holdinghands.utils.JsonUtil
 const val USER = "user"
 
 class UserAdapter(
-    private val users: MutableList<UserResponse>,
+    var users: MutableList<UserResponse>,
     private val context: Context
 ) :
     RecyclerView.Adapter<UserAdapter.ConstraintLayoutViewHolder>() {
