@@ -36,4 +36,7 @@ interface UserService {
 
     @POST("/api/user/rate")
     fun rate(@Header("Authorization") authorization: String, @Body rating: Rating): Call<Double>
+
+    @POST("/api/user/update")
+    fun update(@Header("Authorization") authorization: String): Call<UserResponse>
 }
