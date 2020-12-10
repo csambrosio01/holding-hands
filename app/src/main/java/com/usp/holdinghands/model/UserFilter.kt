@@ -5,5 +5,7 @@ data class UserFilter(
     val ageMin: Int,
     val ageMax: Int,
     val distance: Double,
-    val helpTypes: List<HelpType>
+    val helpTypes: List<HelpType>?,
+    val helpNumberMin: Int?,
+    val helpNumberMax: Int?
 )
