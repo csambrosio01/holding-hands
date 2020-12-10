@@ -34,6 +34,7 @@
     <string name="filter_categories_header">Categorias</string>
     <string name="user_send_invitation">Mandar convite</string>
     <string name="user_distance_long">A %1$s Km de você</string>
+    <string name="user_number_helps_zero">Este usuário não prestou nenhuma ajuda</string>
     <string name="user_number_helps_singular">%1$s ajuda</string>
     <string name="user_number_helps_plural">%1$s ajudas</string>
     <string name="report_sucessful_message">Usuário reportado com sucesso!</string>

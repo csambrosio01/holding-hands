@@ -75,10 +75,10 @@ class UserActivity : AppCompatActivity() {
                 EnumConverter.stringToEnumList(user.helpTypes!!)
             )
 
-            if (user.numberOfHelps <= 1) {
-                findViewById<TextView>(R.id.user_number_helps).text = applicationContext.getString(R.string.user_number_helps_singular, user.numberOfHelps.toString())
-            } else {
-                findViewById<TextView>(R.id.user_number_helps).text = applicationContext.getString(R.string.user_number_helps_plural, user.numberOfHelps.toString())
+            when (user.numberOfHelps) {
+                0 -> findViewById<TextView>(R.id.user_number_helps).text = applicationContext.getString(R.string.user_number_helps_zero)
+                1 -> findViewById<TextView>(R.id.user_number_helps).text = applicationContext.getString(R.string.user_number_helps_singular, user.numberOfHelps.toString())
+                else -> findViewById<TextView>(R.id.user_number_helps).text = applicationContext.getString(R.string.user_number_helps_plural, user.numberOfHelps.toString())
             }
 
         } else {
@@ -97,7 +97,7 @@ class UserActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.user_email).text = user.email
         findViewById<TextView>(R.id.user_phone).text = MaskEditUtil.mask(user.phone.removePrefix("55"), MaskEditUtil.PHONE_MASK)
 
-        if (isPendingView || isHistoryView) {
+        if (isHistoryView && match != null && mutableListOf(MatchStatus.ACCEPT, MatchStatus.DONE).contains(match!!.status)) {
             setVisibilityOfContactViews(View.VISIBLE)
         } else {
             setVisibilityOfContactViews(View.GONE)
@@ -181,10 +181,8 @@ class UserActivity : AppCompatActivity() {
     private fun setVisibilityOfContactViews(visibility: Int) {
         findViewById<TextView>(R.id.user_email).visibility = visibility
         findViewById<TextView>(R.id.user_phone).visibility = visibility
-        findViewById<RatingBar>(R.id.user_rating_bar).visibility =
-                if(isHistoryView) View.VISIBLE else View.GONE
-        findViewById<Button>(R.id.user_send_rating).visibility =
-                if(isHistoryView) View.VISIBLE  else View.GONE
+        findViewById<RatingBar>(R.id.user_rating_bar).visibility = visibility
+        findViewById<Button>(R.id.user_send_rating).visibility = visibility
         findViewById<Button>(R.id.user_send_invitation).visibility =
             if (visibility == View.GONE) View.VISIBLE else View.GONE
     }
