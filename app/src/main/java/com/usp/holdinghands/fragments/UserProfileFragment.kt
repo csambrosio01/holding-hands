@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.CompoundButton
-import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -86,7 +86,7 @@ class UserProfileFragment : Fragment() {
     }
 
     private fun setupButtons() {
-        view!!.findViewById<ImageButton>(R.id.profile_logout_button).setOnClickListener {
+        view!!.findViewById<Button>(R.id.profile_logout_button).setOnClickListener {
             userController.logout()
 
             val intent = Intent(activity, LoginActivity::class.java)
@@ -99,12 +99,12 @@ class UserProfileFragment : Fragment() {
 
     private fun update() {
         view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.VISIBLE
-        view!!.findViewById<ImageButton>(R.id.profile_logout_button).isEnabled = false
+        view!!.findViewById<Button>(R.id.profile_logout_button).isEnabled = false
 
         userController.update(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
-                view!!.findViewById<ImageButton>(R.id.profile_logout_button).isEnabled = true
+                view!!.findViewById<Button>(R.id.profile_logout_button).isEnabled = true
 
                 if (response.isSuccessful && response.body() != null) {
                     user = response.body()!!
@@ -116,7 +116,7 @@ class UserProfileFragment : Fragment() {
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
-                view!!.findViewById<ImageButton>(R.id.profile_logout_button).isEnabled = true
+                view!!.findViewById<Button>(R.id.profile_logout_button).isEnabled = true
                 //TODO: Show error message
             }
         })

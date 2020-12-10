@@ -100,4 +100,5 @@
     <string name="status">Situação: %1$s</string>
     <string name="received_from">Recebido de: %1$s</string>
     <string name="sent_to">Enviado para: %1$s</string>
+    <string name="logout">Sair</string>
 </resources>
