@@ -94,6 +94,13 @@ class UserController(val context: Context) {
         call.enqueue(listener)
     }
 
+    fun getRate(user: UserResponse, listener: Callback<Double>) {
+        val token = sharedPreferences.getString(tokenKey, "")!!
+
+        val call = request.getRate(token, user.userId)
+        call.enqueue(listener)
+    }
+
     fun update(listener: Callback<UserResponse>) {
         val token = sharedPreferences.getString(tokenKey, "")!!
 

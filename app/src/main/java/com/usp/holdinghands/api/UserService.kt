@@ -2,10 +2,7 @@ package com.usp.holdinghands.api
 
 import com.usp.holdinghands.model.*
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.Header
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface UserService {
 
@@ -36,6 +33,9 @@ interface UserService {
 
     @POST("/api/user/rate")
     fun rate(@Header("Authorization") authorization: String, @Body rating: Rating): Call<Double>
+
+    @GET("/api/user/rate/{user_id}")
+    fun getRate(@Header("Authorization")authorization: String, @Path("user_id") userId: Long): Call<Double>
 
     @POST("/api/user/update")
     fun update(@Header("Authorization") authorization: String): Call<UserResponse>
