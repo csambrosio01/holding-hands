@@ -1,5 +1,6 @@
 package com.usp.holdinghands.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -43,6 +44,11 @@ class HistoryFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_history, container, false)
     }
 
+    override fun onResume() {
+        super.onResume()
+        getMatchs()
+    }
+
     private fun configureRecyclerView() {
         viewManager = LinearLayoutManager(activity!!.applicationContext)
         viewAdapter = MatchAdapter(matchs, activity!!.applicationContext, isHistoryView = true)
@@ -56,8 +62,6 @@ class HistoryFragment : Fragment() {
         view!!.findViewById<SwipeRefreshLayout>(R.id.swipe_container).setOnRefreshListener {
             getMatchs()
         }
-
-        getMatchs()
     }
 
     private fun getMatchs() {
