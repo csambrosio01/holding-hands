@@ -78,7 +78,13 @@ class UserActivity : AppCompatActivity() {
 
         findViewById<ImageView>(R.id.user_image).setImageResource(imageId)
         findViewById<TextView>(R.id.user_name).text = user.name
-        findViewById<TextView>(R.id.user_rating).text = applicationContext.getString(R.string.user_rating, user.rating.toString())
+
+        val userRating = findViewById<TextView>(R.id.user_rating)
+        userRating.text = applicationContext.getString(R.string.user_rating, user.rating.toString())
+        if (user.rating == 0.0) {
+            userRating.visibility = View.GONE
+        }
+
         findViewById<TextView>(R.id.user_age).text = applicationContext.getString(R.string.user_age, user.age.toString())
         findViewById<TextView>(R.id.user_distance).text = getString(
             R.string.user_distance_long,

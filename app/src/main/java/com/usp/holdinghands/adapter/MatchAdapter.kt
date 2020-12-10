@@ -76,11 +76,13 @@ class MatchAdapter(
                 context.getString(R.string.sent_to, user.name)
             }
 
-        holder.constraintLayout.findViewById<TextView>(R.id.user_rating).text =
-            holder.constraintLayout.context.getString(
-                R.string.user_rating,
-                user.rating.toString()
-            )
+        val userRating = holder.constraintLayout.findViewById<TextView>(R.id.user_rating)
+        userRating.text =
+            holder.constraintLayout.context.getString(R.string.user_rating, user.rating.toString())
+        if (user.rating == 0.0) {
+            userRating.visibility = View.GONE
+        }
+
         holder.constraintLayout.findViewById<TextView>(R.id.user_age).text =
             holder.constraintLayout.context.getString(
                 R.string.user_age,
