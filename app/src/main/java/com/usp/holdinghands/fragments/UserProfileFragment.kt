@@ -19,6 +19,9 @@ import com.usp.holdinghands.model.UserResponse
 import com.usp.holdinghands.utils.EnumConverter
 import com.usp.holdinghands.utils.MaskEditUtil
 import de.hdodenhof.circleimageview.CircleImageView
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -75,6 +78,10 @@ class UserProfileFragment : Fragment() {
                 }
             }
 
+        switch.setOnClickListener {
+            update()
+        }
+
         switch.isChecked = user.isHelper
     }
 
@@ -88,6 +95,31 @@ class UserProfileFragment : Fragment() {
                     Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
         }
+    }
+
+    private fun update() {
+        view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.VISIBLE
+        view!!.findViewById<ImageButton>(R.id.profile_logout_button).isEnabled = false
+
+        userController.update(object : Callback<UserResponse> {
+            override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
+                view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
+                view!!.findViewById<ImageButton>(R.id.profile_logout_button).isEnabled = true
+
+                if (response.isSuccessful && response.body() != null) {
+                    user = response.body()!!
+                    view!!.findViewById<SwitchCompat>(R.id.profile_card_volunteer_switch).isChecked = user.isHelper
+                } else {
+                    //TODO: Show error message
+                }
+            }
+
+            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
+                view!!.findViewById<ImageButton>(R.id.profile_logout_button).isEnabled = true
+                //TODO: Show error message
+            }
+        })
     }
 
     companion object {
