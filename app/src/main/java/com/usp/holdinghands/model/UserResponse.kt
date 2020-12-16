@@ -16,5 +16,6 @@ data class UserResponse(
     val birth: Date,
     val imageId: String?,
     val rating: Double,
-    val numberOfHelps: Int
+    val numberOfHelps: Int,
+    val isPhoneAvailable: Boolean
 )

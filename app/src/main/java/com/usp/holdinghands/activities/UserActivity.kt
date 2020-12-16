@@ -116,7 +116,12 @@ class UserActivity : AppCompatActivity() {
         }
 
         findViewById<TextView>(R.id.user_email).text = user.email
-        findViewById<TextView>(R.id.user_phone).text = MaskEditUtil.mask(user.phone.removePrefix("55"), MaskEditUtil.PHONE_MASK)
+
+        if (user.isPhoneAvailable) {
+            findViewById<TextView>(R.id.user_phone).text = MaskEditUtil.mask(user.phone.removePrefix("55"), MaskEditUtil.PHONE_MASK)
+        } else {
+            findViewById<TextView>(R.id.user_phone).visibility = View.GONE
+        }
 
         if (isHistoryView && match != null && mutableListOf(MatchStatus.ACCEPT, MatchStatus.DONE).contains(match!!.status)) {
             setVisibilityOfContactViews(View.VISIBLE)
