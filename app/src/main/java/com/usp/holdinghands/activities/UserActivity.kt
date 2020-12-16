@@ -109,10 +109,11 @@ class UserActivity : AppCompatActivity() {
 
         findViewById<TextView>(R.id.user_profession).text = user.profession
 
+        val genderTextView = findViewById<TextView>(R.id.user_gender)
         when (user.gender) {
-            Gender.FEMALE -> findViewById<TextView>(R.id.user_gender).text = applicationContext.getString(R.string.filter_female_switch)
-            Gender.MALE -> findViewById<TextView>(R.id.user_gender).text = applicationContext.getString(R.string.filter_male_switch)
-            Gender.BOTH -> findViewById<TextView>(R.id.user_gender).visibility = View.GONE
+            Gender.FEMALE -> genderTextView.text = applicationContext.getString(R.string.filter_female_switch)
+            Gender.MALE -> genderTextView.text = applicationContext.getString(R.string.filter_male_switch)
+            Gender.BOTH -> genderTextView.visibility = View.GONE
         }
 
         findViewById<TextView>(R.id.user_email).text = user.email
