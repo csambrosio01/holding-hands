@@ -98,6 +98,12 @@ class UserProfileFragment : Fragment() {
         }
 
         volunteerSwitch.isChecked = user.isHelper
+
+        val phoneSwitch = view!!.findViewById<SwitchCompat>(R.id.profile_card_phone_switch)
+        phoneSwitch.setOnClickListener {
+        }
+
+        phoneSwitch.isChecked = user.isPhoneAvailable
     }
 
     private fun setupButtons() {
