@@ -37,6 +37,6 @@ interface UserService {
     @GET("/api/user/rate/{user_id}")
     fun getRate(@Header("Authorization")authorization: String, @Path("user_id") userId: Long): Call<Double>
 
-    @POST("/api/user/update")
-    fun update(@Header("Authorization") authorization: String): Call<UserResponse>
+    @POST("/api/user/update/ishelper")
+    fun updateIsHelper(@Header("Authorization") authorization: String): Call<UserResponse>
 }

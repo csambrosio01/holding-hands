@@ -116,7 +116,7 @@ class UserProfileFragment : Fragment() {
         view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.VISIBLE
         view!!.findViewById<Button>(R.id.profile_logout_button).isEnabled = false
 
-        userController.update(object : Callback<UserResponse> {
+        userController.updateIsHelper(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
                 view!!.findViewById<Button>(R.id.profile_logout_button).isEnabled = true

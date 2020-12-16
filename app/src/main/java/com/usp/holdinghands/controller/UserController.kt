@@ -101,10 +101,10 @@ class UserController(val context: Context) {
         call.enqueue(listener)
     }
 
-    fun update(listener: Callback<UserResponse>) {
+    fun updateIsHelper(listener: Callback<UserResponse>) {
         val token = sharedPreferences.getString(tokenKey, "")!!
 
-        val call = request.update(token)
+        val call = request.updateIsHelper(token)
         call.enqueue(listener)
     }
 }
