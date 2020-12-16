@@ -101,6 +101,7 @@ class UserProfileFragment : Fragment() {
 
         val phoneSwitch = view!!.findViewById<SwitchCompat>(R.id.profile_card_phone_switch)
         phoneSwitch.setOnClickListener {
+            updateIsPhoneAvailable()
         }
 
         phoneSwitch.isChecked = user.isPhoneAvailable
@@ -134,6 +135,32 @@ class UserProfileFragment : Fragment() {
                 }
 
                 view!!.findViewById<SwitchCompat>(R.id.profile_card_volunteer_switch).isChecked = user.isHelper
+            }
+
+            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
+                view!!.findViewById<Button>(R.id.profile_logout_button).isEnabled = true
+                //TODO: Show error message
+            }
+        })
+    }
+
+    private fun updateIsPhoneAvailable() {
+        view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.VISIBLE
+        view!!.findViewById<Button>(R.id.profile_logout_button).isEnabled = false
+
+        userController.updateIsPhoneAvailable(object : Callback<UserResponse> {
+            override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
+                view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
+                view!!.findViewById<Button>(R.id.profile_logout_button).isEnabled = true
+
+                if (response.isSuccessful && response.body() != null) {
+                    user = response.body()!!
+                } else {
+                    Toast.makeText(activity!!.applicationContext, activity!!.applicationContext.getString(R.string.update_error), Toast.LENGTH_LONG).show()
+                }
+
+                view!!.findViewById<SwitchCompat>(R.id.profile_card_phone_switch).isChecked = user.isPhoneAvailable
             }
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {

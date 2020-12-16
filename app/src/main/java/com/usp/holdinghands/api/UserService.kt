@@ -39,4 +39,7 @@ interface UserService {
 
     @POST("/api/user/update/ishelper")
     fun updateIsHelper(@Header("Authorization") authorization: String): Call<UserResponse>
+
+    @POST("/api/user/update/isphoneavailable")
+    fun updateIsPhoneAvailable(@Header("Authorization") authorization: String): Call<UserResponse>
 }

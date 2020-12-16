@@ -107,4 +107,11 @@ class UserController(val context: Context) {
         val call = request.updateIsHelper(token)
         call.enqueue(listener)
     }
+
+    fun updateIsPhoneAvailable(listener: Callback<UserResponse>) {
+        val token = sharedPreferences.getString(tokenKey, "")!!
+
+        val call = request.updateIsPhoneAvailable(token)
+        call.enqueue(listener)
+    }
 }
