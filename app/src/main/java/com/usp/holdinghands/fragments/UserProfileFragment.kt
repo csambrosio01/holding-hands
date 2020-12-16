@@ -16,7 +16,6 @@ import com.usp.holdinghands.R
 import com.usp.holdinghands.activities.LoginActivity
 import com.usp.holdinghands.controller.UserController
 import com.usp.holdinghands.model.Gender
-import com.usp.holdinghands.model.MatchStatus
 import com.usp.holdinghands.model.UserResponse
 import com.usp.holdinghands.utils.EnumConverter
 import com.usp.holdinghands.utils.MaskEditUtil
@@ -80,8 +79,8 @@ class UserProfileFragment : Fragment() {
         view!!.findViewById<TextView>(R.id.profile_profession_info).text = user.profession
         view!!.findViewById<TextView>(R.id.profile_user_help_types).text = EnumConverter.getHelpAsString(EnumConverter.stringToEnumList(user.helpTypes))
 
-        val switch = view!!.findViewById<SwitchCompat>(R.id.profile_card_volunteer_switch)
-        switch
+        val volunteerSwitch = view!!.findViewById<SwitchCompat>(R.id.profile_card_volunteer_switch)
+        volunteerSwitch
             .setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
                 val helperSection = view!!.findViewById<ConstraintLayout>(R.id.helper_section)
                 val profileCard = view!!.findViewById<ConstraintLayout>(R.id.profile_card)
@@ -94,11 +93,11 @@ class UserProfileFragment : Fragment() {
                 }
             }
 
-        switch.setOnClickListener {
-            update()
+        volunteerSwitch.setOnClickListener {
+            updateIsHelper()
         }
 
-        switch.isChecked = user.isHelper
+        volunteerSwitch.isChecked = user.isHelper
     }
 
     private fun setupButtons() {
@@ -113,7 +112,7 @@ class UserProfileFragment : Fragment() {
         }
     }
 
-    private fun update() {
+    private fun updateIsHelper() {
         view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.VISIBLE
         view!!.findViewById<Button>(R.id.profile_logout_button).isEnabled = false
 
