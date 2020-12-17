@@ -37,6 +37,7 @@ class UserProfileFragment : Fragment() {
         userController = UserController(activity!!.applicationContext)
         user = userController.getLoggedUser()!!
 
+        getUser()
         setupViews()
         setupButtons()
     }
@@ -166,6 +167,35 @@ class UserProfileFragment : Fragment() {
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
                 view!!.findViewById<Button>(R.id.profile_logout_button).isEnabled = true
+                //TODO: Show error message
+            }
+        })
+    }
+
+    private fun getUser() {
+        view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.VISIBLE
+        view!!.findViewById<Button>(R.id.profile_logout_button).isEnabled = false
+
+        userController.getUser(user.userId, object : Callback<UserResponse> {
+            override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
+                view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
+                view!!.findViewById<Button>(R.id.profile_logout_button).isEnabled = true
+
+                if (response.isSuccessful && response.body() != null) {
+                    user = response.body()!!
+                    userController.setLoggedUser(user)
+                }
+
+                setupViews()
+                setupButtons()
+            }
+
+            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                view!!.findViewById<ConstraintLayout>(R.id.progress_layout).visibility = View.GONE
+                view!!.findViewById<Button>(R.id.profile_logout_button).isEnabled = true
+
+                setupViews()
+                setupButtons()
                 //TODO: Show error message
             }
         })
