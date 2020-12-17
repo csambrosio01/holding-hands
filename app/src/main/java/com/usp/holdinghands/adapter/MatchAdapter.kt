@@ -2,6 +2,10 @@ package com.usp.holdinghands.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -124,6 +128,7 @@ class MatchAdapter(
         )
         holder.constraintLayout.findViewById<ImageView>(R.id.user_image).setImageResource(imageId)
 
+        val matchStatusTextView = holder.constraintLayout.findViewById<TextView>(R.id.match_status)
         when {
             isPendingView -> {
                 holder.constraintLayout.findViewById<ConstraintLayout>(R.id.help_buttons).visibility =
@@ -138,23 +143,58 @@ class MatchAdapter(
                 }
             }
             isHistoryView -> {
-                holder.constraintLayout.findViewById<TextView>(R.id.match_status).visibility =
+
+                val color: Int
+                val statusText: String
+
+                when (match.status) {
+                    MatchStatus.ACCEPT -> {
+                        color = Color.parseColor("#007A1A")
+                        statusText = context.getString(R.string.accepted)
+                    }
+                    MatchStatus.REJECT -> {
+                        color = Color.RED
+                        statusText = context.getString(R.string.rejected)
+                    }
+                    MatchStatus.DONE -> {
+                        color = Color.parseColor("#007A1A")
+                        statusText = context.getString(R.string.done)
+                    }
+                    MatchStatus.PENDING -> {
+                        color = Color.parseColor("#FFD700")
+                        statusText = context.getString(R.string.pending_fragment_title)
+                    }
+                    else -> {
+                        color = Color.GRAY
+                        statusText = ""
+                    }
+                }
+
+                var text = context.getString(R.string.status, "<color>$statusText</color>")
+
+                val start = text.indexOf("<color>")
+                text = text.replace("<color>", "")
+
+                val end = text.indexOf("</color>")
+                text = text.replace("</color>", "")
+
+                val span = SpannableString(text)
+
+                span.setSpan(
+                    ForegroundColorSpan(color),
+                    start,
+                    end,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+
+                matchStatusTextView.visibility =
                     View.VISIBLE
-                holder.constraintLayout.findViewById<TextView>(R.id.match_status).text =
-                    context.getString(
-                        R.string.status, when (match.status) {
-                            MatchStatus.ACCEPT -> context.getString(R.string.accepted)
-                            MatchStatus.REJECT -> context.getString(R.string.rejected)
-                            MatchStatus.DONE -> context.getString(R.string.done)
-                            MatchStatus.PENDING -> context.getString(R.string.pending_fragment_title)
-                            else -> ""
-                        }
-                    )
+                matchStatusTextView.text = span
             }
             else -> {
                 holder.constraintLayout.findViewById<ConstraintLayout>(R.id.help_buttons).visibility =
                     View.GONE
-                holder.constraintLayout.findViewById<TextView>(R.id.match_status).visibility =
+                matchStatusTextView.visibility =
                     View.GONE
             }
         }

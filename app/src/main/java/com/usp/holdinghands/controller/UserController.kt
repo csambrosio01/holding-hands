@@ -61,6 +61,14 @@ class UserController(val context: Context) {
             .apply()
     }
 
+    fun setLoggedUser(user: UserResponse) {
+        val jsonUser = JsonUtil.toJson(user)
+        sharedPreferences
+            .edit()
+            .putString(userKey, jsonUser)
+            .apply()
+    }
+
     fun getLoggedUser(): UserResponse? {
         val userString = sharedPreferences.getString(userKey, null)
         return if (userString != null) {
@@ -101,10 +109,24 @@ class UserController(val context: Context) {
         call.enqueue(listener)
     }
 
-    fun update(listener: Callback<UserResponse>) {
+    fun updateIsHelper(listener: Callback<UserResponse>) {
         val token = sharedPreferences.getString(tokenKey, "")!!
 
-        val call = request.update(token)
+        val call = request.updateIsHelper(token)
+        call.enqueue(listener)
+    }
+
+    fun updateIsPhoneAvailable(listener: Callback<UserResponse>) {
+        val token = sharedPreferences.getString(tokenKey, "")!!
+
+        val call = request.updateIsPhoneAvailable(token)
+        call.enqueue(listener)
+    }
+
+    fun getUser(userId: Long, listener: Callback<UserResponse>) {
+        val token = sharedPreferences.getString(tokenKey, "")!!
+
+        val call = request.getUser(token, userId)
         call.enqueue(listener)
     }
 }
